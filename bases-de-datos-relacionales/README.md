@@ -2,8 +2,9 @@
 
 - [Deadlock en DBMS](#deadlock-en-dbms)
 - [Formas Normales en Bases de Datos](#formas-normales-en-bases-de-datos)
+- [PostgreSQL: ANALYZE](#postgresql-analyze)
 
----
+--------------------------------------------------------------------------------
 
 ## Deadlock en DBMS
 Un deadlock en el contexto de bases de datos ocurre cuando dos o más
@@ -92,7 +93,35 @@ integridad de los datos en las bases de datos relacionales.
 > **Conclusión:** Todo lo que esté en la tabla debe depender únicamente de la 
 > clave primaria.
 
----
+--------------------------------------------------------------------------------
 
+## PostgreSQL: ANALYZE
+
+El comando **`ANALYZE`** es parte de **PostgreSQL** (aunque otros sistemas de gestión
+de bases de datos también tienen comandos similares).
+
+### Función de ANALYZE:
+**`ANALYZE`** se utiliza para recopilar estadísticas sobre el contenido de las
+tablas en una base de datos. Estas estadísticas son esenciales para el optimizador
+de consultas, que las usa para generar planes de ejecución eficientes.
+
+### Detalles:
+* **Mejora el rendimiento**: Al recopilar estadísticas sobre la distribución de los
+  datos en las columnas, **`ANALYZE`** permite que el optimizador de consultas
+  seleccione los mejores índices y estrategias de acceso.
+* **Ejecución automática**: En PostgreSQL, **`ANALYZE`** se puede ejecutar
+  manualmente o configurarse para que se ejecute automáticamente en intervalos
+  regulares.
+
+### Ejemplo de uso:
+```sql
+ANALYZE my_table;
+```
+Esto actualizará las estadísticas de la tabla **`my_table`**, mejorando el rendimiento
+de futuras consultas sobre esa tabla.
+> **Conclusión:** **`ANALYZE`** actualiza las estadísticas de la tabla para hacer las
+> consultas más eficientes.
+
+--------------------------------------------------------------------------------
 
 
