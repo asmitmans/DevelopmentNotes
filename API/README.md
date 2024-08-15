@@ -2,6 +2,7 @@
 
 - [HATEOAS](#HATEOAS)
 - [Header HTTP](#header-http)
+- [`Authorization` HTTP Header](#authorization-http-header)
 - [Cookies](#cookies)
 
 
@@ -138,6 +139,8 @@ Los headers pueden especificar una amplia variedad de detalles, tales como:
 En resumen, los headers en HTTP son esenciales para la correcta interpretación y
 manipulación de las solicitudes y respuestas, asegurando que tanto el cliente
 como el servidor puedan comunicarse de manera efectiva y segura.
+
+----------------------------------------------------------------------
 
 ## `Authorization` HTTP Header
 
