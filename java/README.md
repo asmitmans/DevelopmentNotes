@@ -3,6 +3,8 @@
 - [Excepción división por cero](#excepción-división-por-cero)
 - [Definir un método como `final`](#definir-un-método-como-final)
 - [Listas sin tipos](#listas-sin-tipos)
+- [Uso de `<T extends Number>`](#uso-de-t-extends-number)
+- [Acceso a atributo heredado de superclase](#acceso-a-atributo-heredado-de-superclase)
 
 ---
 
@@ -92,4 +94,49 @@ public <T> void printList(List<T> lista) {
 * Garantiza que todos los elementos de la lista sean del mismo tipo, lo que
   facilita el manejo y evita errores en tiempo de ejecución.
 
-----------------------------------------------------------------------
+--------------------------------------------------------------------------------
+
+## Uso de `<T extends Number>`
+Cuando en un método Java se utiliza la sintaxis **`<T extends Number>`**, se está
+definiendo un **tipo genérico `T`** que está limitado a **subclases de la clase
+`Number`**. Esto significa que el método solo puede aceptar tipos que sean 
+subclases de **`Number`**, como **`Integer, Double, Float,`** etc.
+
+Por ejemplo:
+
+```java
+public <T extends Number> void myMethod(T number) {
+    // Aquí se pueden usar métodos de la clase Number
+}
+```
+En este caso, **`myMethod`** puede recibir cualquier objeto que sea una instancia
+de una clase que extienda **`Number`**, pero no otros tipos de objetos. Esto se
+utiliza para restringir los tipos que un método genérico puede aceptar,
+asegurando que solo se usen tipos compatibles.
+
+--------------------------------------------------------------------------------
+
+## Acceso a atributo heredado de superclase
+En Java se puede acceder a un atributo heredado de una superclase desde una
+subclase usando **`this.`**. siempre que el atributo no esté declarado como
+**`private`**. Si el atributo es **`protected`**, **`public`**, o tiene acceso 
+por defecto (si están en el mismo paquete), puedes acceder a él directamente con
+**`this.`**.
+
+Por ejemplo:
+
+```java
+class SuperClase {
+    protected int atributo;
+}
+
+class SubClase extends SuperClase {
+    public void metodo() {
+        this.atributo = 10; // Acceso al atributo de la superclase
+    }
+}
+```
+Aquí, **`this.atributo`** en **`SubClase`** se refiere al atributo **`atributo`**
+que es heredado de **`SuperClase`**.
+
+--------------------------------------------------------------------------------

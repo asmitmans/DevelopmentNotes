@@ -4,6 +4,7 @@
 Apuntes sobre diferentes temas de desarrollo de software.
 
 ## Temas
-- [API](./API/README.md)
-- [HTML](./HTML/README.md)
-- [Java](./Java/README.md)
+- [API](./api/README.md)
+- [Bases de Datos Relacionales](.bases-de-datos-relacionales/README.md)
+- [HTML](./html/README.md)
+- [Java](./java/README.md)
