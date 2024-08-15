@@ -1,10 +1,8 @@
 # Java
 
-
 - [Excepción división por cero](#excepción-división-por-cero)
 - [Definir un método como `final`](#definir-un-método-como-final)
 - [Listas sin tipos](#listas-sin-tipos)
-
 
 ---
 
