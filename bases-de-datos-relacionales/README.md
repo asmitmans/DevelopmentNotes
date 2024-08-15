@@ -1,6 +1,7 @@
 # Bases de Datos Relacionales
 
 - [Deadlock en DBMS](#deadlock-en-dbms)
+- [Formas Normales en Bases de Datos](#formas-normales-en-bases-de-datos)
 
 ---
 
@@ -67,21 +68,31 @@ integridad de los datos en las bases de datos relacionales.
   dependencias parciales, donde un atributo dependa solo de parte de una clave
   primaria compuesta.
 * **Ejemplo**:
-  * No en 2NF: En una tabla de órdenes que tiene una clave primaria compuesta
+  * **No en 2NF**: En una tabla de órdenes que tiene una clave primaria compuesta
     (OrderID, ProductID), si el ProductName depende solo de ProductID y no de la
     combinación completa de la clave primaria, se viola la 2NF.
-  * En 2NF: Se elimina ProductName de la tabla de órdenes y se coloca en una
+  * **En 2NF**: Se elimina ProductName de la tabla de órdenes y se coloca en una
     tabla separada de productos, donde ProductID es la clave primaria.
 > **Conclusión:** Todo lo que este en la tabla que no sea parte de la clave debe
-> depender de la clave primaria. Por ejemplo si tengo el `id_producto` no necesito
-> el `nombre_producto`.
+> depender de la clave primaria completa(si es compuesta). Por ejemplo si tengo
+> el `id_producto` no necesito el `nombre_producto`.
 
 ### Tercera Forma Normal (3NF):
 * **Definición**: Una tabla está en 3NF si cumple con 2NF y, además, todos los
   atributos no clave dependen directamente de la clave primaria, sin
   dependencias transitivas. Es decir, no debe haber un atributo no clave que
   dependa de otro atributo no clave.
-Ejemplo:
-No en 3NF: Una tabla de empleados que almacena EmployeeID, DepartmentID, y DepartmentName, donde DepartmentName depende de DepartmentID y no de EmployeeID directamente. Esto crea una dependencia transitiva.
-En 3NF: Se elimina DepartmentName de la tabla de empleados y se coloca en una tabla separada de departamentos, donde DepartmentID es la clave primaria.
+* **Ejemplo**:
+  * **No en 3NF**: Una tabla de empleados que almacena EmployeeID, DepartmentID,
+    y DepartmentName, donde DepartmentName depende de DepartmentID y no de 
+    EmployeeID directamente. Esto crea una dependencia transitiva.
+  * **En 3NF**: Se elimina DepartmentName de la tabla de empleados y se coloca
+    en una tabla separada de departamentos, donde DepartmentID es la clave
+    primaria.
+> **Conclusión:** Todo lo que esté en la tabla debe depender únicamente de la 
+> clave primaria.
+
+---
+
+
 
