@@ -3,6 +3,10 @@
 - [Deadlock en DBMS](#deadlock-en-dbms)
 - [Formas Normales en Bases de Datos](#formas-normales-en-bases-de-datos)
 - [PostgreSQL: ANALYZE](#postgresql-analyze)
+- [Vista Materializada](#vista-materializada)
+- [Crear índice en tabla](#crear-índice-en-tabla)
+- [Crear restricción de unicidad](#crear-restricción-de-unicidad)
+
 
 --------------------------------------------------------------------------------
 
@@ -124,4 +128,96 @@ de futuras consultas sobre esa tabla.
 
 --------------------------------------------------------------------------------
 
+## Vista Materializada
 
+Una **vista materializada** en el contexto de bases de datos relacionales es una
+copia física de los datos que resulta de una consulta SQL, almacenada en una tabla.
+A diferencia de una vista normal, que es simplemente una consulta almacenada que
+se ejecuta cada vez que es llamada, una vista materializada guarda el resultado
+de la consulta en el momento en que se crea o se actualiza.
+
+### Características principales:
+* **Persistencia de datos**: Almacena los datos físicamente en la base de datos,
+  lo que permite un acceso más rápido a los resultados de la consulta.
+* **Actualización periódica**: Puede ser configurada para actualizarse automáticamente
+  en intervalos regulares o manualmente, para reflejar los cambios en los datos
+  subyacentes.
+* **Mejora de rendimiento**: Es útil para mejorar el rendimiento de consultas
+  complejas o costosas que no necesitan ser recalculadas cada vez que se consultan.
+
+### Ejemplo de uso:
+Imagina una consulta que junta datos de varias tablas y realiza cálculos
+complejos. Si esta consulta se ejecuta con frecuencia, podrías crear una vista
+materializada para almacenar el resultado de esa consulta y así reducir el
+tiempo de procesamiento en futuras solicitudes.
+> **Conclusión:** Es como una vista normal que es solo una consulta almacenada, 
+> pero ademas almacena el resultado de la consulta en una tabla. 
+
+--------------------------------------------------------------------------------
+
+## Crear índice en tabla
+
+**[PostgreSQL]**
+
+Para crear un índice en una tabla en PostgreSQL, se utiliza el comando **`CREATE INDEX`**.
+
+```sql
+CREATE INDEX index_name ON table_name (column_name);
+```
+
+### Ventaja:
+* **Mejora el rendimiento de las consultas**: Los índices aceleran las consultas
+  SELECT al permitir un acceso más rápido a los datos, especialmente en tablas
+  grandes.
+
+### Desventaja:
+* **Costo de almacenamiento y escritura**: Los índices ocupan espacio adicional en
+  el disco y pueden ralentizar las operaciones de inserción, actualización y
+  eliminación, ya que el índice debe mantenerse actualizado.
+
+### Caso de uso:
+* **Consultas frecuentes en una columna**: Crear un índice es útil cuando una columna
+  se usa frecuentemente en condiciones WHERE, JOIN, o en ordenamientos (ORDER BY).
+  Por ejemplo, crear un índice en una columna **`email`** en una tabla de usuarios
+  si las búsquedas por correo electrónico son comunes.
+
+Este enfoque permite un acceso más rápido y eficiente a los datos, pero debe
+usarse con cuidado, considerando el impacto en las operaciones de escritura y el
+almacenamiento.
+
+En PostgreSQL (y en la mayoría de los sistemas de bases de datos relacionales),
+las claves primarias **(Primary Keys)** son automáticamente índices.
+
+--------------------------------------------------------------------------------
+
+## Crear restricción de unicidad
+
+**[PostgreSQL]**
+
+### Crear restricción de unicidad al crear la tabla:
+```sql
+CREATE TABLE nombre_tabla (
+    columna1 tipo_dato,
+    columna2 tipo_dato,
+    columna3 tipo_dato,
+    CONSTRAINT nombre_restriccion UNIQUE (columna2, columna3)
+);
+```
+
+Otro forma
+```sql
+CREATE TABLE nombre_tabla (
+    columna1 tipo_dato UNIQUE,
+    columna2 tipo_dato,
+    columna3 tipo_dato
+);
+```
+Esto asegura que **`columna1`** no tendrá valores duplicados.
+
+### Añadir restricción de unicidad a una tabla existente:
+```sql
+ALTER TABLE nombre_tabla 
+ADD CONSTRAINT nombre_restriccion UNIQUE (columna);
+```
+
+--------------------------------------------------------------------------------
