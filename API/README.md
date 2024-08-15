@@ -1,7 +1,9 @@
 # API RESTful
 
-## Índice
-1. [HATEOAS](#HATEOAS)
+- [HATEOAS](#HATEOAS)
+- [Header HTTP](#header-http)
+- [Cookies](#cookies)
+
 
 ## HATEOAS
 
@@ -97,5 +99,90 @@ son bien conocidas y estables, y los clientes están bien definidos,
 puede que HATEOAS no aporte mucho valor. Es importante considerar el
 contexto y las necesidades específicas de tu aplicación antes de
 decidir si implementar HATEOAS o no.
+
+----------------------------------------------------------------------
+
+## Header HTTP
+
+La principal función del **header** en una solicitud o respuesta HTTP es
+proporcionar **metadatos** sobre la comunicación entre el cliente (por ejemplo,
+un navegador web o una aplicación) y el servidor. Estos metadatos incluyen
+información crucial para el correcto procesamiento de la solicitud o respuesta.
+Los headers pueden especificar una amplia variedad de detalles, tales como:
+
+1. **Autenticación y Autorización**: Headers como `Authorization` permiten que 
+   el cliente envíe credenciales al servidor para acceder a recursos protegidos.
+
+2. **Control de Cache**: Headers como `Cache-Control`, `Expires`, y `ETag`
+   indican si y cómo el contenido debe ser almacenado en caché por el cliente o
+   intermediarios.
+
+3. **Tipo de Contenido**: Headers como `Content-Type` indican el tipo de los
+   datos que se están enviando o recibiendo, por ejemplo, `application/json`
+   para JSON, `text/html` para HTML, etc.
+
+4. **Lenguaje**: Headers como `Accept-Language` indican las preferencias de
+   idioma del cliente para el contenido que se va a recibir.
+
+5. **Seguridad**: Headers como `Strict-Transport-Security` ayudan a reforzar la
+   seguridad de la comunicación, como forzar el uso de HTTPS.
+
+6. **Detalles de la Conexión**: Headers como `Connection` pueden controlar si la
+   conexión debe ser cerrada o mantenida abierta después de completar la
+   solicitud.
+
+7. **Control de Transferencia**: Headers como `Transfer-Encoding` y 
+   `Content-Length` indican cómo se está transmitiendo el cuerpo del mensaje,
+   especialmente para manejar respuestas grandes.
+
+En resumen, los headers en HTTP son esenciales para la correcta interpretación y
+manipulación de las solicitudes y respuestas, asegurando que tanto el cliente
+como el servidor puedan comunicarse de manera efectiva y segura.
+
+## `Authorization` HTTP Header
+
+El header `Authorization` en HTTP se usa para enviar credenciales del cliente al
+servidor para autenticar la solicitud. Puede usar diferentes esquemas de
+autenticación, como:
+
+* **Basic**: Envía nombre de usuario y contraseña codificados en Base64.
+* **Bearer**: Envía un token, como un JWT, para autenticar al usuario.
+
+Ejemplo de uso con Bearer:
+
+```http
+Authorization: Bearer <token>
+```
+Este header es clave para la autenticación en APIs y recursos protegidos.
+
+----------------------------------------------------------------------
+
+## Cookies
+
+La función principal de las **cookies** es almacenar pequeños fragmentos de datos
+en el navegador del usuario para ser utilizados por el servidor en futuras
+interacciones. Esto permite:
+
+1. **Mantener sesiones**: Guardar información sobre la sesión del usuario, como
+   identificadores de sesión, para que el usuario no tenga que volver a
+   autenticarse en cada solicitud.  
+
+2. **Recordar preferencias**: Almacenar configuraciones personalizadas, como
+   idioma o temas visuales, para mejorar la experiencia del usuario en futuras
+   visitas.   
+
+3. **Rastrear actividad**: Realizar un seguimiento de la actividad del usuario
+   en el sitio web para análisis o personalización de contenido.   
+
+Las cookies son fundamentales para mantener el estado en la comunicación HTTP,
+que es inherentemente sin estado (stateless).
+
+
+Las cookies son un **mecanismo para mantener información entre solicitudes 
+HTTP.** Dado que HTTP es un protocolo sin estado, las cookies permiten que el 
+servidor "recuerde" información sobre el cliente entre distintas solicitudes, 
+como la sesión de usuario, preferencias, o datos de seguimiento. Esto es 
+esencial para proporcionar una experiencia continua y personalizada en 
+aplicaciones web.
 
 ----------------------------------------------------------------------
