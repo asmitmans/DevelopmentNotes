@@ -2,7 +2,7 @@
 
 - [Deadlock en DBMS](#deadlock-en-dbms)
 - [Formas Normales en Bases de Datos](#formas-normales-en-bases-de-datos)
-- [PostgreSQL: ANALYZE](#postgresql-analyze)
+- [ANALYZE](#analyze)
 - [Vista Materializada](#vista-materializada)
 - [Crear índice en tabla](#crear-índice-en-tabla)
 - [Crear restricción de unicidad](#crear-restricción-de-unicidad)
@@ -11,6 +11,7 @@
 --------------------------------------------------------------------------------
 
 ## Deadlock en DBMS
+
 Un deadlock en el contexto de bases de datos ocurre cuando dos o más
 transacciones se bloquean mutuamente porque cada una espera que la otra libere
 un recurso que necesita para continuar. Ninguna de las transacciones puede
@@ -99,7 +100,9 @@ integridad de los datos en las bases de datos relacionales.
 
 --------------------------------------------------------------------------------
 
-## PostgreSQL: ANALYZE
+## ANALYZE
+
+**[PostgreSQL]**
 
 El comando **`ANALYZE`** es parte de **PostgreSQL** (aunque otros sistemas de gestión
 de bases de datos también tienen comandos similares).
