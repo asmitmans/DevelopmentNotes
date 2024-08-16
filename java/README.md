@@ -1,10 +1,11 @@
 # Java
 
-- [Excepción división por cero](#excepción-división-por-cero)
-- [Definir un método como `final`](#definir-un-método-como-final)
-- [Listas sin tipos](#listas-sin-tipos)
-- [Uso de `<T extends Number>`](#uso-de-t-extends-number)
-- [Acceso a atributo heredado de superclase](#acceso-a-atributo-heredado-de-superclase)
+- [Java](#java)
+  - [Excepción división por cero](#excepción-división-por-cero)
+  - [Definir un método como `final`](#definir-un-método-como-final)
+  - [Listas sin tipos](#listas-sin-tipos)
+  - [Uso de `<T extends Number>`](#uso-de-t-extends-number)
+  - [Acceso a atributo heredado de superclase](#acceso-a-atributo-heredado-de-superclase)
 
 ---
 
