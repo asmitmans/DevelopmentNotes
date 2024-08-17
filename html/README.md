@@ -14,7 +14,7 @@
 - [Etiqueta `<ul>` y `<ol>` (Listas):](#etiqueta-ul-y-ol-listas)
 - [Imagen con enlace (`<a>` con `<img>`)](#imagen-con-enlace-a-con-img)
 - [Menu de navegación `<nav>` con `<ul>`, `<li>`, y `<a>`](#menu-de-navegación-nav-con-ul-li-y-a)
-- [Etiqueta  (División o contenedor):](#etiqueta--división-o-contenedor)
+- [Etiqueta `<div>` (División o contenedor):](#etiqueta-div-división-o-contenedor)
 
 ---
 
@@ -312,8 +312,8 @@ ordenada de enlaces, y cada enlace está contenido en un **`<li>`** (elemento de
 Esto es una práctica común para estructurar menús de navegación en sitios web.
 
 ---
-## Etiqueta <div> (División o contenedor):
-* **Estructura: <div>Contenido aquí</div>**
+## Etiqueta `<div>` (División o contenedor):
+* **Estructura: `<div>Contenido aquí</div>`**
 * **Ejemplo:**
 ```html
 <div class="contenedor">
