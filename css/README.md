@@ -7,6 +7,7 @@
 - [Sintaxis de CSS:](#sintaxis-de-css)
 - [Tipos de selectores en CSS:](#tipos-de-selectores-en-css)
 - [Jerarquía en CSS:](#jerarquía-en-css)
+- [Color en CSS:](#color-en-css)
 
 ---
 
@@ -304,3 +305,90 @@ p { color: blue !important; }
 ```
 
 ---
+## Color en CSS:
+El manejo del color es una parte fundamental del diseño en CSS, ya que permite 
+definir los colores de texto, fondo, bordes y otros elementos visuales en una 
+página web.
+
+### Formatos de color en CSS:
+1. #### Nombres de colores (Color Names):
+   * **Descripción**: CSS soporta un conjunto de nombres predefinidos para colores 
+     comunes como **`red`, `blue`, `green`**, etc.
+   * **Ejemplo**:
+```css
+p {
+    color: red;
+}
+```
+
+#### 2. **Hexadecimal (Hex Color)**:
+* **Descripción**: Utiliza una combinación de seis dígitos hexadecimales para 
+  representar el color. Los primeros dos dígitos representan el rojo, los 
+  siguientes dos el verde, y los últimos dos el azul.
+* **Sintaxis**: `#RRGGBB`
+* Ejemplo:
+```css
+p {
+    color: #ff0000; /* Rojo */
+}
+```
+
+3. **RGB (Red, Green, Blue):**
+
+Descripción: Define el color mediante los valores de los canales rojo, verde y azul. Los valores pueden ir de 0 a 255.
+Sintaxis: rgb(RED, GREEN, BLUE)
+Ejemplo:
+css
+Copiar código
+p {
+    color: rgb(255, 0, 0); /* Rojo */
+}
+RGBA (Red, Green, Blue, Alpha):
+
+Descripción: Similar a rgb, pero incluye un cuarto valor (alpha) para definir la opacidad del color. El valor de alpha va de 0 (transparente) a 1 (opaco).
+Sintaxis: rgba(RED, GREEN, BLUE, ALPHA)
+Ejemplo:
+css
+Copiar código
+p {
+    color: rgba(255, 0, 0, 0.5); /* Rojo semi-transparente */
+}
+HSL (Hue, Saturation, Lightness):
+
+Descripción: Define el color mediante matiz (hue), saturación y luminosidad. El matiz es un ángulo en el círculo de colores (0-360), mientras que la saturación y luminosidad son porcentajes.
+Sintaxis: hsl(HUE, SATURATION%, LIGHTNESS%)
+Ejemplo:
+css
+Copiar código
+p {
+    color: hsl(0, 100%, 50%); /* Rojo */
+}
+HSLA (Hue, Saturation, Lightness, Alpha):
+
+Descripción: Similar a hsl, pero incluye el valor alpha para definir la opacidad.
+Sintaxis: hsla(HUE, SATURATION%, LIGHTNESS%, ALPHA)
+Ejemplo:
+css
+Copiar código
+p {
+    color: hsla(0, 100%, 50%, 0.5); /* Rojo semi-transparente */
+}
+Aplicaciones comunes:
+Color del texto: Utilizado con la propiedad color.
+Color de fondo: Utilizado con la propiedad background-color.
+Color de bordes: Utilizado con propiedades como border-color.
+Ejemplo completo:
+css
+Copiar código
+body {
+    background-color: #f0f0f0; /* Fondo gris claro */
+}
+
+h1 {
+    color: hsl(200, 100%, 50%); /* Azul brillante */
+}
+
+p {
+    color: rgba(0, 0, 0, 0.7); /* Negro con 70% de opacidad */
+    background-color: #ffffcc; /* Fondo amarillo claro */
+}
