@@ -378,6 +378,9 @@ Las etiquetas semánticas son una parte esencial de las mejores prácticas en HT
 contribuyendo a la creación de documentos web más claros, accesibles y bien 
 estructurados.
 
+### Diagrama
+<img src="./semantic_tags.svg">
+
 ---
 
 
