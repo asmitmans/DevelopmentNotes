@@ -17,6 +17,14 @@
 - [Etiqueta `<div>` (División o contenedor):](#etiqueta-div-división-o-contenedor)
 - [Etiquetas semánticas en HTML5:](#etiquetas-semánticas-en-html5)
 - [Serie de preguntas para seleccionar etiquetas semánticas:](#serie-de-preguntas-para-seleccionar-etiquetas-semánticas)
+- [Etiqueta `<header>` (Encabezado):](#etiqueta-header-encabezado)
+- [Etiqueta `<nav>` (Navegación):](#etiqueta-nav-navegación)
+- [Etiqueta `<section>` (Sección):](#etiqueta-section-sección)
+- [Etiqueta `<article>` (Artículo):](#etiqueta-article-artículo)
+- [Etiqueta `<aside>` (Barra lateral o contenido adicional):](#etiqueta-aside-barra-lateral-o-contenido-adicional)
+- [Etiqueta `<footer>` (Pie de página):](#etiqueta-footer-pie-de-página)
+- [Etiqueta `<main>` (Contenido principal):](#etiqueta-main-contenido-principal)
+- [Etiqueta `<figure>` y `<figcaption>` (Figura y leyenda):](#etiqueta-figure-y-figcaption-figura-y-leyenda)
 
 ---
 
@@ -409,7 +417,128 @@ estructurados.
 
 ---
 
+## Etiqueta `<header>` (Encabezado):
+* **Estructura: `<header>Contenido del encabezado</header>`**
+* **Ejemplo:**
+```html
+<header>
+    <h1>Bienvenido a Mi Sitio Web</h1>
+    <nav>
+        <ul>
+            <li><a href="#inicio">Inicio</a></li>
+            <li><a href="#sobre">Sobre Nosotros</a></li>
+        </ul>
+    </nav>
+</header>
+```
+* **Dato extra**: Se usa para definir la cabecera de un documento o sección, 
+  incluyendo títulos, logotipos, y menús de navegación.
 
+---
+## Etiqueta `<nav>` (Navegación):
+* **Estructura: `<nav>Enlaces de navegación</nav>`**
+* **Ejemplo:**
+```html
+<nav>
+    <ul>
+        <li><a href="#inicio">Inicio</a></li>
+        <li><a href="#articulos">Artículos</a></li>
+        <li><a href="#contacto">Contacto</a></li>
+    </ul>
+</nav>
+```
+* **Dato extra**: Se utiliza para agrupar enlaces de navegación principales de un 
+  sitio o aplicación web.
+
+---
+## Etiqueta `<section>` (Sección):
+* **Estructura: `<section>Contenido de la sección</section>`**
+* **Ejemplo:**
+```html
+<section>
+    <h2>Nuestra Historia</h2>
+    <p>Somos una empresa dedicada a...</p>
+</section>
+```
+ * **Dato extra**: Representa una sección genérica dentro de un documento, 
+   típicamente acompañada de un encabezado.
+
+---
+## Etiqueta `<article>` (Artículo):
+* **Estructura: `<article>Contenido del artículo</article>`**
+* **Ejemplo:**
+```html
+Copiar código
+<article>
+    <h2>Título del Artículo</h2>
+    <p>Este es el contenido de un artículo independiente...</p>
+</article>
+```
+* **Dato extra**: Utilizado para contenido independiente y autocontenido que puede 
+  ser distribuido o reutilizado, como artículos de noticias o publicaciones de 
+  blog.
+
+---
+## Etiqueta `<aside>` (Barra lateral o contenido adicional):
+* **Estructura: `<aside>Contenido relacionado</aside>`**
+* **Ejemplo:**
+```html
+<aside>
+    <h3>Enlaces Relacionados</h3>
+    <ul>
+        <li><a href="#tema1">Tema 1</a></li>
+        <li><a href="#tema2">Tema 2</a></li>
+    </ul>
+</aside>
+```
+* **Dato extra**: Se usa para contenido que está relacionado indirectamente con el 
+  contenido principal, como barras laterales o bloques de anuncios.
+
+---
+## Etiqueta `<footer>` (Pie de página):
+* **Estructura: `<footer>Contenido del pie de página</footer>`**
+* **Ejemplo:**
+```html
+<footer>
+    <p>&copy; 2024 Mi Sitio Web. Todos los derechos reservados.</p>
+    <nav>
+        <ul>
+            <li><a href="#politica">Política de Privacidad</a></li>
+            <li><a href="#terminos">Términos de Uso</a></li>
+        </ul>
+    </nav>
+</footer>
+```
+* **Dato extra**: Define el pie de página para un documento o sección, a menudo 
+  contiene información sobre derechos de autor, enlaces legales, o información de
+  contacto.
+
+---
+## Etiqueta `<main>` (Contenido principal):
+* **Estructura: `<main>Contenido principal</main>`**
+* **Ejemplo:**
+```html
+<main>
+    <h2>Título Principal</h2>
+    <p>Este es el contenido principal del documento...</p>
+</main>
+```
+* **Dato extra**: Representa el contenido principal del documento, excluyendo 
+  encabezados, barras laterales, y pies de página.
+
+---
+## Etiqueta `<figure>` y `<figcaption>` (Figura y leyenda):
+* **Ejemplo:**
+```html
+<figure>
+    <img src="imagen.jpg" alt="Descripción de la imagen">
+    <figcaption>Esta es una leyenda para la imagen.</figcaption>
+</figure>
+```
+* **Dato extra**: **`<figure>`** se usa para agrupar contenido visual o ilustrativo, y 
+  **`<figcaption>`** proporciona una leyenda o descripción para ese contenido.
+
+---
 
 
 
