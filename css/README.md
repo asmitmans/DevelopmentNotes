@@ -113,31 +113,27 @@ selector {
 ```
 
 ### Componentes:
-**1. Selector**: Indica a qué elementos HTML se aplicarán los estilos.
-  * **Ejemplo: `h1`, `.clase`, `#id`**
-**2. Propiedad**: Define qué aspecto del elemento se va a modificar.
+1. **Selector**: Indica a qué elementos HTML se aplicarán los estilos.
+  * **Ejemplo: `h1`, `.clase`, `#id`**  
+
+2. **Propiedad**: Define qué aspecto del elemento se va a modificar.
  * **Ejemplo: `color`, `font-size`, `margin`**
 
-Valor: Especifica el valor que se aplicará a la propiedad.
+**3. Valor**: Especifica el valor que se aplicará a la propiedad.
+  * **Ejemplo: `red`, `16px`, `10px`**
 
-Ejemplo: red, 16px, 10px
-Declaración: Es una combinación de una propiedad y su valor, separada por un : y finalizada con un ;.
+**4. Declaración**: Es una combinación de una propiedad y su valor, separada por un 
+   `:` y finalizada con un `;`.
+  * **Ejemplo: color: red;**
 
-Ejemplo: color: red;
-Bloque de declaraciones: Conjunto de declaraciones dentro de llaves {}, que se aplica al selector.
-
-Ejemplo:
-css
-Copiar código
+5. **Bloque de declaraciones**: Conjunto de declaraciones dentro de llaves `{}`, que 
+   se aplica al selector.
+  * **Ejemplo:**
+```css
 h1 {
     color: blue;
     font-size: 24px;
 }
-Ejemplo completo:
-css
-Copiar código
-p {
-    color: green;
-    font-size: 14px;
-    margin: 20px;
-}
+```
+
+---
