@@ -16,6 +16,7 @@
 - [Menu de navegación `<nav>` con `<ul>`, `<li>`, y `<a>`](#menu-de-navegación-nav-con-ul-li-y-a)
 - [Etiqueta `<div>` (División o contenedor):](#etiqueta-div-división-o-contenedor)
 - [Etiquetas semánticas en HTML5:](#etiquetas-semánticas-en-html5)
+- [Serie de preguntas para seleccionar etiquetas semánticas:](#serie-de-preguntas-para-seleccionar-etiquetas-semánticas)
 
 ---
 
@@ -383,6 +384,30 @@ estructurados.
 
 ---
 
+## Serie de preguntas para seleccionar etiquetas semánticas:
+
+### 1. ¿Es este contenido la cabecera o el título de una sección o del documento completo?
+ * Si **sí**, usa **`<header>`**.
+
+### 2. ¿Es este contenido un bloque independiente con sentido completo por sí mismo, como un artículo, una entrada de blog o una publicación de noticias?
+* Si **sí**, usa **`<article>`**.
+
+### 3. ¿Es este contenido una agrupación lógica de temas relacionados dentro de una página, como una sección de un informe o un capítulo de un libro?
+* Si **sí**, usa **`<section>`**.
+
+### 4. ¿Es este contenido un conjunto de enlaces de navegación?
+* Si **sí**, usa **`<nav>`**.
+
+### 5. ¿Es este contenido un bloque de información relacionado pero no esencial para el contenido principal, como una barra lateral, un bloque de anuncios o un widget?
+* Si **sí**, usa **`<aside>`**.
+
+### 6. ¿Es este contenido el pie de página de una sección o del documento completo, conteniendo información como derechos de autor, enlaces a términos de uso, o un contacto?
+* Si **sí**, usa **`<footer>`**.
+
+### 7. ¿Este contenido es la parte principal de la página, excluyendo encabezados, barras laterales y pies de página?
+* Si **sí**, usa **`<main>`**.
+
+---
 
 
 
