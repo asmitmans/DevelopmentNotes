@@ -6,6 +6,7 @@
 - [Formas de añadir CSS:](#formas-de-añadir-css)
 - [Sintaxis de CSS:](#sintaxis-de-css)
 - [Tipos de selectores en CSS:](#tipos-de-selectores-en-css)
+- [Jerarquía en CSS:](#jerarquía-en-css)
 
 ---
 
@@ -252,11 +253,54 @@ Efecto: Aplica color gris a todos los párrafos que son hermanos de un **`<h1>`*
 > **Nota:** En HTML, un elemento es considerado "hermano" de otro cuando ambos 
 > comparten el mismo **elemento padre**. Es decir, están al mismo nivel 
 > jerárquico dentro de la estructura del documento. Por ejemplo, en el siguiente
-> código, los elementos `<p>` y `<div>` son hermanos porque ambos están 
-> contenidos dentro del mismo `<section>`:
+> código, los elementos **`<p>`** y **`<div>`** son hermanos porque ambos están 
+> contenidos dentro del mismo **`<section>`**:
 >```html
 ><section>
 >    <p>Este es un párrafo.</p>
 >    <div>Este es un div.</div>
 ></section>
 >```
+
+---
+## Jerarquía en CSS:
+La jerarquía en CSS se refiere a las reglas que determinan qué estilos se aplican
+a un elemento cuando hay múltiples reglas potencialmente en conflicto. Las dos 
+reglas principales que gobiernan esta jerarquía son:
+
+### 1. Especificidad:
+* **Descripción**: La especificidad determina qué tan "específica" es una regla CSS.
+  Las reglas más específicas tienen prioridad sobre las menos específicas.
+* **Cálculo de especificidad**:
+  * Selectores **inline (`style="..."`)** tienen la mayor especificidad.
+  * Selectores de **ID (`#id`)** tienen mayor especificidad que selectores de clase 
+    **(`.clase`)**, pseudo-clases, o selectores de atributo.
+  * Selectores de **clase**, pseudo-clases, y selectores de atributo son más 
+    específicos que los selectores de elemento **(`p`, `div`)**.
+* **Ejemplo**:
+```css
+p { color: blue; }          /* Especificidad baja */
+.important { color: red; }  /* Especificidad media */
+#unique { color: green; }   /* Especificidad alta */
+```
+
+### 2. Orden de aparición (cascada):
+* **Descripción**: Si dos reglas tienen la misma especificidad, la última regla en el 
+  código tiene prioridad. Esto se refiere al concepto de la "cascada" en CSS.
+* **Ejemplo**:
+```css
+p { color: blue; }
+p { color: red; }  /* Este estilo se aplicará porque aparece después */
+```
+
+### Excepción: `!important`
+* **Descripción**: La declaración **`!important`** puede sobreescribir la jerarquía natural 
+  basada en especificidad y orden de aparición, forzando una regla a tener la 
+  máxima prioridad.
+* **Ejemplo**:
+```css
+p { color: blue !important; }
+#unique { color: green; }  /* El color azul se aplicará a pesar de la especificidad del ID */
+```
+
+---
