@@ -124,7 +124,7 @@ selector {
 
 **4. Declaración**: Es una combinación de una propiedad y su valor, separada por un 
    `:` y finalizada con un `;`.
-  * **Ejemplo: color: red;**
+  * **Ejemplo: `color: red;`**
 
 **5. Bloque de declaraciones**: Conjunto de declaraciones dentro de llaves `{}`, que 
    se aplica al selector.
