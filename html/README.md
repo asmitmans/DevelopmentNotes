@@ -25,6 +25,7 @@
 - [Etiqueta `<footer>` (Pie de página):](#etiqueta-footer-pie-de-página)
 - [Etiqueta `<main>` (Contenido principal):](#etiqueta-main-contenido-principal)
 - [Etiqueta `<figure>` y `<figcaption>` (Figura y leyenda):](#etiqueta-figure-y-figcaption-figura-y-leyenda)
+- [Hero Section](#hero-section)
 
 ---
 
@@ -537,6 +538,99 @@ Copiar código
 ```
 * **Dato extra**: **`<figure>`** se usa para agrupar contenido visual o ilustrativo, y 
   **`<figcaption>`** proporciona una leyenda o descripción para ese contenido.
+
+---
+
+## Hero Section
+La **Hero Section** es una sección prominente y de gran tamaño que se coloca en la 
+parte superior de una página web, especialmente en páginas de aterrizaje (landing
+pages). Es la primera cosa que los visitantes ven al llegar a la página, y su 
+objetivo es captar la atención del usuario, comunicar el valor principal de la 
+oferta, y guiar al usuario hacia la acción deseada, como registrarse o hacer clic
+en un enlace.
+
+### Características principales:
+* **Ubicación**: Situada en la parte superior de la página, ocupando un espacio 
+  significativo en la pantalla.
+* **Contenido**: Incluye un título destacado, subtítulo, una imagen o video llamativo,
+  y un llamado a la acción (CTA), como un botón o enlace.
+* **Diseño**: Estilo visualmente impactante, con una combinación de texto e imágenes 
+  para captar la atención del usuario rápidamente.
+* **Funcionalidad**: Dirigida a la conversión, orientando al usuario hacia la acción 
+  deseada.
+
+### Ejemplo:
+**HTML:**
+```html
+<section class="hero">
+    <div class="hero-content">
+        <h1>Bienvenido a Nuestro Producto</h1>
+        <p>Solución perfecta para tus necesidades</p>
+        <a href="#registro" class="cta-button">Regístrate Ahora</a>
+    </div>
+    <div class="hero-image">
+        <img src="imagen-hero.jpg" alt="Descripción del producto">
+    </div>
+</section>
+```
+
+**CSS:**
+```css
+/* Estilo para la Hero Section */
+.hero {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 50px;
+    background-color: #f5f5f5;
+    background-image: url('background-image.jpg');
+    background-size: cover;
+    background-position: center;
+    color: #333;
+}
+
+.hero-content {
+    max-width: 50%;
+}
+
+.hero h1 {
+    font-size: 48px;
+    margin-bottom: 20px;
+}
+
+.hero p {
+    font-size: 24px;
+    margin-bottom: 30px;
+}
+
+.cta-button {
+    display: inline-block;
+    padding: 15px 30px;
+    background-color: #007bff;
+    color: #fff;
+    text-decoration: none;
+    font-size: 18px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.cta-button:hover {
+    background-color: #0056b3;
+}
+
+.hero-image img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 10px;
+}
+```
+
+### Dato extra:
+* **Responsive Design**: Es crucial que la Hero Section sea responsive, es decir, 
+  que se adapte bien a diferentes tamaños de pantalla, especialmente en 
+  dispositivos móviles. Puedes lograr esto utilizando `@media queries` en el CSS.
+* **Optimización SEO**: Debe incluir texto relevante y bien estructurado, ya que es 
+  una de las primeras cosas que los motores de búsqueda leerán.
 
 ---
 
