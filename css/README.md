@@ -5,6 +5,7 @@
 - [Funcionalidad de CSS](#funcionalidad-de-css)
 - [Formas de añadir CSS:](#formas-de-añadir-css)
 - [Sintaxis de CSS:](#sintaxis-de-css)
+- [Tipos de selectores en CSS:](#tipos-de-selectores-en-css)
 
 ---
 
@@ -137,3 +138,125 @@ h1 {
 ```
 
 ---
+## Tipos de selectores en CSS:
+Los selectores en CSS permiten apuntar a elementos específicos en el documento 
+HTML para aplicarles estilos. Aquí están los tipos principales:
+
+### 1. Selector de Elemento (Tag Selector):
+* **Descripción**: Aplica estilos a todos los elementos de un tipo específico.
+* **Sintaxis: `elemento`**
+* **Ejemplo**:
+```css
+p {
+    color: blue;
+}
+```
+Efecto: Aplica color azul a todos los párrafos **`<p>`**.
+
+### 2. Selector de Clase (Class Selector):
+* **Descripción**: Aplica estilos a todos los elementos que comparten una clase 
+  específica.
+* **Sintaxis: `.nombre-clase`**
+* **Ejemplo**:
+```css
+.destacado {
+    font-weight: bold;
+}
+```
+Efecto: Aplica negrita a todos los elementos con la clase destacado.
+
+### 3. Selector de ID (ID Selector):
+* **Descripción**: Aplica estilos a un único elemento que tiene un ID específico.
+* **Sintaxis: `#id`**
+* **Ejemplo**:
+```css
+#titulo-principal {
+    text-align: center;
+}
+```
+Efecto: Centra el texto del elemento con el ID titulo-principal.
+
+### 4. Selector Universal (Universal Selector):
+* **Descripción**: Aplica estilos a todos los elementos en la página.
+* **Sintaxis: `*`**
+* **Ejemplo**:
+```css
+* {
+    margin: 0;
+    padding: 0;
+}
+```
+Efecto: Elimina el margen y el relleno de todos los elementos.
+
+### 5. Selector de Atributo (Attribute Selector):
+* **Descripción**: Aplica estilos a elementos que tienen un atributo específico o 
+  cuyo atributo tiene un valor específico.
+* **Sintaxis: `[atributo]` o `[atributo="valor"]`**
+* **Ejemplo**:
+```css
+input[type="text"] {
+    border: 1px solid #ccc;
+}
+```
+Efecto: Aplica un borde a todos los campos de entrada de tipo texto.
+
+### 6. Selectores de Descendientes (Descendant Selector):
+* **Descripción**: Aplica estilos a los elementos que son descendientes de un 
+  elemento específico.
+* **Sintaxis: `elemento1 elemento2`**
+* **Ejemplo:**
+```css
+div p {
+    color: red;
+}
+```
+Efecto: Aplica color rojo a todos los párrafos **`<p>`** que están dentro de un **`<div>`**.
+
+### 7. Selector de Hijo Directo (Child Selector):
+* **Descripción**: Aplica estilos a elementos que son hijos directos de un elemento 
+  específico.
+* **Sintaxis: `elemento1 > elemento2`**
+* **Ejemplo**:
+```css
+ul > li {
+    list-style-type: none;
+}
+```
+Efecto: Elimina el estilo de lista solo de los elementos **`<li>`** que son hijos 
+directos de un **`<ul>`**.
+
+### 8. Selector de Hermano Adyacente (Adjacent Sibling Selector):
+* **Descripción**: Aplica estilos a un elemento que es inmediatamente precedido por 
+  un elemento específico.
+* **Sintaxis: `elemento1 + elemento2`**
+* **Ejemplo**:
+```css
+h1 + p {
+    margin-top: 0;
+}
+```
+Efecto: Elimina el margen superior del párrafo que sigue inmediatamente a un **`<h1>`**.
+
+### 9. Selector de Hermano General (General Sibling Selector):
+* **Descripción**: Aplica estilos a todos los elementos que son hermanos de un 
+  elemento específico.
+* **Sintaxis: `elemento1 ~ elemento2`**
+* **Ejemplo:**
+```css
+h1 ~ p {
+    color: gray;
+}
+```
+Efecto: Aplica color gris a todos los párrafos que son hermanos de un <h1>.
+
+> **Nota:** En HTML, un elemento es considerado "hermano" de otro cuando ambos 
+> comparten el mismo **elemento padre**. Es decir, están al mismo nivel 
+> jerárquico dentro de la estructura del documento. Por ejemplo, en el siguiente
+> código, los elementos `<p>` y `<div>` son hermanos porque ambos están 
+> contenidos dentro del mismo `<section>`:
+```html
+<section>
+    <p>Este es un párrafo.</p>
+    <div>Este es un div.</div>
+</section>
+```
