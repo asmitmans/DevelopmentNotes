@@ -15,6 +15,7 @@
 - [Imagen con enlace (`<a>` con `<img>`)](#imagen-con-enlace-a-con-img)
 - [Menu de navegación `<nav>` con `<ul>`, `<li>`, y `<a>`](#menu-de-navegación-nav-con-ul-li-y-a)
 - [Etiqueta `<div>` (División o contenedor):](#etiqueta-div-división-o-contenedor)
+- [Etiquetas semánticas en HTML5:](#etiquetas-semánticas-en-html5)
 
 ---
 
@@ -328,6 +329,62 @@ Esto es una práctica común para estructurar menús de navegación en sitios we
   especialmente en combinación con CSS y JavaScript.
 
 ---
+## Etiquetas semánticas en HTML5:
+Las etiquetas semánticas en HTML5 son aquellas que describen claramente su 
+propósito y el tipo de contenido que contienen, mejorando la accesibilidad, SEO, 
+y la comprensión del código tanto para los desarrolladores como para los 
+navegadores.
+
+### Principales etiquetas semánticas:
+- **`<header>`**: Define un encabezado para un documento o sección.
+- **`<nav>`**: Indica un conjunto de enlaces de navegación.
+- **`<section>`**: Representa una sección genérica de un documento, generalmente con un 
+  encabezado.
+- **`<article>`**: Denota un contenido independiente y autocontenido, como un artículo 
+  de blog o una noticia.
+- **`<aside>`**: Contiene contenido relacionado indirectamente con el contenido principal, 
+  como una barra lateral o un bloque de anuncios.
+- **`<footer>`**: Define el pie de página para un documento o sección.
+- **`<main>`**: Representa el contenido principal del documento, excluyendo cabeceras, 
+  barras laterales, y pie de página.
+- **`<figure>`** y **`<figcaption>`**: Usado para agrupar contenido como imágenes, gráficos, 
+  o tablas con una leyenda.
+
+### Ventajas de usar etiquetas semánticas:
+- **Accesibilidad**: Mejora la accesibilidad, permitiendo que los lectores de pantalla 
+  interpreten mejor la estructura del documento.
+- **SEO**: Los motores de búsqueda pueden entender mejor la estructura y relevancia 
+  del contenido, mejorando el posicionamiento.
+- **Mantenimiento**: Facilita la lectura y mantenimiento del código al proporcionar 
+  una estructura más clara y significativa.
+
+### Ejemplo:
+```html
+<article>
+    <header>
+        <h1>Título del Artículo</h1>
+        <p>Fecha: 15 de agosto de 2024</p>
+    </header>
+    <section>
+        <p>Contenido principal del artículo...</p>
+    </section>
+    <footer>
+        <p>Autor: John Doe</p>
+    </footer>
+</article>
+```
+
+Las etiquetas semánticas son una parte esencial de las mejores prácticas en HTML5, 
+contribuyendo a la creación de documentos web más claros, accesibles y bien 
+estructurados.
+
+---
+
+
+
+
+
+
 
 
 
