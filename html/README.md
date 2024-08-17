@@ -379,7 +379,7 @@ contribuyendo a la creación de documentos web más claros, accesibles y bien
 estructurados.
 
 ### Diagrama
-<img src="./semantic_tags.svg">
+<img src="./semantic_tags.svg" width="400" height="500">
 
 ---
 
