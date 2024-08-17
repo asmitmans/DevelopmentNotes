@@ -247,16 +247,16 @@ h1 ~ p {
     color: gray;
 }
 ```
-Efecto: Aplica color gris a todos los párrafos que son hermanos de un <h1>.
+Efecto: Aplica color gris a todos los párrafos que son hermanos de un **`<h1>`**.
 
 > **Nota:** En HTML, un elemento es considerado "hermano" de otro cuando ambos 
 > comparten el mismo **elemento padre**. Es decir, están al mismo nivel 
 > jerárquico dentro de la estructura del documento. Por ejemplo, en el siguiente
 > código, los elementos `<p>` y `<div>` son hermanos porque ambos están 
 > contenidos dentro del mismo `<section>`:
-```html
-<section>
-    <p>Este es un párrafo.</p>
-    <div>Este es un div.</div>
-</section>
-```
+>```html
+><section>
+>    <p>Este es un párrafo.</p>
+>    <div>Este es un div.</div>
+></section>
+>```
