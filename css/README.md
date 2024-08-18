@@ -830,7 +830,7 @@ estructuran y se comportan los elementos en una página web. Cada elemento en CS
 es una "caja" que contiene el contenido, el relleno, el borde y el margen.
 
 ### Diagrama
-<img src="./box-model.svg" alt="Modelo de Caja CSS" width="300" height="300">
+<img src="./box-model.svg" alt="Modelo de Caja CSS" width="300" height="200">
 
 ### Componentes del Modelo de Caja:
 #### 1. Contenido (Content):

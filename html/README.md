@@ -26,6 +26,7 @@
 - [Etiqueta `<main>` (Contenido principal):](#etiqueta-main-contenido-principal)
 - [Etiqueta `<figure>` y `<figcaption>` (Figura y leyenda):](#etiqueta-figure-y-figcaption-figura-y-leyenda)
 - [Hero Section](#hero-section)
+- [Integración de Google Fonts en una Página Web](#integración-de-google-fonts-en-una-página-web)
 
 ---
 
@@ -633,7 +634,81 @@ en un enlace.
   una de las primeras cosas que los motores de búsqueda leerán.
 
 ---
+## Integración de Google Fonts en una Página Web
+Google Fonts es un servicio gratuito que proporciona una amplia variedad de 
+fuentes tipográficas que se pueden integrar fácilmente en una página web. A 
+continuación te explico cómo integrar Google Fonts en tu proyecto web.
 
+### Pasos para la Integración:
+#### 1. Seleccionar una Fuente en Google Fonts:
+  * Visita [Google Fonts](https://fonts.google.com/).
+  * Explora las fuentes disponibles y selecciona la que deseas utilizar.
+  * [Get font]
+  * Una vez seleccionada, puedes personalizar los estilos (regular, bold, italic, 
+    etc.) y los caracteres que necesitas.
+
+#### 2. Obtener el Código de Integración:
+  * [<> Get embed code]
+  * Después de seleccionar la fuente y los estilos, Google Fonts generará un enlace 
+  * **`<link>`** para incluir en el **`<head>`** de tu documento HTML.
+  * Existe la opción de añadirla al CSS o al HTML. Google deja disponible 
+    códigos para ambas opciones. **`<link>`** o **`@import`**
+  * **Ejemplo**:
+```html
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Matemasie&display=swap" rel="stylesheet">
+```
+  * Este enlace carga la fuente directamente desde los servidores de Google.
+  * **Ejemplo de la opción de incluirla en el CSS**:
+```css
+@import url('https://fonts.googleapis.com/css2?family=Matemasie&display=swap');
+```
+
+#### 3. Incluir el Enlace en el HTML:
+  * Añade el enlace generado dentro de la etiqueta **`<head>`** de tu página HTML.
+  * **Ejemplo**:
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mi Página Web</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Matemasie&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Contenido de la página -->
+</body>
+</html>
+```
+
+#### 4. Aplicar la Fuente en el CSS:
+  * Una vez incluida la fuente en tu HTML, puedes aplicarla a cualquier elemento 
+    de la página utilizando la propiedad **`font-family`** en tu archivo CSS.
+  * **Ejemplo**:
+```css
+.matemasie-regular {
+  font-family: "Matemasie", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+```
+
+### Opciones Adicionales:
+* **Optimización de Carga**:
+  * La opción **`display=swap`** en el enlace permite mostrar texto en una fuente 
+    genérica mientras la fuente personalizada se descarga, lo que mejora la 
+    experiencia del usuario.
+* **Fuentes Múltiples**:
+  * Puedes agregar múltiples fuentes seleccionadas al mismo tiempo, simplemente 
+    añadiéndolas al mismo enlace en Google Fonts.
+  
+---
+
+  
 
 
 
