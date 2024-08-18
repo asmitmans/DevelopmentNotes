@@ -15,6 +15,7 @@
 - [Modelos de Caja en CSS:](#modelos-de-caja-en-css)
 - [Restablecimiento de Propiedades por Defecto en CSS:](#restablecimiento-de-propiedades-por-defecto-en-css)
 - [Propiedad `display` en CSS:](#propiedad-display-en-css)
+- [CSS Web Safe Fonts:](#css-web-safe-fonts)
 
 ---
 
@@ -1046,11 +1047,117 @@ img {
 ```
 
 ---
+## CSS Web Safe Fonts:
+Las **Web Safe Fonts** son fuentes que se consideran seguras para su uso en la web 
+porque están preinstaladas en la mayoría de los sistemas operativos y dispositivos. 
+Esto garantiza que la mayoría de los usuarios verán el texto en la fuente prevista 
+por el diseñador, en lugar de una fuente de reemplazo.
 
+### Características de Web Safe Fonts:
+* **Compatibilidad**: Las Web Safe Fonts están disponibles en la mayoría de los 
+  sistemas operativos, incluidos Windows, macOS, Linux, iOS, y Android.
+* **Consistencia**: Al utilizar Web Safe Fonts, se asegura que el diseño tipográfico 
+  se vea casi igual en diferentes dispositivos y navegadores.
+* **Rendimiento**: No se requiere descargar fuentes adicionales, lo que mejora el 
+  tiempo de carga de la página.
 
+### Principales Web Safe Fonts:
+#### 1. Arial
+* **Descripción**: Fuente sans-serif ampliamente utilizada y disponible en casi todos 
+  los sistemas.
+* **Ejemplo CSS**:
+```css
+body {
+    font-family: "Arial", sans-serif;
+}
+```
 
+#### 2. Verdana
+* **Descripción**: Fuente sans-serif diseñada para ser legible incluso en tamaños 
+  pequeños.
+* **Ejemplo CSS**:
+```css
+p {
+    font-family: "Verdana", sans-serif;
+}
+```
 
+#### 3. Helvetica
+* **Descripción**: Una de las fuentes sans-serif más conocidas y utilizadas en el 
+  diseño gráfico.
+* **Ejemplo CSS**:
+```css
+h1 {
+    font-family: "Helvetica", sans-serif;
+}
+```
 
+#### 4. Times New Roman
+* **Descripción**: Fuente serif clásica, comúnmente utilizada en documentos formales 
+  y publicaciones impresas.
+* **Ejemplo CSS**:
+```css
+h2 {
+    font-family: "Times New Roman", serif;
+}
+```
+
+#### 5. Georgia
+* **Descripción**: Fuente serif diseñada para ser legible en pantalla, con un toque 
+  más moderno que Times New Roman.
+* **Ejemplo CSS**:
+```css
+blockquote {
+    font-family: "Georgia", serif;
+}
+```
+
+#### 6. Courier New
+* **Descripción**: Fuente monoespaciada, popular para mostrar código o texto en 
+  formato teletipo.
+* **Ejemplo CSS**:
+```css
+pre {
+    font-family: "Courier New", monospace;
+}
+```
+
+#### 7. Trebuchet MS
+* **Descripción**: Fuente sans-serif moderna y legible, diseñada específicamente para 
+  la web.
+* **Ejemplo CSS**:
+```css
+nav {
+    font-family: "Trebuchet MS", sans-serif;
+}
+```
+
+#### 8. Comic Sans MS
+* **Descripción**: Fuente sans-serif con un estilo informal y juguetón, utilizada 
+  ocasionalmente en diseños más casuales.
+* **Ejemplo CSS**:
+```css
+.fun-text {
+    font-family: "Comic Sans MS", cursive, sans-serif;
+}
+```
+
+### Uso en CSS:
+Al utilizar Web Safe Fonts en CSS, es recomendable incluir una familia genérica 
+como respaldo para garantizar que, si por alguna razón la fuente específica no 
+está disponible, el navegador seleccione una fuente similar.
+
+### Ejemplo General:
+```css
+body {
+    font-family: "Helvetica", "Arial", sans-serif;
+}
+```
+En este ejemplo, si "Helvetica" no está disponible, se usará "Arial". Si ninguna 
+de estas fuentes está disponible, el navegador utilizará una fuente sans-serif 
+genérica.
+
+---
 
 
 
