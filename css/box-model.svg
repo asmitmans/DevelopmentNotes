@@ -1,0 +1,17 @@
+<svg width="300" height="300" xmlns="http://www.w3.org/2000/svg">
+    <!-- Caja exterior para el margen -->
+    <rect x="10" y="10" width="280" height="280" fill="none" stroke="#ccc" stroke-width="10"/>
+    <text x="150" y="30" font-family="Arial" font-size="14" text-anchor="middle" fill="#333">Margin</text>
+    
+    <!-- Caja para el borde -->
+    <rect x="30" y="30" width="240" height="240" fill="none" stroke="#000" stroke-width="10"/>
+    <text x="150" y="55" font-family="Arial" font-size="14" text-anchor="middle" fill="#333">Border</text>
+    
+    <!-- Caja para el relleno -->
+    <rect x="50" y="50" width="200" height="200" fill="none" stroke="#00f" stroke-width="10"/>
+    <text x="150" y="80" font-family="Arial" font-size="14" text-anchor="middle" fill="#333">Padding</text>
+    
+    <!-- Caja de contenido -->
+    <rect x="70" y="70" width="160" height="160" fill="#f5f5f5" stroke="#000" stroke-width="1"/>
+    <text x="150" y="150" font-family="Arial" font-size="14" text-anchor="middle" fill="#333">Content</text>
+</svg>

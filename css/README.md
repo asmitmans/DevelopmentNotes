@@ -11,6 +11,8 @@
 - [Texto en CSS:](#texto-en-css)
 - [Fondo en CSS:](#fondo-en-css)
 - [Unidades Relativas en CSS:](#unidades-relativas-en-css)
+- [Modelos de Caja en CSS:](#modelos-de-caja-en-css)
+- [Restablecimiento de Propiedades por Defecto en CSS:](#restablecimiento-de-propiedades-por-defecto-en-css)
 
 ---
 
@@ -734,6 +736,151 @@ veces el 1% del ancho o alto del viewport, dependiendo de cuál sea más pequeñ
 más grande, respectivamente.
 
 ---
+## Modelos de Caja en CSS:
+El modelo de caja es un concepto fundamental en CSS que describe cómo se 
+estructuran y se comportan los elementos en una página web. Cada elemento en CSS 
+es una "caja" que contiene el contenido, el relleno, el borde y el margen.
+
+### Diagrama
+<img src="./box-model.svg" alt="Modelo de Caja CSS" width="300" height="300">
+
+### Componentes del Modelo de Caja:
+#### 1. Contenido (Content):
+* **Descripción**: Es el área donde se muestra el contenido del elemento, como texto, 
+  imágenes, etc.
+* **Propiedades relevantes: `width`, `height`.**
+* **Ejemplo**:
+```css
+div {
+    width: 200px;
+    height: 100px;
+}
+```
+
+#### 2. Relleno (Padding):
+* **Descripción**: Espacio entre el contenido y el borde del elemento. El relleno 
+  aumenta el tamaño total de la caja.
+* **Propiedades relevantes: `padding`, `padding-top`, `padding-right`, `padding-bottom`,** 
+* **`padding-left`**.
+* **Ejemplo**:
+```css
+div {
+    padding: 20px;
+}
+```
+
+#### 3. Borde (Border):
+* **Descripción**: Línea que rodea el contenido y el relleno. Puede tener grosor, 
+  estilo y color.
+* **Propiedades relevantes: `border`, `border-width`, `border-style`, `border-color`.**
+* **Ejemplo**:
+```css
+div {
+    border: 2px solid black;
+}
+```
+
+#### 4. Margen (Margin):
+* **Descripción**: Espacio fuera del borde, separa el elemento de otros elementos 
+  adyacentes.
+* **Propiedades relevantes: `margin`, `margin-top`, `margin-right`, `margin-bottom`,**
+* **`margin-left.`**
+* **Ejemplo**:
+```css
+div {
+    margin: 15px;
+}
+```
+
+### Modelo de Caja Estándar (Content-Box):
+* **Descripción**: En el modelo de caja estándar, las propiedades **`width`** y **`height`** 
+  solo aplican al área del contenido. El relleno y el borde se suman al tamaño 
+  total de la caja.
+* **Ejemplo**:
+```css
+div {
+    width: 200px;
+    padding: 20px;
+    border: 5px solid black;
+}
+```
+* **Tamaño total**:
+  * **Ancho total: `200px (contenido) + 20px (relleno) x 2 + 5px (borde) x 2 = 250px`**
+  * **Alto total: `100px (contenido) + 20px (relleno) x 2 + 5px (borde) x 2 = 150px`**
+
+### Modelo de Caja Alternativo (Border-Box):
+* **Descripción**: En el modelo **`border-box`**, las propiedades **`width`** y **`height`**
+  incluyen el contenido, el relleno y el borde, lo que simplifica el cálculo del 
+  tamaño total de la caja.
+* **Ejemplo**:
+```css
+div {
+    box-sizing: border-box;
+    width: 200px;
+    padding: 20px;
+    border: 5px solid black;
+}
+```
+* **Tamaño total**:
+  * **Ancho total** = 200px
+  * **Alto total** = 100px
+
+### Ejemplo Visual Completo:
+```css
+div {
+    width: 200px;
+    height: 100px;
+    padding: 20px;
+    border: 5px solid black;
+    margin: 15px;
+    box-sizing: border-box; /* Usa border-box para simplificar el tamaño total */
+}
+```
+
+---
+## Restablecimiento de Propiedades por Defecto en CSS:
+El restablecimiento de propiedades por defecto en CSS se refiere a la práctica 
+de eliminar o normalizar los márgenes, rellenos, y otros estilos predeterminados 
+que los navegadores aplican a los elementos HTML. Esto se suele hacer para 
+asegurar un comportamiento consistente en todos los navegadores, ya que cada uno 
+tiene su propia configuración por defecto.
+
+### Ejemplo Común de Restablecimiento:
+```css
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+```
+* **`*`**: Es el selector universal, que aplica las reglas a todos los elementos de 
+  la página.
+* **`margin: 0`; y `padding: 0;`**: Elimina todos los márgenes y rellenos predeterminados.
+* **`box-sizing: border-box;`**: Cambia el modelo de caja para incluir el padding y el 
+  borde dentro del ancho y alto declarados.
+
+### Uso de `* { margin: 0; padding: 0; }:`
+Es una práctica que puede ser útil en ciertos contextos, pero no es la más óptima 
+para todos los casos debido a posibles problemas de rendimiento.
+### Práctica Profesional Recomendada: 
+Utilizar **`Normalize.css`** o un archivo de CSS Reset adecuado para manejar las 
+inconsistencias entre navegadores es una mejor práctica, más alineada con las 
+necesidades de desarrollo moderno.
+
+---
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
