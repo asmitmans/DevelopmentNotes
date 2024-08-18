@@ -10,9 +10,11 @@
 - [Color en CSS:](#color-en-css)
 - [Texto en CSS:](#texto-en-css)
 - [Fondo en CSS:](#fondo-en-css)
+- [Unidades de Medida Absoluta en CSS:](#unidades-de-medida-absoluta-en-css)
 - [Unidades Relativas en CSS:](#unidades-relativas-en-css)
 - [Modelos de Caja en CSS:](#modelos-de-caja-en-css)
 - [Restablecimiento de Propiedades por Defecto en CSS:](#restablecimiento-de-propiedades-por-defecto-en-css)
+- [Propiedad `display` en CSS:](#propiedad-display-en-css)
 
 ---
 
@@ -663,6 +665,91 @@ div {
 ```
 
 ---
+## Unidades de Medida Absoluta en CSS:
+Las unidades de medida absolutas en CSS se refieren a unidades que tienen un 
+tamaño fijo, independiente del entorno de visualización, como el dispositivo o 
+la pantalla. Estas unidades son especialmente útiles cuando se necesita un 
+control preciso y consistente del tamaño, independientemente de las 
+configuraciones del usuario o del dispositivo.
+
+### Principales Unidades de Medida Absoluta:
+#### 1. `px` (píxeles):
+* **Descripción**: Un píxel es la unidad más básica de medida en pantallas. En la 
+  mayoría de los casos, 1px equivale a un píxel físico en la pantalla.
+* **Uso común**: Ancho de bordes, tamaño de fuentes, márgenes y rellenos.
+* **Ejemplo**:
+```css
+p {
+    font-size: 16px;
+}
+```
+
+#### 2. `cm` (centímetros):
+* **Descripción**: Un centímetro es una unidad de medida basada en el sistema métrico.
+* **Uso común**: Más utilizada en impresión o en situaciones donde se necesita medir 
+  en términos físicos.
+* **Ejemplo**:
+```css
+div {
+    width: 10cm;
+}
+```
+
+#### 3. `mm` (milímetros):
+* **Descripción**: Un milímetro es 1/10 de un centímetro. Como los centímetros, los 
+  milímetros se utilizan principalmente para medios impresos.
+* **Uso común**: Precisión en impresiones o diseños específicos.
+* **Ejemplo**:
+```css
+div {
+    width: 50mm;
+}
+```
+
+#### 4. `in` (pulgadas):
+* **Descripción**: Una pulgada es equivalente a 2.54 centímetros. Es otra unidad de 
+  medida basada en el sistema imperial.
+* **Uso común**: Principalmente en impresión, donde las dimensiones físicas son 
+  importantes.
+* **Ejemplo**:
+```css
+div {
+    width: 2in;
+}
+```
+
+#### 5. `pt` (puntos):
+* **Descripción**: Un punto es igual a 1/72 de una pulgada. Esta unidad se usa 
+  comúnmente en tipografía.
+* **Uso común**: Principalmente en la definición del tamaño de fuentes para impresión.
+* **Ejemplo**:
+```css
+p {
+    font-size: 12pt;
+}
+```
+
+#### 6. `pc` (picas):
+* **Descripción**: Una pica equivale a 12 puntos, o 1/6 de pulgada. Es otra unidad 
+  tipográfica.
+* **Uso común**: Tipografía en diseño gráfico y editorial.
+* **Ejemplo**:
+```css
+div {
+    width: 3pc;
+}
+```
+
+### Comparación y Uso:
+* **Pantallas vs. Impresión**: Las unidades como **`px`** se utilizan principalmente en 
+  pantallas, mientras que **`cm`, `mm`, `in`, `pt`**, y **`pc`** son más comunes en 
+  medios impresos donde se requiere una medida física exacta.
+* **Consistencia**: Las unidades absolutas aseguran que el tamaño se mantenga 
+  constante sin importar el dispositivo o la configuración del usuario, lo que 
+  puede ser útil en ciertos contextos, aunque a menudo es preferible utilizar 
+  unidades relativas para lograr un diseño responsivo.
+
+---
 ## Unidades Relativas en CSS:
 Las unidades relativas en CSS son aquellas que se definen en relación con otra 
 medida, ya sea el tamaño del contenedor, la raíz del documento, o la 
@@ -868,18 +955,97 @@ inconsistencias entre navegadores es una mejor práctica, más alineada con las
 necesidades de desarrollo moderno.
 
 ---
+## Propiedad `display` en CSS:
+La propiedad `display` en CSS es una de las más fundamentales, ya que controla cómo 
+se muestran y organizan los elementos en la página web. Define el modelo de caja 
+utilizado por un elemento y cómo interactúa con otros elementos a su alrededor.
 
+### Valores Comunes de `display`:
+#### 1. `display: block;`:
+* **Descripción**: El elemento se comporta como un bloque, ocupando todo el ancho 
+  disponible de su contenedor. Comienza en una nueva línea y otros elementos 
+  también comienzan en nuevas líneas.
+* **Ejemplo**:
+```css
+div {
+    display: block;
+}
+```
+* **Aplicación típica**: Elementos como **`<div>`, `<p>`, `<h1>`**.
 
+#### 2. `display: inline;`:
+* **Descripción**: El elemento se comporta como un contenido en línea, ocupando solo 
+  el espacio necesario y permitiendo que otros elementos se sitúen a su lado en 
+  la misma línea.
+* **Ejemplo**:
+```css
+span {
+    display: inline;
+}
+```
+* **Aplicación típica**: Elementos como **`<span>`, `<a>`, `<strong>`**.
 
+#### 3. `display: inline-block;`:
+* **Descripción**: Combina las características de **`inline`** y **`block`**. El elemento se 
+  comporta como un contenido en línea, pero se puede dar dimensiones (ancho, alto) 
+  como un bloque.
+* **Ejemplo**:
+```css
+img {
+    display: inline-block;
+}
+```
+* **Aplicación típica**: Botones, imágenes, menús horizontales.
 
+#### 4.`display: none;`:
+* **Descripción**: El elemento no se muestra en la página y no ocupa espacio en el 
+  layout.
+* **Ejemplo**:
+```css
+.oculto {
+    display: none;
+}
+```
+* **Aplicación típica**: Ocultar temporalmente contenido o elementos interactivos.
 
+#### 5. `display: flex;`:
+* **Descripción**: Convierte el contenedor en un contenedor flexible (flexbox), lo 
+  que facilita la alineación y distribución de los elementos hijos en direcciones 
+  horizontal o vertical.
+* **Ejemplo**:
+```css
+.contenedor {
+    display: flex;
+}
+```
+* **Aplicación típica**: Layouts modernos y dinámicos que requieren alineación y 
+  distribución sofisticadas.
 
+#### 6. `display: grid;`:
+* **Descripción**: Convierte el contenedor en un contenedor de cuadrícula (grid), 
+  permitiendo la alineación y distribución de los elementos hijos en filas y 
+  columnas.
+* **Ejemplo**:
+```css
+.contenedor {
+    display: grid;
+}
+```
+* **Aplicación típica**: Layouts complejos que requieren control preciso sobre filas 
+  y columnas.
 
+#### 4. `display: inline-flex;` y `display: inline-grid;`:
+* **Descripción**: Versiones en línea de flex y grid, permitiendo que el contenedor 
+  ocupe solo el espacio necesario mientras mantiene las propiedades de flexbox o 
+  grid.
+* **Ejemplo**:
+```css
+.item {
+    display: inline-flex;
+}
+```
 
-
-
-
-
+---
 
 
 
