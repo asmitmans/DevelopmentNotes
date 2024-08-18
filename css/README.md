@@ -9,6 +9,7 @@
 - [Jerarquía en CSS:](#jerarquía-en-css)
 - [Color en CSS:](#color-en-css)
 - [Texto en CSS:](#texto-en-css)
+- [Fondo en CSS:](#fondo-en-css)
 
 ---
 
@@ -540,3 +541,126 @@ p {
     line-height: 1.5;
 }
 ```
+
+## Fondo en CSS:
+CSS proporciona una serie de propiedades para controlar el fondo de los elementos 
+en una página web. Estas propiedades permiten definir colores de fondo, imágenes, 
+y cómo estos se comportan en relación con el contenido del elemento.
+
+### Propiedades principales:
+#### 1. `background-color`:
+* **Descripción**: Define el color de fondo de un elemento.
+* **Ejemplo**:
+```css
+body {
+    background-color: #f0f0f0; /* Gris claro */
+}
+```
+
+#### 2. `background-image`:
+* **Descripción**: Establece una imagen como fondo de un elemento.
+* **Ejemplo**:
+```css
+div {
+    background-image: url('imagen.jpg');
+}
+```
+* **Dato extra**: Se puede usar con imágenes repetitivas o como fondo decorativo.
+
+#### 3. `background-repeat`:
+* **Descripción**: Controla cómo se repite la imagen de fondo.
+* **Valores comunes: `repeat`, `no-repeat`, `repeat-x`, `repeat-y`.**
+* **Ejemplo**:
+```css
+div {
+    background-image: url('imagen.jpg');
+    background-repeat: no-repeat;
+}
+```
+
+#### 4. `background-position`:
+* **Descripción**: Define la posición inicial de la imagen de fondo.
+* **Valores comunes: `top`, `bottom`, `left`, `right`, `center`**.
+* **Ejemplo**:
+```css
+div {
+    background-image: url('imagen.jpg');
+    background-position: center center;
+}
+```
+
+#### 5. `background-size`:
+* **Descripción**: Controla el tamaño de la imagen de fondo.
+* **Valores comunes: `auto`, `cover`, `contain`.**
+* **Ejemplo**:
+```css
+div {
+    background-image: url('imagen.jpg');
+    background-size: cover;
+}
+```
+
+#### 6. `background-attachment`:
+* **Descripción**: Define si la imagen de fondo se desplaza con el contenido o 
+  permanece fija.
+* **Valores comunes: `scroll`, `fixed`, `local`.**
+* **Ejemplo**:
+```css
+div {
+    background-image: url('imagen.jpg');
+    background-attachment: fixed;
+}
+```
+
+#### 7. `background-clip`:
+* **Descripción**: Especifica el área del fondo en la que se aplica el color de
+  fondo o la imagen.
+* **Valores comunes: `border-box`, `padding-box`, `content-box`.**
+* **Ejemplo**:
+```css
+div {
+    background-color: lightblue;
+    background-clip: padding-box;
+}
+```
+
+#### 8. `background-origin:`
+* **Descripción**: Establece el punto de referencia para la posición del fondo.
+* **Valores comunes: `padding-box`, `border-box`, `content-box`.**
+* **Ejemplo**:
+```css
+div {
+    background-image: url('imagen.jpg');
+    background-origin: content-box;
+}
+```
+
+### Propiedad abreviada background:
+* **Descripción**: Permite definir todas las propiedades del fondo en una sola línea.
+* **Ejemplo**:
+```css
+div {
+    background: url('imagen.jpg') no-repeat center center / cover fixed;
+}
+```
+
+### Ejemplo completo:
+```css
+body {
+    background-color: #f0f0f0; /* Fondo gris claro */
+}
+
+div {
+    background-image: url('imagen.jpg');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    background-attachment: fixed;
+}
+```
+
+---
+
+
+
+
