@@ -10,6 +10,7 @@
 - [Color en CSS:](#color-en-css)
 - [Texto en CSS:](#texto-en-css)
 - [Fondo en CSS:](#fondo-en-css)
+- [Unidades Relativas en CSS:](#unidades-relativas-en-css)
 
 ---
 
@@ -660,6 +661,82 @@ div {
 ```
 
 ---
+## Unidades Relativas en CSS:
+Las unidades relativas en CSS son aquellas que se definen en relación con otra 
+medida, ya sea el tamaño del contenedor, la raíz del documento, o la 
+configuración del navegador. Estas unidades permiten crear diseños más flexibles 
+y adaptables.
+
+### Principales Unidades Relativas:
+#### 1. `em`:
+* **Descripción**: Relativa al tamaño de la fuente del elemento padre.
+* **Ejemplo**:
+```css
+p {
+    font-size: 2em; /* 2 veces el tamaño de la fuente del padre */
+}
+```
+
+#### 2. `rem`
+* **Descripción**: Relativa al tamaño de la fuente de la raíz del documento 
+  (normalmente **`<html>`**).
+* **Ejemplo**:
+```css
+p {
+    font-size: 1.5rem; /* 1.5 veces el tamaño de la fuente raíz */
+}
+```
+
+#### 3. `%` (Porcentaje)
+* **Descripción**: Relativa al tamaño del contenedor padre, comúnmente utilizada para 
+  el ancho y alto.
+* **Ejemplo**:
+```css
+div {
+    width: 50%; /* 50% del ancho del contenedor padre */
+}
+```
+> **Nota:** En la mayoría de los casos, cuando utilizas un porcentaje en CSS, 
+> estás especificando un tamaño relativo al contenedor padre del elemento, lo 
+> que hace que el diseño sea flexible y se adapte a diferentes tamaños de 
+> contenedores.
+
+#### 4. vh (Viewport Height):
+* **Descripción**: Relativa al 1% de la altura de la ventana gráfica (viewport).
+* **Ejemplo**:
+```css
+div {
+    height: 50vh; /* 50% de la altura de la ventana gráfica */
+}
+```
+
+#### 5. vw (Viewport Width):
+* **Descripción**: Relativa al 1% del ancho de la ventana gráfica (viewport).
+* **Ejemplo**:
+```css
+div {
+    width: 80vw; /* 80% del ancho de la ventana gráfica */
+}
+```
+
+#### 6. vmin y vmax:
+* **Descripción**:
+* **`vmin`**: Relativa al 1% de la dimensión más pequeña del viewport (altura o ancho).
+* **`vmax`**: Relativa al 1% de la dimensión más grande del viewport.
+* **Ejemplo**:
+```css
+div {
+    width: 50vmin; /* 50% de la dimensión más pequeña del viewport */
+}
+```
+**`vmin`** y **`vmax`** permiten establecer tamaños relativos en función de cuántas 
+veces el 1% del ancho o alto del viewport, dependiendo de cuál sea más pequeño o 
+más grande, respectivamente.
+
+---
+
+
+
 
 
 
