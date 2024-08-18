@@ -27,6 +27,8 @@
 - [Etiqueta `<figure>` y `<figcaption>` (Figura y leyenda):](#etiqueta-figure-y-figcaption-figura-y-leyenda)
 - [Hero Section](#hero-section)
 - [Integración de Google Fonts en una Página Web](#integración-de-google-fonts-en-una-página-web)
+- [Insertar Icono Font Awesome y Personalización](#insertar-icono-font-awesome-y-personalización)
+- [Insertar SVG y Personalización](#insertar-svg-y-personalización)
 
 ---
 
@@ -708,12 +710,86 @@ continuación te explico cómo integrar Google Fonts en tu proyecto web.
   
 ---
 
-  
+## Insertar Icono Font Awesome y Personalización
+Un **icono como fuente** es un glifo dentro de una fuente tipográfica, utilizado en 
+lugar de caracteres textuales. **Font Awesome** es una popular biblioteca de iconos 
+basada en fuentes que facilita la inserción de iconos escalables y 
+personalizables en páginas web.
 
+### Pasos para Insertar y Personalizar un Icono Font Awesome:
+#### 1. Incluir Font Awesome:
+* Inserta el siguiente enlace en el **`<head>`** de tu HTML para cargar Font Awesome 
+  desde un CDN.
+```html
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+```
 
+#### 2. Insertar un Icono:
+* Usa la etiqueta **`<i>`** o **`<span>`** con la clase correspondiente al icono que deseas.
+```html
+<i class="fas fa-home"></i>
+```
 
+#### 3. Personalizar el Icono con CSS:
+* **Tamaño**: Cambia el tamaño del icono usando **`font-size`**.
+```css
+i.fas {
+    font-size: 24px;
+}
+```
 
+* **Color**: Cambia el color del icono usando **`color`**.
+```css
+i.fas {
+    color: blue;
+}
+```
+* **Espaciado y Efectos**: Aplica márgenes, sombras, y otros estilos como lo harías 
+  con texto.
+```css
+i.fas {
+    margin-right: 10px;
+    text-shadow: 2px 2px 4px #000000;
+}
+```
 
+---
+## Insertar SVG y Personalización
+Un **SVG** (Scalable Vector Graphics) es un formato de imagen basado en XML que 
+permite gráficos vectoriales escalables y totalmente personalizables en la web.
 
+### Pasos para Insertar y Personalizar un SVG:
+**1. Insertar un SVG en el HTML:**
+* Puedes insertar un SVG directamente en el HTML como parte del documento.
+```html
+<svg width="100" height="100" xmlns="http://www.w3.org/2000/svg" class="mi-icono">
+    <circle cx="50" cy="50" r="40" stroke="black" stroke-width="3" fill="red"/>
+</svg>
+```
+**2. Personalizar el SVG con CSS:**
+ * *Tamaño**: Puedes ajustar el tamaño del SVG usando **`width`** y **`height`**.
+```css
+.mi-icono {
+    width: 150px;
+    height: 150px;
+}
+```
 
+* **Color**: Modifica el color de relleno (**`fill`**) o el color del borde (**`stroke`**) de 
+  los elementos dentro del SVG.
+```css
+.mi-icono circle {
+    fill: blue;
+    stroke: green;
+}
+```
+* **Otros Estilos**: Aplica sombras, bordes, y otros efectos como lo harías con otros 
+  elementos HTML.
+```css
+.mi-icono {
+    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+```
+
+---
 
