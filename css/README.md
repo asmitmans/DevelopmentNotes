@@ -8,6 +8,7 @@
 - [Tipos de selectores en CSS:](#tipos-de-selectores-en-css)
 - [Jerarquía en CSS:](#jerarquía-en-css)
 - [Color en CSS:](#color-en-css)
+- [Texto en CSS:](#texto-en-css)
 
 ---
 
@@ -399,4 +400,143 @@ p {
 ```
 
 ---
+## Texto en CSS:
+CSS ofrece una variedad de propiedades para controlar el estilo, tamaño, 
+alineación y otros aspectos del texto en una página web.
 
+### 1. Tipografía (Typography):
+* **Propiedad principal**: `font-family`
+* **Descripción**: Define la fuente utilizada para el texto.
+* **Ejemplo**:
+```css
+p {
+    font-family: "Arial", sans-serif;
+}
+```
+* **Dato extra**: Es común definir una pila de fuentes como respaldo, en caso de que 
+  la fuente principal no esté disponible.
+
+#### font-family en CSS
+En CSS, **`font-family`** se refiere a una familia de fuentes que puede incluir varios 
+estilos o variaciones de una fuente. Por ejemplo, la familia de fuentes "Arial" 
+incluye variaciones como "Arial Bold", "Arial Italic", etc. Al especificar una 
+familia de fuentes, CSS intentará usar esa fuente y sus variaciones en el texto.
+
+#### Comillas en valores de fuentes
+* **Comillas para nombres con espacios**: Los nombres de fuentes que contienen 
+  espacios deben ir entre comillas. "Arial" no tiene espacios, pero sigue siendo 
+  una buena práctica usar comillas para los nombres de fuentes, ya que algunos 
+  navegadores podrían requerirlo si el nombre contiene caracteres especiales o 
+  empieza con un número.
+* **Familias genéricas sin comillas**: **`sans-serif`** es una **familia genérica**, no una 
+  fuente específica. Las familias genéricas en CSS son **`serif`, `sans-serif`,** 
+  **`monospace`, `cursive`**, y **`fantasy`**. No requieren comillas porque no se refieren a 
+  una fuente específica, sino a un tipo general de diseño tipográfico. El 
+  navegador selecciona una fuente predeterminada que coincida con ese estilo 
+  genérico si no puede usar las fuentes anteriores en la lista.
+
+Es una **práctica recomendada** en CSS incluir tanto una fuente específica (deseada) 
+como una familia genérica como respaldo, como en **`font-family: "Arial", sans-serif;`**. 
+Esto asegura que, si por alguna razón la fuente deseada no está disponible en el 
+dispositivo del usuario, el navegador pueda utilizar una fuente de la familia 
+genérica.
+
+### 2. Tamaño del texto (Font Size):
+* **Propiedad principal: `font-size`**
+* **Descripción**: Controla el tamaño del texto. Puede especificarse en varias 
+  unidades como **`px`, `em`, `rem`, `%`**, etc.
+* **Ejemplo**:
+```css
+h1 {
+    font-size: 36px;
+}
+p {
+    font-size: 16px;
+}
+```
+* **Dato extra**: Usar unidades relativas como em o rem facilita la creación de un 
+  diseño responsivo.
+
+### 3. Estilo de la fuente (Font Style):
+* **Propiedad principal: `font-style`**
+* **Descripción**: Controla el estilo de la fuente, como normal, cursiva o itálica.
+* **Ejemplo**:
+```css
+em {
+    font-style: italic;
+}
+```
+* **Dato extra**: Es común aplicar **`font-style`: `italic`** a citas o énfasis.
+
+### 4. Peso de la fuente (Font Weight):
+* **Propiedad principal: `font-weight`**
+* **Descripción**: Controla el grosor del texto, variando desde valores como **`normal`**, 
+  **`bold`**, hasta números que van de **`100`** a **`900`**.
+* **Ejemplo**:
+```css
+strong {
+    font-weight: bold;
+}
+```
+* **Dato extra**: Los valores numéricos permiten mayor precisión en el grosor de la 
+  fuente.
+
+### 5. Alineación del texto (Text Alignment):
+* **Propiedad principal: `text-align`**
+* **Descripción**: Define cómo se alinea el texto dentro de su contenedor. Los 
+  valores comunes son **`left`, `right`, `center`**, y **`justify`**.
+* **Ejemplo**:
+```css
+p {
+    text-align: justify;
+}
+h1 {
+    text-align: center;
+}
+```
+
+### 6. Decoración del texto (Text Decoration):
+* **Propiedad principal: `text-decoration`**
+* **Descripción**: Controla la decoración del texto, como subrayado, línea 
+  sobrepuesta, o tachado.
+* **Ejemplo**:
+```css
+a {
+    text-decoration: underline;
+}
+del {
+    text-decoration: line-through;
+}
+```
+
+### 7. Transformación del texto (Text Transform):
+* **Propiedad principal: `text-transform`**
+* **Descripción**: Controla la capitalización del texto, con valores como **`uppercase`**, 
+  **`lowercase`**, y **`capitalize`**.
+* **Ejemplo**:
+```css
+h2 {
+    text-transform: uppercase;
+}
+```
+
+### 8. Espaciado entre letras (Letter Spacing):
+* **Propiedad principal: `letter-spacing`**
+* **Descripción**: Ajusta el espacio entre caracteres de un texto.
+* **Ejemplo**:
+```css
+h1 {
+    letter-spacing: 2px;
+}
+```
+
+### 9. Altura de línea (Line Height):
+* **Propiedad principal: `line-height`**
+* **Descripción**: Define la altura de una línea de texto, afectando el espaciado 
+  vertical entre líneas.
+* **Ejemplo**:
+```css
+p {
+    line-height: 1.5;
+}
+```
