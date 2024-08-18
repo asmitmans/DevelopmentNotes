@@ -16,6 +16,8 @@
 - [Restablecimiento de Propiedades por Defecto en CSS:](#restablecimiento-de-propiedades-por-defecto-en-css)
 - [Propiedad `display` en CSS:](#propiedad-display-en-css)
 - [CSS Web Safe Fonts:](#css-web-safe-fonts)
+- [Propiedad `position` en CSS:](#propiedad-position-en-css)
+- [Personalizar SVG en CSS](#personalizar-svg-en-css)
 
 ---
 
@@ -1156,6 +1158,212 @@ body {
 En este ejemplo, si "Helvetica" no está disponible, se usará "Arial". Si ninguna 
 de estas fuentes está disponible, el navegador utilizará una fuente sans-serif 
 genérica.
+
+---
+
+## Propiedad `position` en CSS:
+La propiedad **`position`** en CSS controla cómo se posicionan los elementos en la 
+página, permitiendo moverlos en relación con otros elementos o el viewport. 
+Esta propiedad es esencial para crear efectos como menús que siguen al usuario 
+al hacer scroll.
+
+### Valores Principales de `position`:
+#### 1. `static`:
+  * **Descripción**: Es el valor por defecto. Los elementos se posicionan según el 
+    flujo normal del documento y no se pueden mover utilizando propiedades como 
+    top, left, right, o bottom.
+  * **Ejemplo**:
+```css
+div {
+    position: static;
+}
+```
+
+#### 2. `relative`:
+  * **Descripción**: El elemento se posiciona en relación con su posición original 
+    en el flujo del documento. Se puede mover usando `top`, `left`, `right`, y `bottom`, 
+    pero su espacio original sigue ocupado.
+  * **Ejemplo**:
+```css
+div {
+    position: relative;
+    top: 10px;
+    left: 20px;
+}
+```
+
+#### 3. `absolute`:
+  * Descripción: El elemento se posiciona en relación con su contenedor 
+    posicionado más cercano (es decir, un ancestro con position: relative, 
+    absolute, o fixed). Si no hay tal contenedor, se posiciona en relación con 
+    el viewport.
+  * **Ejemplo**:
+```css
+div {
+    position: absolute;
+    top: 50px;
+    right: 30px;
+}
+```
+
+#### 4. `fixed`:
+  * Descripción: El elemento se posiciona en relación con el viewport (la 
+    ventana del navegador). No se mueve cuando se hace scroll en la página. Este 
+    valor es comúnmente utilizado para crear menús que siguen al usuario mientras 
+    se desplaza.
+  * **Ejemplo**:
+```css
+nav {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    background-color: #333;
+    color: white;
+    padding: 10px 0;
+}
+```
+
+#### 5. `sticky`:
+  * **Descripción**: El elemento se comporta como relative hasta que alcanza un 
+    cierto punto de scroll, momento en el que se comporta como fixed. Esto es 
+    útil para crear encabezados o menús que se fijan en la parte superior al 
+    hacer scroll.
+  * **Ejemplo**:
+```css
+header {
+    position: sticky;
+    top: 0;
+    background-color: #333;
+    color: white;
+    padding: 10px 0;
+}
+```
+
+### Ejemplo de un Menú Fijo:
+```css
+nav {
+    position: fixed; /* El menú se fija en la parte superior de la página */
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: #333;
+    color: white;
+    padding: 15px;
+    z-index: 1000; /* Asegura que el menú se superponga sobre otros elementos */
+}
+```
+
+### Explicación del Ejemplo:
+* **`position: fixed;`**: Hace que el menú se quede fijo en la parte superior de la 
+  pantalla mientras el usuario hace scroll.
+* **`top: 0;`**: Posiciona el menú en la parte superior del viewport.
+* **`z-index: 1000;`**: Asegura que el menú permanezca por encima de otros elementos 
+  de la página.
+
+---
+
+## Personalizar SVG en CSS
+El SVG (Scalable Vector Graphics) es un formato de imagen vectorial que se 
+utiliza comúnmente en la web debido a su escalabilidad y flexibilidad. Al 
+insertar un SVG en una página web, puedes cambiar sus propiedades utilizando CSS, 
+lo que te permite modificar su apariencia sin necesidad de editar el archivo SVG 
+directamente.
+
+### Métodos para Insertar un SVG:
+#### 1. Insertar SVG como Imagen (`<img>`):
+* **Descripción**: Este es el método más simple, similar a cómo insertarías 
+  cualquier otra imagen.
+* **Ejemplo**:
+```html
+<img src="imagen.svg" alt="Descripción del SVG">
+```
+* **Limitación**: Con este método, solo puedes cambiar propiedades CSS generales del 
+  **`<img>`**, como tamaño, pero no puedes acceder ni modificar los elementos internos 
+  del SVG.
+
+#### 2. Insertar SVG Directamente en el HTML (`<svg>`):
+* **Descripción**: Inserta el código SVG directamente en el documento HTML, lo que 
+  te permite aplicar CSS a sus elementos internos.
+* **Ejemplo**:
+```html
+<svg width="100" height="100" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="50" cy="50" r="40" stroke="black" stroke-width="3" fill="red" class="mi-circulo"/>
+</svg>
+```
+* **Ventaja**: Puedes aplicar estilos directamente a los elementos internos del SVG 
+  usando clases o identificadores.
+
+#### 3. Insertar SVG como Imagen de Fondo (CSS `background-image`):
+* **Descripción**: Usa SVG como una imagen de fondo en CSS.
+* **Ejemplo**:
+```css
+.fondo {
+    width: 100px;
+    height: 100px;
+    background-image: url('imagen.svg');
+    background-size: cover;
+}
+```
+
+### Cambiar Propiedades del SVG con CSS:
+#### 1. Aplicar Estilos a un SVG Insertado como Imagen (`<img>`):
+* **Ejemplo**:
+```css
+img {
+    width: 150px;
+    height: auto;
+}
+```
+
+#### 2. Aplicar Estilos a un SVG Insertado Directamente en el HTML:
+* **Ejemplo**:
+```css
+.mi-circulo {
+    fill: blue; /* Cambia el color de relleno del círculo */
+    stroke: green; /* Cambia el color del borde */
+    stroke-width: 5; /* Cambia el grosor del borde */
+}
+```
+* **Ventaja**: Puedes apuntar directamente a los elementos SVG usando clases o 
+  identificadores, lo que permite una personalización más específica.
+
+#### 3. Cambiar el Color de un SVG Insertado como Fondo:
+* Para cambiar el color de un SVG usado como fondo, necesitarás editar el SVG 
+  directamente o utilizar herramientas que te permitan generar SVG con colores 
+  variables en CSS.
+
+### Ejemplo Completo:
+**HTML:**
+```html
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejemplo de SVG</title>
+    <link rel="stylesheet" href="estilos.css">
+</head>
+<body>
+    <!-- SVG insertado directamente en el HTML -->
+    <svg width="100" height="100" xmlns="http://www.w3.org/2000/svg" class="mi-svg">
+        <circle cx="50" cy="50" r="40" stroke="black" stroke-width="3" fill="red"/>
+    </svg>
+</body>
+</html>
+```
+
+**CSS**:
+```css
+.mi-svg {
+    width: 150px; /* Cambia el tamaño del SVG */
+}
+
+.mi-svg circle {
+    fill: blue; /* Cambia el color de relleno del círculo */
+    stroke: green; /* Cambia el color del borde */
+    stroke-width: 5px; /* Cambia el grosor del borde */
+}
+```
 
 ---
 
