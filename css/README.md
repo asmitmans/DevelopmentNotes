@@ -701,7 +701,7 @@ div {
 > que hace que el diseño sea flexible y se adapte a diferentes tamaños de 
 > contenedores.
 
-#### 4. vh (Viewport Height):
+#### 4. `vh` (Viewport Height):
 * **Descripción**: Relativa al 1% de la altura de la ventana gráfica (viewport).
 * **Ejemplo**:
 ```css
@@ -710,7 +710,7 @@ div {
 }
 ```
 
-#### 5. vw (Viewport Width):
+#### 5. `vw` (Viewport Width):
 * **Descripción**: Relativa al 1% del ancho de la ventana gráfica (viewport).
 * **Ejemplo**:
 ```css
@@ -719,7 +719,7 @@ div {
 }
 ```
 
-#### 6. vmin y vmax:
+#### 6. `vmin` y `vmax`:
 * **Descripción**:
 * **`vmin`**: Relativa al 1% de la dimensión más pequeña del viewport (altura o ancho).
 * **`vmax`**: Relativa al 1% de la dimensión más grande del viewport.
