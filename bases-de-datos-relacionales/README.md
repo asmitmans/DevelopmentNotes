@@ -44,6 +44,7 @@
 - [Función de Agregación `MIN()` en PostgreSQL](#función-de-agregación-min-en-postgresql)
 - [GROUP BY en PostgreSQL](#group-by-en-postgresql)
 - [Modelo de Datos en Bases de Datos Relacionales](#modelo-de-datos-en-bases-de-datos-relacionales)
+- [Modelo de Datos Físico en Bases de Datos Relacionales](#modelo-de-datos-físico-en-bases-de-datos-relacionales)
 - [](#)
 
 
@@ -351,6 +352,25 @@ primaria.
 * **Identificación Única**: Proporciona un identificador único para cada registro, lo 
   que es fundamental para establecer relaciones entre tablas.
 
+### Cómo Crear una Primary Key
+1. #### Al crear la tabla:
+* Puedes definir la clave primaria directamente al crear la tabla.
+* **Ejemplo**:
+```sql
+CREATE TABLE usuarios (
+    id SERIAL PRIMARY KEY,
+    nombre VARCHAR(100),
+    email VARCHAR(255)
+);
+```
+2. #### Al añadir la columna:
+* Si la columna ya existe y deseas convertirla en una clave primaria, puedes 
+  hacerlo con **`ALTER TABLE`**.
+* **Ejemplo**:
+```sql
+ALTER TABLE usuarios ADD PRIMARY KEY (id);
+```
+
 --------------------------------------------------------------------------------
 
 ## Foreign Key (Clave Foránea)
@@ -367,6 +387,26 @@ creando un vínculo entre las filas de ambas tablas.
   creación de registros huérfanos o inconsistentes.
 * **Múltiples Relaciones**: Una tabla puede contener múltiples claves foráneas, cada 
   una estableciendo una relación con diferentes tablas.
+
+### Cómo Crear una Foreign Key
+1. #### Al crear la tabla:
+* Puedes definir la clave foránea directamente al crear la tabla.
+* **Ejemplo**:
+```sql
+CREATE TABLE pedidos (
+    id SERIAL PRIMARY KEY,
+    id_usuario INT REFERENCES usuarios(id),
+    fecha DATE
+);
+```
+
+2. #### Al añadir la columna:
+* Si la columna ya existe y deseas convertirla en una clave foránea, puedes 
+  hacerlo con **`ALTER TABLE`**.
+* **Ejemplo**:
+```sql
+ALTER TABLE pedidos ADD CONSTRAINT fk_usuario FOREIGN KEY (id_usuario) REFERENCES usuarios(id);
+```
 
 --------------------------------------------------------------------------------
 
@@ -794,7 +834,50 @@ ellas.
   
 --------------------------------------------------------------------------------
   
-## 
+## Modelo de Datos Físico en Bases de Datos Relacionales
+El modelo de datos físico es una representación detallada de cómo los datos se 
+almacenan y se organizan en un sistema de gestión de bases de datos (DBMS) a 
+nivel físico. Este modelo se enfoca en la implementación real de la base de datos 
+en hardware, incluyendo detalles como estructuras de almacenamiento, índices, y 
+particionamiento.
+
+### Componentes Clave:
+1. **Tablas y Columnas**: Definición específica de las tablas, tipos de datos de las 
+   columnas, y restricciones a nivel de base de datos.
+3. **Índices**: Estructuras que mejoran la velocidad de las consultas al permitir 
+   acceso rápido a los datos.
+4. **Particionamiento**: Dividir grandes tablas en partes más pequeñas para mejorar 
+   el rendimiento y la gestión.
+5. **Espacios de Almacenamiento**: Definición de los discos o volúmenes donde se 
+   almacenarán los datos.
+6. **Optimización del Rendimiento**: Uso de técnicas como la desnormalización para 
+   mejorar la eficiencia de las consultas.
+
+### Ejemplo de un Modelo de Datos Físico:
+* **Tabla Usuarios**:
+  * **`id_usuario`** (INTEGER, PRIMARY KEY, almacenado en un índice de tipo B-tree)
+  * **`nombre`** (VARCHAR(100))
+  * **`email`** (VARCHAR(255), INDEX para búsquedas rápidas)
+
+* **Índices**:
+  * Índice **`idx_email`** en la columna email para acelerar las consultas que buscan 
+    usuarios por su dirección de correo electrónico.
+  
+--------------------------------------------------------------------------------
+
+##   
+  
+--------------------------------------------------------------------------------
+  
+  
+--------------------------------------------------------------------------------
+  
+  
+--------------------------------------------------------------------------------
+  
+  
+--------------------------------------------------------------------------------
+  
 
 
 
