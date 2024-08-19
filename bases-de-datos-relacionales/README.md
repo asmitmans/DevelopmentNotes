@@ -32,7 +32,17 @@
 - [Borrar Todos los Datos de una Tabla en PostgreSQL](#borrar-todos-los-datos-de-una-tabla-en-postgresql)
 - [Borrar Algunos Datos de una Tabla en PostgreSQL](#borrar-algunos-datos-de-una-tabla-en-postgresql)
 - [Insertar Varios Registros a una Tabla en PostgreSQL](#insertar-varios-registros-a-una-tabla-en-postgresql)
-- [Función LEFT en PostgreSQL](#función-left-en-postgresql)
+- [Función `LEFT` en PostgreSQL](#función-left-en-postgresql)
+- [Función `COALESCE` en PostgreSQL](#función-coalesce-en-postgresql)
+- [Función `LOWER` en PostgreSQL](#función-lower-en-postgresql)
+- [Función `UPPER` en PostgreSQL](#función-upper-en-postgresql)
+- [Función `LENGTH` en PostgreSQL](#función-length-en-postgresql)
+- [Función de Agregación `SUM()` en PostgreSQL](#función-de-agregación-sum-en-postgresql)
+- [Función de Agregación `AVG()` en PostgreSQL](#función-de-agregación-avg-en-postgresql)
+- [Función de Agregación `COUNT()` en PostgreSQL](#función-de-agregación-count-en-postgresql)
+- [Función de Agregación `MAX()` en PostgreSQL](#función-de-agregación-max-en-postgresql)
+- [Función de Agregación `MIN()` en PostgreSQL](#función-de-agregación-min-en-postgresql)
+- [GROUP BY en PostgreSQL](#group-by-en-postgresql)
 
 
 --------------------------------------------------------------------------------
@@ -609,7 +619,7 @@ INSERT INTO usuarios (nombre, edad) VALUES
 
 --------------------------------------------------------------------------------
 
-## Función LEFT en PostgreSQL
+## Función `LEFT` en PostgreSQL
 Extrae un número determinado de caracteres desde el inicio de una cadena.
 ```sql
 SELECT LEFT(nombre, 3) FROM usuarios;
@@ -618,5 +628,160 @@ Si nombre es 'Carlos', el resultado será 'Car'.
 
 --------------------------------------------------------------------------------
 
+## Función `COALESCE` en PostgreSQL
+Devuelve el primer valor no nulo de la lista de expresiones proporcionadas.
+```sql
+SELECT COALESCE(email, 'sin_email@example.com') FROM usuarios;
+```
+Si **`email`** es **`NULL`**, el resultado será **`'sin_email@example.com'`**.
 
 --------------------------------------------------------------------------------
+
+## Función `LOWER` en PostgreSQL
+Convierte todos los caracteres de una cadena a minúsculas.
+```sql
+SELECT LOWER(nombre) FROM usuarios;
+```
+Si `nombre` es `'Carlos'`, el resultado será `'carlos'`.
+
+--------------------------------------------------------------------------------
+
+## Función `UPPER` en PostgreSQL
+Convierte todos los caracteres de una cadena a mayúsculas.
+```sql
+SELECT UPPER(nombre) FROM usuarios;
+```
+Si nombre es 'Carlos', el resultado será 'CARLOS'.
+
+--------------------------------------------------------------------------------
+
+## Función `LENGTH` en PostgreSQL
+Devuelve la longitud de una cadena en número de caracteres.
+```sql
+SELECT LENGTH(nombre) FROM usuarios;
+```
+Si nombre es 'Carlos', el resultado será 6.
+
+--------------------------------------------------------------------------------
+
+## Función de Agregación `SUM()` en PostgreSQL
+Calcula la suma total de los valores en una columna numérica. Se puede usar sin 
+**`GROUP BY`** para sumar todos los valores, o con **`GROUP BY`** para sumar valores 
+dentro de grupos específicos.
+```sql
+SELECT SUM(edad) FROM usuarios;
+```
+Si las edades son 25, 30, y 35, el resultado será 90.
+
+--------------------------------------------------------------------------------
+
+## Función de Agregación `AVG()` en PostgreSQL
+Calcula el promedio (media aritmética) de los valores en una columna numérica. 
+Se puede usar sin **`GROUP BY`** para promediar todos los valores, o con **`GROUP BY`** para 
+promediar valores dentro de grupos específicos.
+```sql
+SELECT AVG(edad) FROM usuarios;
+```
+Si las edades son 25, 30, y 35, el resultado será 30.
+
+--------------------------------------------------------------------------------
+
+## Función de Agregación `COUNT()` en PostgreSQL
+* **`COUNT(*)`** cuenta todas las filas, incluidas las que tienen valores nulos en 
+  cualquier campo.
+* **`COUNT(campo)`** cuenta solo las filas donde el campo especificado no es nulo.
+
+```sql
+SELECT COUNT(*) FROM usuarios;
+```
+Si hay 10 registros en la tabla **`usuarios`**, el resultado será **`10`**.
+
+```sql
+SELECT COUNT(email) FROM usuarios;
+```
+Si hay 10 registros en la tabla usuarios y 7 de ellos tienen un valor no nulo en
+la columna email, el resultado será 7.
+
+--------------------------------------------------------------------------------
+
+## Función de Agregación `MAX()` en PostgreSQL
+Devuelve el valor máximo en una columna numérica o de fecha. Se puede usar sin 
+**`GROUP BY`** para obtener el valor máximo de toda la tabla, o con **`GROUP BY`** para 
+obtener el valor máximo dentro de cada grupo específico.
+```sql
+SELECT MAX(edad) FROM usuarios;
+```
+Si las edades en la tabla son 25, 30, y 35, el resultado será 35.
+
+--------------------------------------------------------------------------------
+
+## Función de Agregación `MIN()` en PostgreSQL
+Devuelve el valor mínimo en una columna numérica o de fecha. Se puede usar sin 
+**`GROUP BY`** para obtener el valor mínimo de toda la tabla, o con **`GROUP BY`** para
+obtener el valor mínimo dentro de cada grupo específico.
+```sql
+SELECT MIN(edad) FROM usuarios;
+```
+Si las edades en la tabla son 25, 30, y 35, el resultado será 25.
+
+--------------------------------------------------------------------------------
+
+## GROUP BY en PostgreSQL
+**`GROUP BY`** es una cláusula en SQL que se utiliza para agrupar filas que tienen 
+los mismos valores en columnas especificadas en grupos. Esta agrupación permite 
+aplicar funciones de agregación (como **`SUM`, `AVG`, `COUNT`, `MAX`, `MIN`**) a cada 
+grupo de datos.
+
+### Uso
+**`GROUP BY`** se utiliza después de la cláusula **`WHERE`** y antes de la cláusula 
+**`ORDER BY`** (si se utiliza). Los campos especificados en **`GROUP BY`** determinan cómo 
+se agrupan las filas en el resultado.
+
+### Ejemplo: Precio más alto por categoría mostrando la categoría
+
+Supongamos que tenemos una tabla **`productos`** con las columnas **`categoria`, `nombre`**, y 
+**`precio`**. Queremos encontrar el precio más alto por categoría.
+```sql
+SELECT categoria, MAX(precio) 
+FROM productos 
+GROUP BY categoria;
+```
+* **Explicación**:
+  * **`SELECT categoria, MAX(precio)`**: Selecciona la categoría y el precio máximo 
+    dentro de esa categoría.
+  * **`GROUP BY categoria`**: Agrupa los registros por la columna categoria, asegurando 
+    que cada grupo contenga registros con la misma categoría.
+
+* **Regla Importante**: Solo puedes incluir en el **`SELECT`** las columnas que 
+  están en la cláusula **`GROUP BY`** o las que están dentro de una función de 
+  agregación. Esto asegura que el resultado sea coherente y no haya ambigüedad 
+  en los datos mostrados.
+
+--------------------------------------------------------------------------------
+
+
+
+--------------------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
