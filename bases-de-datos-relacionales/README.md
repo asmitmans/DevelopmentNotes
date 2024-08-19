@@ -43,10 +43,8 @@
 - [Función de Agregación `MAX()` en PostgreSQL](#función-de-agregación-max-en-postgresql)
 - [Función de Agregación `MIN()` en PostgreSQL](#función-de-agregación-min-en-postgresql)
 - [GROUP BY en PostgreSQL](#group-by-en-postgresql)
-- [](#)
 - [Modelo de Datos en Bases de Datos Relacionales](#modelo-de-datos-en-bases-de-datos-relacionales)
-- [](#-1)
-- [](#-2)
+- [](#)
 
 
 --------------------------------------------------------------------------------
@@ -760,11 +758,9 @@ GROUP BY categoria;
   están en la cláusula **`GROUP BY`** o las que están dentro de una función de 
   agregación. Esto asegura que el resultado sea coherente y no haya ambigüedad 
   en los datos mostrados.
-
-<br>
+  
 --------------------------------------------------------------------------------
-<br>
-
+  
 ## Modelo de Datos en Bases de Datos Relacionales
 Un **modelo de datos** es una representación abstracta que define cómo se organizan, 
 almacenan, y manipulan los datos en una base de datos relacional. Este modelo 
@@ -795,11 +791,9 @@ ellas.
 **Relación**:
 * Un **usuario** puede tener muchos pedidos, lo que define una relación uno a muchos 
   entre las tablas Usuarios y Pedidos.
-
-<br>
+  
 --------------------------------------------------------------------------------
-<br>
-
+  
 ## 
 
 
