@@ -43,6 +43,10 @@
 - [Función de Agregación `MAX()` en PostgreSQL](#función-de-agregación-max-en-postgresql)
 - [Función de Agregación `MIN()` en PostgreSQL](#función-de-agregación-min-en-postgresql)
 - [GROUP BY en PostgreSQL](#group-by-en-postgresql)
+- [](#)
+- [Modelo de Datos en Bases de Datos Relacionales](#modelo-de-datos-en-bases-de-datos-relacionales)
+- [](#-1)
+- [](#-2)
 
 
 --------------------------------------------------------------------------------
@@ -757,12 +761,46 @@ GROUP BY categoria;
   agregación. Esto asegura que el resultado sea coherente y no haya ambigüedad 
   en los datos mostrados.
 
+<br>
 --------------------------------------------------------------------------------
+<br>
 
+## Modelo de Datos en Bases de Datos Relacionales
+Un **modelo de datos** es una representación abstracta que define cómo se organizan, 
+almacenan, y manipulan los datos en una base de datos relacional. Este modelo 
+establece las estructuras de datos (tablas, columnas) y las relaciones entre 
+ellas.
 
+### Componentes Clave:
+**1. Entidades (Tablas)**: Representan objetos o conceptos del mundo real, como 
+  "Usuarios" o "Productos".
+**2. Atributos (Columnas)**: Describen propiedades o características de las 
+  entidades, como "nombre", "edad" o "precio".
+**3. Relaciones**: Definen cómo las entidades están conectadas entre sí, 
+  utilizando claves primarias y foráneas.
+**4. Restricciones**: Reglas que aseguran la integridad y validez de los datos, 
+  como `UNIQUE`, `NOT NULL`, y `FOREIGN KEY`.
 
+### Ejemplo de un Modelo de Datos:
+* **Tabla Usuarios**:
+  * id_usuario (Primary Key)
+  * nombre
+  * email
+  
+* **Tabla Pedidos**:
+  * id_pedido (Primary Key)
+  * fecha
+  * id_usuario (Foreign Key que refiere a Usuarios)
+
+**Relación**:
+* Un **usuario** puede tener muchos pedidos, lo que define una relación uno a muchos 
+  entre las tablas Usuarios y Pedidos.
+
+<br>
 --------------------------------------------------------------------------------
+<br>
 
+## 
 
 
 
