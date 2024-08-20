@@ -61,6 +61,7 @@
 - [Restricciones en SQL](#restricciones-en-sql)
 - [SERIAL en PostgreSQL](#serial-en-postgresql)
 - [Importancia de la Integridad Referencial en las Tablas](#importancia-de-la-integridad-referencial-en-las-tablas)
+- [¿Qué es una Transacción en Bases de Datos?](#qué-es-una-transacción-en-bases-de-datos)
 
 
 --------------------------------------------------------------------------------
@@ -1328,6 +1329,67 @@ cuando se asegura la integridad referencial, ya que el sistema puede hacer
 suposiciones seguras sobre las relaciones entre tablas, mejorando el rendimiento. 
 
 --------------------------------------------------------------------------------
+
+## ¿Qué es una Transacción en Bases de Datos?
+### Definición:
+Una **transacción** en una base de datos es una secuencia de una o más operaciones 
+(como **`INSERT`, `UPDATE`, `DELETE`**) que se ejecutan como una unidad indivisible de 
+trabajo. Esto significa que todas las operaciones dentro de una transacción se 
+completan exitosamente, o ninguna de ellas se aplica, garantizando que la base 
+de datos permanezca en un estado consistente.
+
+### Propiedades ACID de una Transacción
+Las transacciones en bases de datos relacionales se adhieren a las propiedades 
+**ACID**:
+
+#### 1. Atomicidad (Atomicity):
+Garantiza que todas las operaciones dentro de una transacción se completen o 
+ninguna lo haga. Si alguna parte de la transacción falla, se realiza un **rollback** 
+(reversión) de todas las operaciones.
+
+#### 2. Consistencia (Consistency):
+Asegura que una transacción lleve a la base de datos de un estado válido a otro 
+estado válido, manteniendo las reglas de integridad y las restricciones definidas.
+
+#### 3. Aislamiento (Isolation):
+Asegura que las transacciones concurrentes no interfieran entre sí. Cada 
+transacción se ejecuta en un entorno aislado, como si fuera la única operación 
+en la base de datos.
+
+#### 4. Durabilidad (Durability):
+Asegura que una vez que una transacción se ha completado y se ha confirmado 
+(committed), los cambios realizados persisten en la base de datos, incluso si 
+ocurre una falla del sistema.
+
+### ¿Por qué Son Importantes las Transacciones?
+#### 1. Consistencia de los Datos:
+Las transacciones aseguran que las operaciones complejas sobre la base de datos, 
+como transferencias de fondos entre cuentas, se completen sin dejar los datos en 
+un estado inconsistente.
+
+#### 2. Recuperación ante Fallos:
+En caso de que ocurra un fallo durante una transacción, los cambios realizados 
+pueden revertirse, lo que ayuda a mantener la integridad de los datos.
+
+#### 3. Manejo de Operaciones Complejas:
+Las transacciones permiten agrupar múltiples operaciones de manipulación de datos 
+en una sola unidad de trabajo. Esto es crucial en situaciones donde las 
+operaciones interdependientes deben completarse todas juntas o no realizarse en 
+absoluto.
+
+#### 4. Concurrencia Controlada:
+En entornos donde múltiples usuarios acceden y modifican la base de datos 
+simultáneamente, las transacciones ayudan a controlar el acceso concurrente, 
+evitando condiciones de carrera y garantizando que cada transacción vea un 
+estado consistente de la base de datos.
+
+#### 5. Facilidad de Desarrollo:
+Para los desarrolladores, las transacciones simplifican la lógica de las 
+aplicaciones al asegurar que las secuencias de operaciones complejas se manejen 
+de manera robusta y segura.
+
+--------------------------------------------------------------------------------
+
 
 
 
