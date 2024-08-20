@@ -1298,7 +1298,7 @@ mediante el uso de claves foráneas (**`FOREIGN KEY`**), que vinculan una column
 en una tabla con una clave primaria en otra tabla.
 
 ### Razones por las que es Importante la Integridad Referencial:
-1. #### Consistencia de Datos:
+#### 1. Consistencia de Datos:
 Garantiza que los datos en la base de datos estén siempre en un estado coherente. 
 Por ejemplo, si una tabla de pedidos hace referencia a una tabla de clientes, la 
 integridad referencial asegura que no puedas crear un pedido para un cliente que 
