@@ -45,7 +45,12 @@
 - [GROUP BY en PostgreSQL](#group-by-en-postgresql)
 - [Modelo de Datos en Bases de Datos Relacionales](#modelo-de-datos-en-bases-de-datos-relacionales)
 - [Modelo de Datos Físico en Bases de Datos Relacionales](#modelo-de-datos-físico-en-bases-de-datos-relacionales)
-- [](#)
+- [Queries Anidadas o Subconsultas en PostgreSQL](#queries-anidadas-o-subconsultas-en-postgresql)
+- [Operaciones de Unión entre Tablas en PostgreSQL](#operaciones-de-unión-entre-tablas-en-postgresql)
+- [INNER JOIN](#inner-join)
+- [LEFT OUTER JOIN (LEFT JOIN)](#left-outer-join-left-join)
+- [RIGHT OUTER JOIN (RIGHT JOIN)](#right-outer-join-right-join)
+- [FULL OUTER JOIN](#full-outer-join)
 
 
 --------------------------------------------------------------------------------
@@ -862,18 +867,118 @@ particionamiento.
 * **Índices**:
   * Índice **`idx_email`** en la columna email para acelerar las consultas que buscan 
     usuarios por su dirección de correo electrónico.
+
+--------------------------------------------------------------------------------
+
+## Queries Anidadas o Subconsultas en PostgreSQL
+Una subconsulta o query anidada es una consulta dentro de otra consulta (consulta 
+exterior). La subconsulta se ejecuta primero, y su resultado se utiliza en la 
+consulta exterior para realizar cálculos o filtros adicionales.
+
+#### Consulta Exterior y Consulta Interior:
+* **Consulta Exterior**: Es la consulta principal que recibe los resultados de la 
+  subconsulta.
+* **Consulta Interior**: Es la subconsulta que se ejecuta dentro de la consulta 
+  exterior para proporcionar datos adicionales.
+
+### Ejemplo: Obtener las Ventas Promedio por Vendedor
+Supongamos que tienes una tabla ventas con las columnas empleado_id y monto, y 
+deseas calcular el promedio de ventas por vendedor utilizando una subconsulta.
+
+#### Objetivo:
+1. **Calcular la suma total de ventas por vendedor**.
+2. **Calcular el promedio de esas sumas para obtener el promedio de ventas por** 
+   **vendedor**.
+
+```sql
+SELECT AVG(ventas_por_vendedor) AS promedio_ventas_por_vendedor
+FROM (
+    SELECT empleado_id, SUM(monto) AS ventas_por_vendedor
+    FROM ventas
+    GROUP BY empleado_id
+) AS subconsulta;
+```
   
 --------------------------------------------------------------------------------
 
-##   
+## Operaciones de Unión entre Tablas en PostgreSQL
+Las operaciones de unión (joins) se utilizan en SQL para combinar filas de dos o 
+más tablas basándose en una columna relacionada entre ellas.
+
+### Diagrama JOINS
+<img src="./joins.svg" alt="SQL Joins Diagram" width="800" height="600">
+
+--------------------------------------------------------------------------------
+
+## INNER JOIN
+* **Descripción**: Combina filas de dos tablas donde las columnas relacionadas tienen 
+  valores coincidentes en ambas tablas. Solo se devuelven las filas que tienen 
+  coincidencias en ambas tablas.
+
+* **Ejemplo**:
+
+```sql
+SELECT a.nombre, b.pedido
+FROM clientes a
+INNER JOIN pedidos b ON a.cliente_id = b.cliente_id;
+```
+* **Resultado**: Devuelve solo los clientes que tienen pedidos.
+
+--------------------------------------------------------------------------------
+
+## LEFT OUTER JOIN (LEFT JOIN)
+* **Descripción**: Devuelve todas las filas de la tabla de la izquierda (la primera tabla mencionada), y las filas coincidentes de la tabla de la derecha. Si no hay 
+coincidencias, las columnas de la tabla derecha se completan con **`NULL`**.
+
+* **Ejemplo**:
+```sql
+SELECT a.nombre, b.pedido
+FROM clientes a
+LEFT JOIN pedidos b ON a.cliente_id = b.cliente_id;
+```
+* **Resultado**: Devuelve todos los clientes, incluso aquellos que no tienen pedidos 
+  (con **`NULL`** en las columnas del pedido).
   
+--------------------------------------------------------------------------------
+
+## RIGHT OUTER JOIN (RIGHT JOIN)
+* **Descripción**: Devuelve todas las filas de la tabla de la derecha (la segunda 
+  tabla mencionada), y las filas coincidentes de la tabla de la izquierda. Si no 
+  hay coincidencias, las columnas de la tabla izquierda se completan con **`NULL`**.
+
+* **Ejemplo**:
+
+```sql
+SELECT a.nombre, b.pedido
+FROM clientes a
+RIGHT JOIN pedidos b ON a.cliente_id = b.cliente_id;
+```
+* **Resultado**: Devuelve todos los pedidos, incluso aquellos que no están asociados 
+  con ningún cliente (con **`NULL`** en las columnas del cliente).
+
+--------------------------------------------------------------------------------
+
+## FULL OUTER JOIN
+* **Descripción**: Devuelve todas las filas cuando hay coincidencia en una de las 
+  tablas. Si no hay coincidencias, las filas se completan con **`NULL`** en las 
+  columnas de la tabla que no coincide.
+
+* **Ejemplo**:
+
+```sql
+SELECT a.nombre, b.pedido
+FROM clientes a
+FULL OUTER JOIN pedidos b ON a.cliente_id = b.cliente_id;
+```
+* **Resultado**: Devuelve todos los clientes y todos los pedidos, incluyendo aquellos 
+  que no tienen coincidencias en la otra tabla (con **`NULL`** en las columnas donde no 
+  hay coincidencia).
+
 --------------------------------------------------------------------------------
   
   
 --------------------------------------------------------------------------------
-  
-  
---------------------------------------------------------------------------------
+
   
   
 --------------------------------------------------------------------------------
