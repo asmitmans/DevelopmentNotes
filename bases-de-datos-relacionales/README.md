@@ -63,6 +63,7 @@
 - [Importancia de la Integridad Referencial en las Tablas](#importancia-de-la-integridad-referencial-en-las-tablas)
 - [¿Qué es una Transacción en Bases de Datos?](#qué-es-una-transacción-en-bases-de-datos)
 - [Comandos de Transacciones en SQL](#comandos-de-transacciones-en-sql)
+- [Modo Autocommit en SQL](#modo-autocommit-en-sql)
 
 
 --------------------------------------------------------------------------------
@@ -1444,6 +1445,63 @@ COMMIT;
 
 --------------------------------------------------------------------------------
 
+## Modo Autocommit en SQL
+**¿Qué es el Modo Autocommit?**
+Autocommit es un modo en las bases de datos SQL donde cada instrucción DML 
+(Data Manipulation Language), como INSERT, UPDATE, DELETE, o SELECT, se trata 
+automáticamente como una transacción independiente que se confirma 
+automáticamente al completarse. Es decir, cada comando ejecutado se confirma de 
+inmediato sin necesidad de un comando COMMIT explícito.
+
+### Características del Modo Autocommit:
+#### 1. Confirmación Automática:
+En el modo autocommit, cada operación se confirma inmediatamente después de su 
+ejecución. No es necesario iniciar una transacción explícita con **`BEGIN`** ni 
+finalizarla con **`COMMIT`**.
+
+#### 2. Desactivación del Autocommit:
+Puedes desactivar el modo autocommit si deseas ejecutar varias operaciones como 
+parte de una única transacción. En muchos sistemas de bases de datos, esto se 
+hace iniciando una transacción explícita con **`BEGIN`** o un comando equivalente.
+
+#### 3. Reversión Manual No Disponible:
+Debido a que cada operación se confirma inmediatamente, no se puede usar 
+**`ROLLBACK`** para revertir los cambios a menos que desactives el modo autocommit 
+y trabajes dentro de una transacción explícita.
+
+### Cómo Funciona en PostgreSQL:
+* **Activado por Defecto**: En PostgreSQL, el modo autocommit está activado por 
+  defecto. Esto significa que cada instrucción SQL se ejecuta como una 
+  transacción propia y se confirma automáticamente.
+
+* **Desactivar el Autocommit**:
+  * Para ejecutar varias instrucciones dentro de una única transacción, puedes 
+    desactivar el autocommit utilizando el siguiente enfoque:
+```sql
+BEGIN;  -- Inicia una transacción
+INSERT INTO tabla (columna) VALUES ('valor1');
+UPDATE tabla SET columna = 'valor2' WHERE id = 1;
+COMMIT;  -- Confirma la transacción
+```
+  * Aquí, **`BEGIN`** inicia una transacción y **`COMMIT`** la confirma. Durante este tiempo, 
+    el autocommit está efectivamente desactivado.
+
+### Ventajas y Desventajas:
+* **Ventajas**:
+  * **Simplicidad**: Para operaciones simples y transacciones que consisten en una 
+    sola instrucción, el autocommit facilita la codificación y reduce la 
+    posibilidad de olvidarse de confirmar una transacción.
+
+* **Desventajas**:
+  * **Control Limitado**: En operaciones complejas que requieren múltiples 
+    instrucciones, el modo autocommit puede ser problemático porque no permite 
+    revertir las operaciones fácilmente si ocurre un error en medio de la 
+    secuencia.
+  * **Riesgo de Inconsistencia**: Si se producen errores lógicos entre las 
+    operaciones, no se puede deshacer una parte de las operaciones realizadas 
+    antes de detectar el problema.
+
+--------------------------------------------------------------------------------
 
 
 
