@@ -1304,25 +1304,25 @@ Por ejemplo, si una tabla de pedidos hace referencia a una tabla de clientes, la
 integridad referencial asegura que no puedas crear un pedido para un cliente que 
 no existe en la base de datos.
 
-2. #### Prevención de Errores:
+#### 2. Prevención de Errores:
 Ayuda a evitar la introducción de datos inválidos o huérfanos. Por ejemplo, si 
 se elimina un cliente de la tabla de clientes, la integridad referencial evitaría 
 que existan pedidos que referencien a ese cliente inexistente, evitando así datos 
 inconsistentes o "huérfanos".
 
-3. #### Mantenimiento de Relaciones Lógicas:
+#### 3. Mantenimiento de Relaciones Lógicas:
 Asegura que las relaciones entre las tablas se mantengan correctas y lógicas a lo 
 largo del tiempo. Esto es crucial en aplicaciones donde las tablas están 
 fuertemente interrelacionadas, como en sistemas de gestión de inventarios o 
 sistemas de facturación.
 
-4. #### Facilita la Mantenibilidad:
+#### 4. Facilita la Mantenibilidad:
 Una base de datos con integridad referencial es más fácil de mantener y auditar. 
 Las reglas de integridad referencial permiten a los administradores y 
 desarrolladores confiar en que las relaciones entre datos son correctas, lo que 
 simplifica las actualizaciones, eliminaciones y otras operaciones de mantenimiento.
 
-5. #### Optimización de Consultas:
+#### 5. Optimización de Consultas:
 Las bases de datos relacionales pueden optimizar consultas de manera más efectiva 
 cuando se asegura la integridad referencial, ya que el sistema puede hacer 
 suposiciones seguras sobre las relaciones entre tablas, mejorando el rendimiento. 
