@@ -905,9 +905,6 @@ FROM (
 Las operaciones de unión (joins) se utilizan en SQL para combinar filas de dos o 
 más tablas basándose en una columna relacionada entre ellas.
 
-### Diagrama JOINS
-<img src="./joins.svg" alt="SQL Joins Diagram" width="800" height="600">
-
 --------------------------------------------------------------------------------
 
 ## INNER JOIN
