@@ -1,10 +1,12 @@
 <svg width="800" height="600" xmlns="http://www.w3.org/2000/svg">
+  <!-- Fondo blanco -->
+  <rect width="800" height="600" fill="white"/>
+
   <!-- INNER JOIN -->
   <g transform="translate(150, 100)">
-    <circle cx="50" cy="50" r="50" fill="lightgray"/>
-    <circle cx="100" cy="50" r="50" fill="lightgray"/>
-    <circle cx="50" cy="50" r="50" fill="none" stroke="blue" stroke-width="2"/>
-    <circle cx="100" cy="50" r="50" fill="none" stroke="blue" stroke-width="2"/>
+    <circle cx="50" cy="50" r="50" fill="white" stroke="blue" stroke-width="2"/>
+    <circle cx="100" cy="50" r="50" fill="white" stroke="blue" stroke-width="2"/>
+    <path d="M 50,50 A 50,50 0 0 1 100,50 A 50,50 0 0 1 50,50 Z" fill="lightgray"/>
     <text x="75" y="120" font-size="20" text-anchor="middle">INNER JOIN</text>
     <text x="25" y="55" font-size="20" text-anchor="middle" fill="blue">A</text>
     <text x="125" y="55" font-size="20" text-anchor="middle" fill="blue">B</text>
@@ -12,10 +14,9 @@
 
   <!-- LEFT OUTER JOIN -->
   <g transform="translate(450, 100)">
-    <circle cx="50" cy="50" r="50" fill="lightgray"/>
-    <circle cx="100" cy="50" r="50" fill="white"/>
-    <circle cx="50" cy="50" r="50" fill="none" stroke="blue" stroke-width="2"/>
-    <circle cx="100" cy="50" r="50" fill="none" stroke="blue" stroke-width="2"/>
+    <circle cx="50" cy="50" r="50" fill="lightgray" stroke="blue" stroke-width="2"/>
+    <circle cx="100" cy="50" r="50" fill="white" stroke="blue" stroke-width="2"/>
+    <path d="M 50,50 A 50,50 0 0 1 100,50 A 50,50 0 0 1 50,50 Z" fill="lightgray"/>
     <text x="75" y="120" font-size="20" text-anchor="middle">LEFT OUTER JOIN</text>
     <text x="25" y="55" font-size="20" text-anchor="middle" fill="blue">A</text>
     <text x="125" y="55" font-size="20" text-anchor="middle" fill="blue">B</text>
@@ -23,10 +24,9 @@
 
   <!-- RIGHT OUTER JOIN -->
   <g transform="translate(150, 300)">
-    <circle cx="50" cy="50" r="50" fill="white"/>
-    <circle cx="100" cy="50" r="50" fill="lightgray"/>
-    <circle cx="50" cy="50" r="50" fill="none" stroke="blue" stroke-width="2"/>
-    <circle cx="100" cy="50" r="50" fill="none" stroke="blue" stroke-width="2"/>
+    <circle cx="50" cy="50" r="50" fill="white" stroke="blue" stroke-width="2"/>
+    <circle cx="100" cy="50" r="50" fill="lightgray" stroke="blue" stroke-width="2"/>
+    <path d="M 50,50 A 50,50 0 0 1 100,50 A 50,50 0 0 1 50,50 Z" fill="lightgray"/>
     <text x="75" y="120" font-size="20" text-anchor="middle">RIGHT OUTER JOIN</text>
     <text x="25" y="55" font-size="20" text-anchor="middle" fill="blue">A</text>
     <text x="125" y="55" font-size="20" text-anchor="middle" fill="blue">B</text>
@@ -34,10 +34,8 @@
 
   <!-- FULL OUTER JOIN -->
   <g transform="translate(450, 300)">
-    <circle cx="50" cy="50" r="50" fill="lightgray"/>
-    <circle cx="100" cy="50" r="50" fill="lightgray"/>
-    <circle cx="50" cy="50" r="50" fill="none" stroke="blue" stroke-width="2"/>
-    <circle cx="100" cy="50" r="50" fill="none" stroke="blue" stroke-width="2"/>
+    <circle cx="50" cy="50" r="50" fill="lightgray" stroke="blue" stroke-width="2"/>
+    <circle cx="100" cy="50" r="50" fill="lightgray" stroke="blue" stroke-width="2"/>
     <text x="75" y="120" font-size="20" text-anchor="middle">FULL OUTER JOIN</text>
     <text x="25" y="55" font-size="20" text-anchor="middle" fill="blue">A</text>
     <text x="125" y="55" font-size="20" text-anchor="middle" fill="blue">B</text>
