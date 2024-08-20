@@ -62,6 +62,7 @@
 - [SERIAL en PostgreSQL](#serial-en-postgresql)
 - [Importancia de la Integridad Referencial en las Tablas](#importancia-de-la-integridad-referencial-en-las-tablas)
 - [¿Qué es una Transacción en Bases de Datos?](#qué-es-una-transacción-en-bases-de-datos)
+- [Comandos de Transacciones en SQL](#comandos-de-transacciones-en-sql)
 
 
 --------------------------------------------------------------------------------
@@ -1389,6 +1390,61 @@ aplicaciones al asegurar que las secuencias de operaciones complejas se manejen
 de manera robusta y segura.
 
 --------------------------------------------------------------------------------
+
+## Comandos de Transacciones en SQL
+En SQL, los comandos de transacciones permiten controlar cómo se agrupan y 
+ejecutan las operaciones de manipulación de datos (DML) para garantizar que se 
+respeten las propiedades ACID (Atomicidad, Consistencia, Aislamiento, 
+Durabilidad). 
+
+| **Comando**             | **Descripción**                                                                                                                                                    |
+|-------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| **`BEGIN`**             | Inicia una nueva transacción. Todas las operaciones subsecuentes se agrupan en una transacción hasta que se ejecute `COMMIT` o `ROLLBACK`.                          |
+| **`COMMIT`**            | Confirma todos los cambios realizados en la transacción actual, haciendo que sean permanentes en la base de datos. Después de un `COMMIT`, la transacción se cierra. |
+| **`ROLLBACK`**          | Revierte todos los cambios realizados en la transacción actual desde el último `BEGIN`, devolviendo la base de datos al estado anterior al inicio de la transacción. |
+| **`SAVEPOINT`**         | Crea un punto de guardado dentro de una transacción que se puede utilizar para deshacer una parte de la transacción sin afectar al resto.                           |
+| **`RELEASE SAVEPOINT`** | Elimina un punto de guardado previamente definido.                                                                                                                 |
+| **`ROLLBACK TO SAVEPOINT`** | Revierte las operaciones hasta el `SAVEPOINT` especificado, pero no termina la transacción. Las operaciones antes del `SAVEPOINT` se mantienen.               |
+
+### Ejemplos de Uso:
+#### 1. Iniciar y Confirmar una Transacción:
+```sql
+BEGIN;
+INSERT INTO cuentas (cliente_id, balance) VALUES (1, 1000);
+UPDATE cuentas SET balance = balance - 100 WHERE cliente_id = 1;
+COMMIT;
+```
+* **Descripción**: Se inicia una transacción, se realizan las operaciones de 
+  inserción y actualización, y finalmente, se confirma la transacción con 
+  **`COMMIT`**, haciendo permanentes los cambios.
+
+#### 2. Revertir una Transacción:
+```sql
+BEGIN;
+INSERT INTO cuentas (cliente_id, balance) VALUES (2, 2000);
+DELETE FROM cuentas WHERE cliente_id = 2;
+ROLLBACK;
+```
+* **Descripción**: Se inicia una transacción, se realizan las operaciones de 
+  inserción y eliminación, pero luego se ejecuta un **`ROLLBACK`**, revirtiendo todos 
+  los cambios realizados en la transacción.
+
+#### 3. Uso de SAVEPOINT:
+```sql
+BEGIN;
+INSERT INTO cuentas (cliente_id, balance) VALUES (3, 3000);
+SAVEPOINT sp1;
+UPDATE cuentas SET balance = balance - 500 WHERE cliente_id = 3;
+ROLLBACK TO SAVEPOINT sp1;
+COMMIT;
+```
+* **Descripción**: Se inicia una transacción, se inserta un registro, se crea un 
+  **`SAVEPOINT`**, se realiza una actualización, y luego se revierte solo la operación 
+  después del **`SAVEPOINT`**. Finalmente, se confirma la transacción.
+
+--------------------------------------------------------------------------------
+
+
 
 
 
