@@ -51,6 +51,7 @@
 - [LEFT OUTER JOIN (LEFT JOIN)](#left-outer-join-left-join)
 - [RIGHT OUTER JOIN (RIGHT JOIN)](#right-outer-join-right-join)
 - [FULL OUTER JOIN](#full-outer-join)
+- [HAVING en SQL](#having-en-sql)
 
 
 --------------------------------------------------------------------------------
@@ -972,9 +973,44 @@ FULL OUTER JOIN pedidos b ON a.cliente_id = b.cliente_id;
   hay coincidencia).
 
 --------------------------------------------------------------------------------
-  
+
+## HAVING en SQL
+La cláusula HAVING en SQL se utiliza para filtrar resultados después de que se 
+hayan aplicado funciones de agregación (como SUM, AVG, COUNT, etc.). HAVING es 
+similar a WHERE, pero se usa en conjunto con GROUP BY para filtrar los grupos de 
+resultados generados por la consulta.
+
+### WHERE vs HAVING
+#### WHERE**:
+* Se utiliza para filtrar filas individuales antes de aplicar cualquier función 
+  de agregación.
+* No puede utilizarse para filtrar resultados basados en agregaciones.
+* **Ejemplo**:
+```sql
+SELECT empleado_id, SUM(monto) 
+FROM ventas 
+WHERE monto > 100 
+GROUP BY empleado_id;
+```
+* Aquí, **`WHERE`** filtra las filas individuales donde monto es mayor que 100 antes 
+  de realizar la agregación.
+
+#### HAVING:
+* Se utiliza para filtrar los resultados después de que se hayan aplicado las 
+  funciones de agregación y los grupos hayan sido formados.
+* Se utiliza principalmente para filtrar grupos de datos.
+* **Ejemplo**:
+```sql
+SELECT empleado_id, SUM(monto) 
+FROM ventas 
+GROUP BY empleado_id 
+HAVING SUM(monto) > 1000;
+```
+* Aquí, **`HAVING`** filtra los grupos para incluir solo aquellos cuyo total 
+  (SUM(monto)) es mayor que 1000.  
   
 --------------------------------------------------------------------------------
+
 
   
   
