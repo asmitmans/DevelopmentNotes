@@ -52,6 +52,12 @@
 - [RIGHT OUTER JOIN (RIGHT JOIN)](#right-outer-join-right-join)
 - [FULL OUTER JOIN](#full-outer-join)
 - [HAVING en SQL](#having-en-sql)
+- [Data Manipulation Language (DML) en SQL](#data-manipulation-language-dml-en-sql)
+- [Uso de IN en SQL](#uso-de-in-en-sql)
+- [Uso de `DELETE` sin condicion](#uso-de-delete-sin-condicion)
+- [Uso de `UPDATE` sin condicion](#uso-de-update-sin-condicion)
+- [Tipos de Datos en PostgreSQL](#tipos-de-datos-en-postgresql)
+- [Tipos de Datos Numéricos en PostgreSQL con Rangos de Valores](#tipos-de-datos-numéricos-en-postgresql-con-rangos-de-valores)
 
 
 --------------------------------------------------------------------------------
@@ -1011,16 +1017,205 @@ HAVING SUM(monto) > 1000;
   
 --------------------------------------------------------------------------------
 
+## Data Manipulation Language (DML) en SQL
+**Data Manipulation Language (DML)** es un subconjunto de SQL que incluye los 
+comandos utilizados para manipular y gestionar los datos en una base de datos 
+relacional. Estos comandos permiten insertar, actualizar, eliminar y consultar 
+datos almacenados en las tablas.
 
-  
+### Principales Comandos DML:
+1. #### INSERT:
+* **Función**: Se utiliza para insertar nuevos registros en una tabla.
+* **Ejemplo**:
+```sql
+INSERT INTO empleados (nombre, edad, departamento) VALUES ('Juan', 30, 'Ventas');
+```
+
+2. #### UPDATE:
+* **Función**: Se utiliza para modificar los datos existentes en una tabla.
+* **Ejemplo**:
+```sql
+UPDATE empleados SET edad = 31 WHERE nombre = 'Juan';
+```
+Otro ejemplo
+```sql
+UPDATE empleados SET departamento = 'Marketing' WHERE departamento = 'Ventas' 
+AND edad > 25;
+```
+
+3. #### DELETE:
+* **Función**: Se utiliza para eliminar registros de una tabla.
+* **Ejemplo**:
+```sql
+DELETE FROM empleados WHERE nombre = 'Juan';
+```
+
+4. #### SELECT:
+* **Función**: Se utiliza para consultar y recuperar datos de una tabla.
+* **Ejemplo**:
+```sql
+SELECT nombre, edad FROM empleados WHERE departamento = 'Ventas';
+```
+### Características Relevantes:
+* **Transacciones**: Las operaciones DML generalmente se realizan dentro de 
+  transacciones para garantizar la integridad de los datos. Esto significa que 
+  los cambios pueden ser confirmados (**`COMMIT`**) o revertidos (**`ROLLBACK`**).
+* **Manipulación de Datos**: DML se enfoca exclusivamente en la manipulación de los 
+  datos existentes en la base de datos, a diferencia del Data Definition 
+  Language (DDL), que se usa para definir la estructura de la base de datos.
   
 --------------------------------------------------------------------------------
-  
 
+## Uso de IN en SQL
+La cláusula **`IN`** en SQL se utiliza para especificar múltiples valores en una 
+condición **`WHERE`**. Es una forma concisa de verificar si un valor de una columna 
+coincide con alguno de los valores dentro de una lista o subconsulta.
 
+### Sintaxis Básica:
+```sql
+SELECT columna1, columna2 
+FROM nombre_tabla 
+WHERE columna IN (valor1, valor2, valor3, ...);
+```
 
+### Ejemplo con Lista de Valores:
+```sql
+SELECT nombre, departamento 
+FROM empleados 
+WHERE departamento IN ('Ventas', 'Marketing', 'IT');
+```
+* **Explicación**: Este comando selecciona todos los empleados cuyos departamentos 
+  sean "Ventas", "Marketing" o "IT".
 
+### Ejemplo con Subconsulta:
+```sql
+SELECT nombre, departamento 
+FROM empleados 
+WHERE departamento IN (SELECT departamento FROM departamentos 
+WHERE ubicacion = 'Madrid');
+```
+* **Explicación**: Este comando selecciona todos los empleados cuyos departamentos 
+  coinciden con los departamentos ubicados en "Madrid" según la tabla 
+  **`departamentos`**.
 
+### Ventajas de IN:
+* **Simplicidad**: Permite evitar el uso de múltiples condiciones OR.
+* **Legibilidad**: Hace que las consultas sean más legibles y fáciles de entender 
+  cuando se comparan varios valores.
+
+--------------------------------------------------------------------------------
+
+## Uso de `DELETE` sin condicion
+Si intentas borrar un registro en una tabla SQL sin especificar un campo 
+identificador (o cualquier condición en la cláusula **`WHERE`**), el comando de 
+eliminación podría eliminar todos los registros de la tabla.
+
+### Ejemplo:
+Supongamos que tienes la tabla **`empleados`**, y ejecutas el siguiente comando sin 
+una condición **`WHERE`**:
+```sql
+DELETE FROM empleados;
+```
+**Consecuencia**:
+* ***Sin `WHERE`**: Este comando eliminaría todos los registros de la tabla empleados, 
+  dejando la tabla vacía.
+
+--------------------------------------------------------------------------------
+
+## Uso de `UPDATE` sin condicion
+Si se ejecuta un comando **`UPDATE`** sin incluir una cláusula **`WHERE`**, se actualizarán 
+todos los registros de la tabla.
+
+### Ejemplo:
+Supongamos que tienes la tabla **`empleados`**, y ejecutas el siguiente comando sin 
+una condición **`WHERE`**:
+```sql
+UPDATE empleados 
+SET departamento = 'Marketing';
+```
+**Consecuencia**:
+* **Sin `WHERE`**: Este comando cambiaría el valor del campo departamento a "Marketing" 
+  para todos los registros en la tabla **`empleados`**, independientemente de su valor 
+  original.
+
+--------------------------------------------------------------------------------
+
+## Tipos de Datos en PostgreSQL
+PostgreSQL soporta una amplia variedad de tipos de datos que se pueden utilizar 
+para definir las columnas de una tabla. A continuación se presenta una lista de 
+los tipos de datos más comunes:
+
+1. ### Tipos Numéricos
+* **`INTEGER (INT)`**: Entero de 4 bytes.
+* **`SMALLINT`**: Entero pequeño de 2 bytes.
+* **`BIGINT`**: Entero grande de 8 bytes.
+* **`SERIAL`**: Entero autoincremental de 4 bytes.
+* **`BIGSERIAL`**: Entero autoincremental de 8 bytes.
+* **`DECIMAL / NUMERIC`**: Número exacto con precisión y escala definidas.
+* **`REAL`**: Número de punto flotante de 4 bytes.
+* **`DOUBLE PRECISION`**: Número de punto flotante de 8 bytes.
+
+2. ### Tipos de Cadenas de Texto
+* **`VARCHAR(n)`**: Cadena de texto de longitud variable con un límite de **`n`** caracteres.
+* **`CHAR(n)`**: Cadena de texto de longitud fija de **`n`** caracteres.
+* **`TEXT`**: Cadena de texto de longitud variable sin límite específico.
+
+3. ### Tipos de Fecha y Hora
+* **`DATE`**: Fecha (año, mes, día).
+* **`TIME [WITHOUT TIME ZONE]`**: Hora del día (sin información de zona horaria).
+* **`TIMESTAMP [WITHOUT TIME ZONE]`**: Marca de tiempo (fecha y hora sin zona horaria).
+* **`TIMESTAMP WITH TIME ZONE`**: Marca de tiempo con zona horaria.
+* **`INTERVAL`**: Intervalo de tiempo (diferencia entre dos tiempos).
+
+4. ### Tipos Booleanos
+* **`BOOLEAN`**: Valor lógico que puede ser **`TRUE`, `FALSE` o `NULL`**.
+
+5. ### Tipos Monetarios
+* **`MONEY`**: Valor monetario con símbolo de moneda.
+
+6. ### Tipos de Datos Binarios
+* **`BYTEA`**: Datos binarios (byte array).
+
+7. ### Tipos Geográficos
+* **`POINT`**: Un punto en un plano de 2D.
+* **`LINE`**: Línea infinita en un plano de 2D.
+* **`LSEG`**: Segmento de línea en un plano de 2D.
+* **`BOX`**: Rectángulo en un plano de 2D.
+* **`PATH`**: Camino geométrico en un plano de 2D.
+* **`POLYGON`**: Polígono en un plano de 2D.
+* **`CIRCLE`**: Círculo en un plano de 2D.
+
+8. ### Tipos de Datos JSON
+* **`JSON`**: Datos en formato JSON, sin verificación de la estructura.
+* **`JSONB`**: Datos en formato JSON almacenados en formato binario con 
+  verificación de la estructura.
+
+9. ### Tipos de Datos de Matriz
+* **`<tipo_de_dato>[]`**: Matriz de cualquier tipo de datos base (ej. **`INTEGER[]`**, 
+  **`TEXT[]`**).
+
+1.  ### Otros Tipos de Datos
+* **`UUID`**: Identificador único universal.
+* **`XML`**: Datos en formato XML.
+* **`ARRAY`**: Matriz de elementos de un tipo de datos.
+* **`CIDR`, `INET`, `MACADDR`**: Para almacenar direcciones de red, IP, y direcciones MAC.
+
+--------------------------------------------------------------------------------
+
+## Tipos de Datos Numéricos en PostgreSQL con Rangos de Valores
+
+| **Tipo de Dato**        | **Descripción**                                | **Rango de Valores**                                           | **Precisión**                 |
+|-------------------------|------------------------------------------------|----------------------------------------------------------------|-------------------------------|
+| `INTEGER` (`INT`)       | Entero de 4 bytes                              | -2,147,483,648 a 2,147,483,647                                 | N/A                           |
+| `SMALLINT`              | Entero pequeño de 2 bytes                      | -32,768 a 32,767                                               | N/A                           |
+| `BIGINT`                | Entero grande de 8 bytes                       | -9,223,372,036,854,775,808 a 9,223,372,036,854,775,807         | N/A                           |
+| `SERIAL`                | Entero autoincremental de 4 bytes              | 1 a 2,147,483,647                                              | N/A                           |
+| `BIGSERIAL`             | Entero autoincremental de 8 bytes              | 1 a 9,223,372,036,854,775,807                                  | N/A                           |
+| `DECIMAL` / `NUMERIC`   | Número exacto con precisión y escala definidas | Ajustable según la precisión especificada                      | Definida por el usuario       |
+| `REAL`                  | Número de punto flotante de 4 bytes            | Aproximadamente de -3.4 * 10^38 a 3.4 * 10^38                  | 6 decimales significativos    |
+| `DOUBLE PRECISION`      | Número de punto flotante de 8 bytes            | Aproximadamente de -1.7 * 10^308 a 1.7 * 10^308                | 15 decimales significativos   |
+
+--------------------------------------------------------------------------------
 
 
 
