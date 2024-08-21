@@ -64,6 +64,8 @@
 - [¿Qué es una Transacción en Bases de Datos?](#qué-es-una-transacción-en-bases-de-datos)
 - [Comandos de Transacciones en SQL](#comandos-de-transacciones-en-sql)
 - [Modo Autocommit en SQL](#modo-autocommit-en-sql)
+- [Buenas Prácticas en la Gestión de Bases de Datos Relacionales](#buenas-prácticas-en-la-gestión-de-bases-de-datos-relacionales)
+- [Lenguaje de Definición de Datos (DDL) en SQL](#lenguaje-de-definición-de-datos-ddl-en-sql)
 
 
 --------------------------------------------------------------------------------
@@ -1503,21 +1505,113 @@ COMMIT;  -- Confirma la transacción
 
 --------------------------------------------------------------------------------
 
+## Buenas Prácticas en la Gestión de Bases de Datos Relacionales
+En la gestión de bases de datos relacionales, es fundamental seguir buenas 
+prácticas que aseguren la integridad de los datos, la fiabilidad del sistema, y 
+la capacidad de recuperación ante incidentes.
 
+### 1. Utilizar Claves PRIMARY KEY y FOREIGN KEY para Garantizar la Integridad Referencial:
+Las claves primarias (**`PRIMARY KEY`**) aseguran la unicidad y la identificación de 
+cada fila en una tabla, mientras que las claves foráneas (**`FOREIGN KEY`**) 
+establecen y refuerzan las relaciones entre tablas. El uso de estas claves es 
+esencial para mantener la integridad referencial, garantizando que las relaciones 
+entre los datos sean correctas y consistentes.
 
+### 2. Definir Reglas de Negocio y Restricciones de Integridad en la Base de Datos:
+Es importante que las reglas de negocio, como las restricciones de integridad 
+(**`NOT NULL`, `UNIQUE`, `CHECK`**), se implementen a nivel de base de datos para evitar 
+la entrada de datos inválidos o inconsistentes. Esto asegura que los datos 
+siempre cumplan con las expectativas y los requerimientos del sistema.
 
+### 3. Realizar Pruebas Exhaustivas de las Operaciones que Modifican Datos:
+Antes de implementar operaciones que modifican datos (como **`INSERT`, `UPDATE`**, 
+**`DELETE`**), es crucial realizar pruebas exhaustivas para verificar que las 
+operaciones se comportan como se espera y no introducen errores o inconsistencias 
+en los datos. Esto incluye pruebas de escenarios límite, pruebas de integridad 
+referencial y validaciones de negocio.
 
+### 4. Implementar un Plan de Recuperación ante Desastres para Proteger la Base de Datos contra Fallos del Sistema:
+Un plan de recuperación ante desastres es fundamental para garantizar que la 
+base de datos pueda ser restaurada en caso de fallos del sistema, como pérdida 
+de datos, corrupción de archivos o fallos de hardware. Esto incluye respaldos 
+regulares, procedimientos de restauración, y pruebas periódicas del plan de 
+recuperación.
 
+### 5. Optimizar el Rendimiento mediante el Uso Adecuado de Índices:
+El uso de índices en las tablas puede mejorar significativamente el rendimiento 
+de las consultas, especialmente en bases de datos grandes. Sin embargo, es 
+importante diseñar los índices cuidadosamente para evitar impactos negativos en 
+las operaciones de escritura (**`INSERT`, `UPDATE`, `DELETE`**). Además, se debe 
+realizar un mantenimiento regular de los índices, como la reconstrucción de 
+índices fragmentados.
 
+--------------------------------------------------------------------------------
 
+## Lenguaje de Definición de Datos (DDL) en SQL
+El **Lenguaje de Definición de Datos (DDL)** es un subconjunto del lenguaje SQL que 
+se utiliza para definir, modificar y eliminar la estructura de los objetos en 
+una base de datos. Estos objetos incluyen tablas, índices, esquemas, vistas, 
+entre otros.
 
+### Principales Comandos DDL:
+#### 1. `CREATE`:
+* **Función**: Crea nuevos objetos en la base de datos, como tablas, índices, 
+  vistas, esquemas, etc.
+* **Ejemplo**:
+```sql
+CREATE TABLE empleados (
+    id SERIAL PRIMARY KEY,
+    nombre VARCHAR(100) NOT NULL,
+    edad INT,
+    departamento VARCHAR(50)
+);
+```
+* **Descripción**: Este comando crea una nueva tabla llamada empleados con las 
+  columnas especificadas.
 
+#### 2. `ALTER`:
+* **Función**: Modifica la estructura de un objeto existente en la base de datos.
+* **Ejemplo**:
+```sql
+ALTER TABLE empleados ADD COLUMN salario DECIMAL(10, 2);
+```
+* **Descripción**: Este comando añade una nueva columna llamada salario a la tabla 
+  empleados.
 
+#### 3. `DROP`:
+* **Función**: Elimina un objeto de la base de datos, como una tabla, vista, índice, 
+  etc.
+* **Ejemplo**:
+```sql
+DROP TABLE empleados;
+```
+* **Descripción**: Este comando elimina la tabla empleados y todos los datos 
+  contenidos en ella.
 
+#### 4. `TRUNCATE`:
+* **Función**: Elimina rápidamente todos los registros de una tabla, reseteando 
+  cualquier contador de identificadores automáticos, pero manteniendo la 
+  estructura de la tabla.
+* **Ejemplo**:
+```sql
+TRUNCATE TABLE empleados;
+```
+* **Descripción**: Este comando elimina todos los registros de la tabla empleados, 
+  pero la tabla en sí permanece en la base de datos.
 
+### Características Clave del DDL:
+* **Transacciones Implícitas**:
+Las operaciones DDL suelen ser transacciones implícitas, lo que significa que se 
+confirman automáticamente cuando se ejecutan y no pueden ser revertidas mediante 
+un **`ROLLBACK`**.
 
+* **Cambios Permanentes**:
+Los comandos DDL realizan cambios permanentes en la estructura de la base de 
+datos. Una vez que un comando DDL se ejecuta con éxito, los cambios son 
+inmediatamente visibles para todos los usuarios y no pueden deshacerse sin 
+ejecutar comandos adicionales.
 
-
+--------------------------------------------------------------------------------
 
 
 
