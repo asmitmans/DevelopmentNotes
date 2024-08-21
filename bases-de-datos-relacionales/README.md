@@ -66,6 +66,7 @@
 - [Modo Autocommit en SQL](#modo-autocommit-en-sql)
 - [Buenas Prácticas en la Gestión de Bases de Datos Relacionales](#buenas-prácticas-en-la-gestión-de-bases-de-datos-relacionales)
 - [Lenguaje de Definición de Datos (DDL) en SQL](#lenguaje-de-definición-de-datos-ddl-en-sql)
+- [Borrar Tablas Referenciadas en SQL](#borrar-tablas-referenciadas-en-sql)
 
 
 --------------------------------------------------------------------------------
@@ -1610,6 +1611,63 @@ Los comandos DDL realizan cambios permanentes en la estructura de la base de
 datos. Una vez que un comando DDL se ejecuta con éxito, los cambios son 
 inmediatamente visibles para todos los usuarios y no pueden deshacerse sin 
 ejecutar comandos adicionales.
+
+--------------------------------------------------------------------------------
+
+## Borrar Tablas Referenciadas en SQL
+En una base de datos relacional, cuando una tabla tiene una clave foránea 
+**(`FOREIGN KEY`)** que referencia a otra tabla, no puedes eliminar (borrar) la 
+tabla referenciada directamente si existen relaciones activas, a menos que tomes 
+medidas adicionales. Esto es para garantizar la integridad referencial.
+
+### Opciones para Borrar Tablas Referenciadas:
+#### 1. Eliminar las Restricciones de Clave Foránea (`FOREIGN KEY`) Antes de Borrar la Tabla:
+Puedes eliminar primero las restricciones de clave foránea que hacen referencia 
+a la tabla que deseas borrar, y luego eliminar la tabla.
+* **Pasos**:
+  **1. Eliminar la Clave Foránea**:
+```sql
+ALTER TABLE tabla_hija DROP CONSTRAINT fk_nombre_de_la_restricción;
+```
+  **2. Borrar la Tabla Referenciada**:
+```sql
+DROP TABLE tabla_referenciada;
+```
+
+#### 2. Utilizar `CASCADE` para Eliminar la Tabla Referenciada:
+En PostgreSQL y otros sistemas de bases de datos, puedes usar la opción **`CASCADE`** 
+cuando eliminas una tabla. Esto eliminará automáticamente todas las claves 
+foráneas que hacen referencia a la tabla y la propia tabla.
+* **Comando**:
+```sql
+DROP TABLE tabla_referenciada CASCADE;
+```
+* **Descripción**: Este comando eliminará la tabla tabla_referenciada y 
+  automáticamente eliminará todas las referencias a ella en otras tablas.
+
+#### 3. Eliminar Manualmente las Filas Dependientes Antes de Borrar la Tabla:
+Si no deseas utilizar **`CASCADE`**, puedes eliminar manualmente las filas 
+dependientes en las tablas que referencian la tabla que deseas borrar.
+* **Pasos**:
+  **1. Eliminar las Filas Dependientes**:
+```sql
+DELETE FROM tabla_hija WHERE referencia = valor_referenciado;
+```
+  **2. Borrar la Tabla Referenciada**:
+```sql
+DROP TABLE tabla_referenciada;
+```
+
+### Consideraciones:
+* **Integridad Referencial**:
+La integridad referencial es clave para mantener datos consistentes. Borrar una 
+tabla referenciada sin tener cuidado puede llevar a inconsistencias y errores 
+lógicos en tu base de datos.
+
+* **Precaución con `CASCADE`**:
+Usar **`CASCADE`** es poderoso, pero también peligroso si no se utiliza 
+correctamente. Puede borrar más datos de los que inicialmente se pretendía, por 
+lo que debe utilizarse con precaución.
 
 --------------------------------------------------------------------------------
 
