@@ -74,6 +74,7 @@
 - [Diferencias Fundamentales entre el Modelo Relacional y el Modelo Conceptual](#diferencias-fundamentales-entre-el-modelo-relacional-y-el-modelo-conceptual)
 - [Modelo Lógico](#modelo-lógico)
 - [Modelo Físico](#modelo-físico)
+- [Normalización y Desnormalización](#normalización-y-desnormalización)
 
 
 --------------------------------------------------------------------------------
@@ -1932,13 +1933,38 @@ implementable en el sistema de base de datos.
 
 --------------------------------------------------------------------------------
 
+## Normalización y Desnormalización
 
+### Normalización
+* **Definición**: La normalización es el proceso de organizar los datos en una base 
+  de datos para minimizar la redundancia y evitar problemas de inconsistencia. 
+  Se logra mediante la aplicación de varias formas normales, cada una de las 
+  cuales impone una regla para asegurar la integridad de los datos.
+* **Objetivo**: Garantizar que los datos se almacenen de manera eficiente y 
+  consistente, evitando duplicaciones y asegurando que cada dato se almacene 
+  solo una vez.
 
+### Desnormalización
+* **Definición**: La desnormalización es el proceso de combinar tablas normalizadas 
+  para mejorar el rendimiento de las consultas, a menudo introduciendo 
+  redundancia intencionalmente.
+* **Objetivo**: Optimizar el rendimiento de las consultas y reducir la complejidad 
+  en la recuperación de datos, especialmente en sistemas donde las operaciones 
+  de lectura son más frecuentes que las de escritura.
 
+### Diferencias Clave:
+* **Normalización**: Reduce la redundancia y mejora la integridad de los datos, pero 
+  puede hacer que las consultas sean más complejas y lentas debido a la necesidad 
+  de realizar JOINs entre múltiples tablas.
+* **Desnormalización**: Mejora el rendimiento de las consultas al reducir la 
+  necesidad de JOINs, pero puede aumentar la redundancia y el riesgo de 
+  inconsistencias.
 
+### Cuándo Usar Cada Enfoque:
+* **Normalización**: Es ideal en sistemas donde la integridad de los datos es 
+  crítica y las operaciones de escritura y actualización son comunes.
+* **Desnormalización**: Es útil en sistemas donde se prioriza el rendimiento de las 
+  consultas de lectura, como en sistemas de análisis de datos o en aplicaciones 
+  con alta carga de consultas.
 
-
-
-
-
-
+--------------------------------------------------------------------------------
