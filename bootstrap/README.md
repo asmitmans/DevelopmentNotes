@@ -548,6 +548,9 @@ dispositivo, manteniendo la interfaz limpia y fácil de usar.
 ---
 
 ## Componentes de Bootstrap
+
+`#Revisar`
+
 Bootstrap proporciona una variedad de componentes predefinidos que permiten 
 crear interfaces web de manera rápida y fácil. A continuación, se detallan 
 algunos de los componentes más utilizados junto con ejemplos de uso.
@@ -633,10 +636,6 @@ forma colapsable.
 * `accordion-button` define el botón que muestra u oculta el contenido.
 * `accordion-collapse` controla la visibilidad del contenido.
 
-
-Estos componentes hacen parte del conjunto de herramientas que ofrece Bootstrap 
-para crear interfaces consistentes y funcionales, adaptables a cualquier 
-dispositivo y personalizables según tus necesidades.
 
 ---
 
