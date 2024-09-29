@@ -5,6 +5,7 @@
 - [Integrando CDN de Bootstrap](#integrando-cdn-de-bootstrap)
 - [Documentación oficial de Bootstrap](#documentación-oficial-de-bootstrap)
 - [Integrando Bootstrap mediante Descarga](#integrando-bootstrap-mediante-descarga)
+- [Sistema de Grillas de Bootstrap](#sistema-de-grillas-de-bootstrap)
 
 
 ## Introducción a Bootstrap
@@ -104,8 +105,8 @@ completo.
 2. **Estructura de Archivos**: Descomprime el archivo descargado. Encontrarás al 
    menos dos carpetas principales:
 
-   * css/: Contiene los archivos CSS de Bootstrap.
-   * js/: Contiene los archivos JavaScript de Bootstrap y Popper.js.
+   * `css/`: Contiene los archivos CSS de Bootstrap.
+   * `js/`: Contiene los archivos JavaScript de Bootstrap y Popper.js.
 
 3. **Incluir el CSS**: Agrega el archivo CSS a tu proyecto añadiendo un `<link>` en el 
    `<head>` de tu archivo HTML:
@@ -126,6 +127,62 @@ completo.
 
 Una vez integrados, puedes utilizar todas las características y componentes de 
 Bootstrap en tu proyecto de manera local.
+
+---
+
+## Sistema de Grillas de Bootstrap
+
+El sistema de grillas (grid system) es el componente principal de Bootstrap para 
+crear layouts responsivos. Se basa en una cuadrícula de 12 columnas, y permite 
+organizar el contenido fácilmente con filas y columnas que se adaptan a 
+diferentes tamaños de pantalla.
+
+### Conceptos Clave:
+1. **Contenedores (`.container`, `.container-fluid`):**
+   Son elementos de envoltura que alinean y centran el contenido.
+   * `.container`: Tiene un ancho fijo y se ajusta automáticamente según el tamaño de pantalla.
+   * `.container-fluid`: Ocupa el 100% del ancho de la pantalla.
+
+2. **Filas (`.row`):**
+   Las filas contienen columnas y aseguran que estas se alineen correctamente. Deben ser hijos directos de un contenedor.
+
+3. **Columnas (`.col`):**
+   Se utilizan para dividir el espacio dentro de una fila. Bootstrap permite 12 columnas por fila y estas pueden combinarse para ajustar su ancho (por ejemplo, `.col-6` para ocupar 6 de las 12 columnas).
+
+### Tamaños de Pantalla (Breakpoints):
+Las columnas pueden ajustarse según el tamaño de la pantalla, usando los 
+siguientes prefijos:
+* `.col-sm-`: Pequeñas (≥576px).
+* `.col-md-`: Medianas (≥768px).
+* `.col-lg-`: Grandes (≥992px).
+* `.col-xl-`: Extra grandes (≥1200px).
+* `.col-xxl-`: Extra extra grandes (≥1400px).
+
+#### Ejemplo de Uso:
+* **Distribución Equitativa:**
+  Si quieres que todas las columnas de una fila se distribuyan equitativamente:
+```html
+<div class="container">
+  <div class="row">
+    <div class="col">Columna 1</div>
+    <div class="col">Columna 2</div>
+    <div class="col">Columna 3</div>
+  </div>
+</div>
+```
+* **Distribución Específica:**
+  Si quieres que una columna ocupe un espacio mayor:
+```html
+<div class="container">
+  <div class="row">
+    <div class="col-8">Columna grande</div>
+    <div class="col-4">Columna pequeña</div>
+  </div>
+</div>
+```
+
+El sistema de grillas de Bootstrap es muy flexible, permitiendo crear layouts 
+responsivos de forma rápida y sencilla.
 
 ---
 
