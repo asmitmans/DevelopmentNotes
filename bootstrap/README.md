@@ -4,6 +4,7 @@
 - [Introducción a Bootstrap](#introducción-a-bootstrap)
 - [Integrando CDN de Bootstrap](#integrando-cdn-de-bootstrap)
 - [Documentación oficial de Bootstrap](#documentación-oficial-de-bootstrap)
+- [Integrando Bootstrap mediante Descarga](#integrando-bootstrap-mediante-descarga)
 
 
 ## Introducción a Bootstrap
@@ -84,3 +85,47 @@ Es el recurso más actualizado y detallado para aprender sobre la integración,
 componentes, utilidades y ejemplos de uso del framework.
 
 ---
+
+## Integrando Bootstrap mediante Descarga
+
+`#Revisar`
+
+En lugar de usar una CDN, puedes descargar Bootstrap para tener todos sus 
+archivos localmente. Esto es útil si deseas un mayor control sobre los archivos, 
+trabajar offline, o personalizar el framework.
+
+### Pasos para integrar Bootstrap mediante descarga:
+
+1. Descargar Bootstrap: Ve a la página oficial de descarga de Bootstrap: 
+   https://getbootstrap.com/docs/5.3/getting-started/download/.
+Aquí puedes descargar la versión compilada y minificada o el código fuente 
+completo.
+
+2. Estructura de Archivos: Descomprime el archivo descargado. Encontrarás al 
+   menos dos carpetas principales:
+
+   * css/: Contiene los archivos CSS de Bootstrap.
+   * js/: Contiene los archivos JavaScript de Bootstrap y Popper.js.
+
+3. Incluir el CSS: Agrega el archivo CSS a tu proyecto añadiendo un ´<link>´ en el 
+   ´<head>´ de tu archivo HTML:
+
+   ´´´html
+   <link rel="stylesheet" href="path/to/bootstrap/css/bootstrap.min.css">
+   ´´´
+   Asegúrate de reemplazar ´path/to/bootstrap´ con la ruta correcta a los 
+   archivos en tu proyecto.
+
+4. Incluir el JavaScript: Agrega el archivo JavaScript de Bootstrap antes del 
+   cierre del ´<body>´:
+
+   ´´´html
+   <script src="path/to/bootstrap/js/bootstrap.bundle.min.js"></script>
+   ´´´
+   Este archivo incluye tanto el JavaScript de Bootstrap como Popper.js.
+
+Una vez integrados, puedes utilizar todas las características y componentes de 
+Bootstrap en tu proyecto de manera local.
+
+---
+
