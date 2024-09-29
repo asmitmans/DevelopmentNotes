@@ -525,6 +525,12 @@ hacer zoom.
 **Beneficio:** Facilita la navegación y mejora la experiencia en diferentes 
 dispositivos.
 
+> **Nota:** Las cards son responsivas en Bootstrap si utilizas clases como 
+> `img-fluid` para las imágenes y usas el sistema de grillas para controlar cómo 
+> se distribuyen las cards en diferentes tamaños de pantalla. Si las imágenes o 
+> elementos internos tienen tamaños fijos, entonces la responsividad de las 
+> cards se verá limitada.
+
 ### 5. Priorizar el Contenido de la Página Web
 El diseño responsivo implica mostrar u ocultar elementos según el tamaño de 
 pantalla para mejorar la experiencia del usuario.
