@@ -181,8 +181,27 @@ siguientes prefijos:
 </div>
 ```
 
-El sistema de grillas de Bootstrap es muy flexible, permitiendo crear layouts 
-responsivos de forma rápida y sencilla.
+### Ejemplo Práctico de Uso Responsivo:
+El siguiente ejemplo muestra cómo una columna cambia de tamaño según el ancho de 
+la pantalla:
+
+```html
+<div class="col-12 col-sm-6 col-md-4 col-lg-3">
+  <img src="ruta_imagen.extension" alt="Texto alternativo" class="img-fluid">
+</div>
+```
+En este caso:
+* En pantallas muy pequeñas (por debajo de `576px`), la columna ocupará las 12 
+  columnas completas.
+* En pantallas pequeñas (`≥576px`), ocupará 6 columnas (la mitad del ancho).
+* En pantallas medianas (`≥768px`), ocupará 4 columnas (un tercio del ancho).
+* En pantallas grandes (`≥992px`), ocupará 3 columnas (un cuarto del ancho).
+
+El uso de la clase `img-fluid` hace que la imagen sea responsiva, ajustándose al 
+ancho de su contenedor sin perder proporción.
 
 ---
+
+
+
 
