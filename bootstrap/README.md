@@ -2,6 +2,7 @@
 
 - [Bootstrap](#bootstrap)
 - [Introducción a Bootstrap](#introducción-a-bootstrap)
+- [Integrando CDN de Bootstrap](#integrando-cdn-de-bootstrap)
 
 
 ## Introducción a Bootstrap
@@ -36,6 +37,41 @@ diseñado para crear rápidamente interfaces de usuario responsivas y móviles.
 
 Bootstrap es ampliamente utilizado debido a su simplicidad, consistencia y 
 amplia documentación oficial.
+
+---
+
+## Integrando CDN de Bootstrap
+
+### Agregar el recurso CSS
+Para usar Bootstrap de manera rápida en un proyecto, se puede integrar el CSS 
+desde la CDN oficial. Esto permite cargar los estilos de Bootstrap desde 
+servidores externos sin necesidad de instalar nada localmente.
+
+#### Pasos esenciales:
+1. Agregar el siguiente `<link>` en el `<head>` de tu archivo HTML:
+
+```html
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/css/bootstrap.min.css">
+```
+Esto asegura que todas las clases de estilos de Bootstrap estén disponibles.
+
+### JavaScript
+Bootstrap utiliza algunas funcionalidades de JavaScript para interactuar con 
+componentes dinámicos como modales, tooltips, y otros. La integración de 
+JavaScript desde la CDN también es sencilla.
+
+#### Pasos esenciales:
+
+1. Agregar el siguiente `<script>` antes del cierre del `<body>`:
+
+```html
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+```
+Esto incluirá tanto el propio JavaScript de Bootstrap como Popper.js, necesario 
+para ciertos componentes como tooltips y dropdowns.
+
+Ambos recursos, CSS y JavaScript, son esenciales para que el framework funcione 
+correctamente y se aprovechen todas sus funcionalidades.
 
 ---
 
