@@ -7,6 +7,8 @@
 - [Integrando Bootstrap mediante Descarga](#integrando-bootstrap-mediante-descarga)
 - [Sistema de Grillas de Bootstrap](#sistema-de-grillas-de-bootstrap)
 - [Simular grid y flexbox de CSS en Bootstrap](#simular-grid-y-flexbox-de-css-en-bootstrap)
+- [Mobile First](#mobile-first)
+- [Mobile First en Bootstrap](#mobile-first-en-bootstrap)
 
 
 ## Introducción a Bootstrap
@@ -205,6 +207,7 @@ ancho de su contenedor sin perder proporción.
 
 ## Simular grid y flexbox de CSS en Bootstrap
 
+`#Revisar`
 
 ### 1. Simular CSS Grid con Bootstrap
 ```html
@@ -252,6 +255,76 @@ ancho de su contenedor sin perder proporción.
 
 ---
 
+## Mobile First
 
+### ¿Qué es?
+"Mobile First" es una estrategia de diseño y desarrollo web que prioriza la 
+creación de experiencias optimizadas para dispositivos móviles antes de 
+adaptarlas a pantallas más grandes (tabletas y ordenadores de escritorio). La 
+idea es enfocarse en el contenido esencial y la usabilidad en pantallas pequeñas 
+y luego escalar hacia versiones más complejas a medida que aumenta el tamaño de 
+la pantalla.
 
+### Características:
+* **Prioriza el Contenido Esencial:** La información y funciones más importantes se 
+  presentan de manera clara y accesible en dispositivos móviles.
+* **Adaptabilidad y Escalabilidad:** El diseño se basa en expandir y agregar 
+  elementos a medida que aumenta el tamaño de la pantalla, en lugar de reducir y 
+  eliminar funciones de un diseño de escritorio.
+* **Uso de Media Queries Min-width:** La técnica principal en CSS para "Mobile 
+  First" consiste en escribir estilos base para pantallas móviles y luego usar 
+  media queries con min-width para añadir estilos adicionales para pantallas más 
+  grandes.
+* **Rendimiento Mejorado:** Al centrarse primero en dispositivos móviles, que suelen 
+  tener conexiones de red y hardware más limitados, se fomenta la creación de 
+  experiencias rápidas y optimizadas.
+
+La estrategia "Mobile First" es clave para garantizar una experiencia de usuario 
+consistente y efectiva a través de múltiples dispositivos y tamaños de pantalla.
+
+---
+
+## Mobile First en Bootstrap
+Bootstrap adopta un enfoque "Mobile First" en su diseño y desarrollo. Esto 
+significa que todos los estilos base y funcionalidades están optimizados para 
+dispositivos móviles, y luego se adaptan a pantallas más grandes mediante media 
+queries.
+
+### Características específicas de Mobile First en Bootstrap:
+* **Estilos base para dispositivos móviles:** Todos los componentes de Bootstrap 
+  están diseñados inicialmente para pantallas pequeñas. A medida que el tamaño 
+  de la pantalla aumenta, se añaden reglas adicionales.
+
+* **Media Queries de `min-width`:** Bootstrap utiliza breakpoints con `min-width` para 
+  aplicar estilos adicionales según el tamaño de pantalla. Esto sigue el enfoque 
+  "Mobile First", ya que los estilos se construyen de menor a mayor (de móvil a 
+  escritorio). Ejemplo de breakpoints:
+
+  * **`sm` (≥576px):** Pequeñas pantallas (tabletas).
+  * **`md` (≥768px):** Pantallas medianas.
+  * **`lg` (≥992px):** Pantallas grandes (desktops).
+  * **`xl` (≥1200px):** Pantallas extra grandes.
+  * **`xxl` (≥1400px):** Pantallas extra extra grandes.
+  
+* **Componentes adaptables:** Todos los componentes, como navbars, grids y tarjetas, 
+  están diseñados para ser responsivos y adaptarse al tamaño de pantalla de 
+  forma progresiva.
+
+### Ejemplo de cómo se refleja Mobile First en Bootstrap:
+Una columna en Bootstrap se adapta de acuerdo con el tamaño de la pantalla, 
+usando breakpoints:
+
+```html
+<div class="col-12 col-sm-6 col-md-4 col-lg-3">Contenido</div>
+```
+**Comportamiento:**
+* **Móvil (`<576px`):** La columna ocupa el ancho completo (`col-12`).
+* **Pequeña (`≥576px`):** La columna ocupa la mitad del ancho (`col-sm-6`).
+* **Mediana (`≥768px`):** La columna ocupa un tercio del ancho (`col-md-4`).
+* **Grande (`≥992px`):** La columna ocupa un cuarto del ancho (`col-lg-3`).
+ 
+Bootstrap facilita el diseño responsivo desde una perspectiva "Mobile First", 
+asegurando que la experiencia sea fluida desde móviles hasta desktops.
+
+---
 
