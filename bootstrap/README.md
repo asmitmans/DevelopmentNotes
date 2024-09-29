@@ -12,6 +12,7 @@
 - [Uso de Media Queries](#uso-de-media-queries)
 - [Diseño Responsivo en Bootstrap](#diseño-responsivo-en-bootstrap)
 - [Componentes de Bootstrap](#componentes-de-bootstrap)
+- [Contenedores de Bootstrap](#contenedores-de-bootstrap)
 
 
 ## Introducción a Bootstrap
@@ -638,9 +639,28 @@ forma colapsable.
 
 ---
 
+## Contenedores de Bootstrap
+
+Los **contenedores** en Bootstrap son los elementos principales para alinear y 
+centrar el contenido en la página, y sirven como base para el diseño responsivo.
+
+### `Container`
+
+#### Características:
+* **Centro y Alineación:** Los contenedores proporcionan un ancho máximo y centran 
+  el contenido horizontalmente en la página.
+
+* **Tipos de Contenedores:**
+  * **`.container:`** Tiene un ancho fijo y cambia según el tamaño de pantalla (sm, 
+    md, lg, xl, xxl).
+  * **`.container-fluid:`** Ocupa el 100% del ancho de la pantalla independientemente 
+    del tamaño del viewport.
+
+---
 
 
 
+ 
 
 
 
