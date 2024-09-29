@@ -9,6 +9,8 @@
 - [Simular grid y flexbox de CSS en Bootstrap](#simular-grid-y-flexbox-de-css-en-bootstrap)
 - [Mobile First](#mobile-first)
 - [Mobile First en Bootstrap](#mobile-first-en-bootstrap)
+- [Uso de Media Queries](#uso-de-media-queries)
+- [Diseño Responsivo en Bootstrap](#diseño-responsivo-en-bootstrap)
 
 
 ## Introducción a Bootstrap
@@ -325,6 +327,216 @@ usando breakpoints:
  
 Bootstrap facilita el diseño responsivo desde una perspectiva "Mobile First", 
 asegurando que la experiencia sea fluida desde móviles hasta desktops.
+
+---
+
+## Uso de Media Queries
+
+### ¿Qué es?
+Las media queries son reglas de CSS que permiten aplicar estilos de manera 
+condicional en función de características del dispositivo o la ventana de 
+visualización (viewport), como el ancho de la pantalla, la orientación, y la 
+resolución. Esto ayuda a crear diseños responsivos que se adaptan a diferentes 
+tamaños y tipos de pantalla.
+
+### Características:
+* **Adaptabilidad:** Permite cambiar los estilos de una página web según el tamaño 
+  de pantalla o tipo de dispositivo.
+
+* **Condicionalidad:** Puedes aplicar estilos solo cuando se cumplen ciertas 
+  condiciones (e.g., un ancho mínimo de pantalla).
+
+* **Flexibilidad en diseño:** Permiten ajustar el layout, tipografía, y otros 
+  elementos para que se vean y funcionen de manera óptima en diferentes 
+  dispositivos (móviles, tabletas, desktops).
+
+### Sintaxis Básica:
+```css
+@media (condition) {
+  /* estilos aplicados cuando se cumple la condición */
+}
+```
+
+### Ejemplos con Breakpoints Comunes:
+
+#### 1. 576px (Pantallas pequeñas como móviles):
+
+```css
+@media (min-width: 576px) {
+  .contenedor {
+    background-color: lightblue;
+  }
+}
+```
+Esto aplicará un fondo azul claro cuando la pantalla tenga al menos 576px de
+ancho.
+
+#### 2. 760px (Tabletas pequeñas y móviles grandes):
+
+```css
+@media (min-width: 760px) {
+  .contenedor {
+    padding: 20px;
+  }
+}
+```
+Esto añade un `padding` de 20px a `.contenedor` si la pantalla es de al menos 760px 
+de ancho.
+
+#### 3. 992px (Pantallas medianas como tabletas y desktops pequeños):
+
+```css
+@media (min-width: 992px) {
+  .contenedor {
+    display: flex;
+    flex-direction: row;
+  }
+}
+```
+Esto cambia el layout de `.contenedor` a un `flexbox` con dirección de filas en 
+pantallas de al menos 992px.
+
+#### 4. 1200px (Pantallas grandes como desktops):
+```css
+@media (min-width: 1200px) {
+  .contenedor {
+    max-width: 1200px;
+    margin: auto;
+  }
+}
+```
+Aquí se limita el ancho máximo del contenedor y se centra el contenido si la 
+pantalla tiene al menos 1200px de ancho.
+
+### Orden Correcto para Media Queries
+Para evitar conflictos, deben ordenarse de mayor a menor ancho (min-width), es 
+decir, de pantallas grandes a pantallas pequeñas. Esto garantiza que las reglas 
+más específicas para pantallas más grandes se apliquen correctamente, y luego se 
+ajusten para pantallas más pequeñas.
+
+#### Orden Recomendado (de mayor a menor ancho):
+```css
+/* Media query para pantallas grandes (desktops) */
+@media (min-width: 1200px) {
+  .contenedor {
+    max-width: 1200px;
+    margin: auto;
+  }
+}
+
+/* Media query para pantallas medianas (tabletas y desktops pequeños) */
+@media (min-width: 992px) {
+  .contenedor {
+    display: flex;
+    flex-direction: row;
+  }
+}
+
+/* Media query para tabletas pequeñas y móviles grandes */
+@media (min-width: 760px) {
+  .contenedor {
+    padding: 20px;
+  }
+}
+
+/* Media query para pantallas pequeñas (móviles) */
+@media (min-width: 576px) {
+  .contenedor {
+    background-color: lightblue;
+  }
+}
+```
+
+#### ¿Por qué hacerlo así?
+* **Especificidad Progresiva:** Las reglas más generales para pantallas pequeñas 
+  están al final, mientras que las más específicas para pantallas grandes están 
+  al principio.
+
+* **Sobrescritura Correcta:** Los estilos para pantallas grandes se aplican primero, 
+  y luego se sobrescriben si la pantalla es más pequeña, garantizando que solo 
+  los estilos necesarios sean aplicados.
+
+De esta manera, las media queries se aplican correctamente y evitas conflictos 
+de estilos que puedan afectar el diseño responsivo.
+
+---
+
+## Diseño Responsivo en Bootstrap
+Bootstrap facilita el diseño responsivo con herramientas específicas. Aquí se 
+detallan algunos aspectos fundamentales para lograr un diseño responsivo 
+efectivo con Bootstrap:
+
+### 1. Usar la etiqueta `meta viewport`
+La etiqueta `<meta name="viewport">` es esencial para que el diseño responsivo 
+funcione correctamente. Controla cómo se ajusta la página al ancho de pantalla 
+del dispositivo.
+
+**En Bootstrap:**
+
+```html
+<meta name="viewport" content="width=device-width, initial-scale=1">
+```
+**Beneficio**: Esto permite que la página se adapte al ancho del dispositivo, 
+asegurando que los elementos se muestren de forma correcta y escalada en 
+pantallas pequeñas (móviles).
+
+### 2. Usar Grillas
+El sistema de grillas de Bootstrap (grid system) es la base para el diseño 
+responsivo, basado en una cuadrícula de 12 columnas. Los breakpoints (`sm`, `md`, 
+`lg`, `xl`, `xxl`) permiten ajustar la distribución de los elementos según el tamaño 
+de pantalla.
+
+**En Bootstrap:**
+
+```html
+<div class="container">
+  <div class="row">
+    <div class="col-sm-12 col-md-6">Columna 1</div>
+    <div class="col-sm-12 col-md-6">Columna 2</div>
+  </div>
+</div>
+```
+**Beneficio:** Esto asegura que la disposición de los elementos cambie según el 
+tamaño de pantalla, haciendo que el contenido sea legible y funcional.
+
+### 3. Usar Imágenes
+Las imágenes deben ser responsivas para ajustar su tamaño automáticamente al 
+ancho del contenedor.
+
+**En Bootstrap:**
+
+```html
+<img src="imagen.jpg" alt="Descripción" class="img-fluid">
+```
+**Beneficio:** La clase `img-fluid` hace que la imagen sea flexible y mantenga su 
+proporción mientras se ajusta al tamaño del contenedor.
+
+### 4. Considerar la Experiencia del Usuario
+El diseño responsivo se enfoca en la usabilidad y la accesibilidad. Esto implica 
+asegurar que los elementos interactivos (botones, menús) sean lo suficientemente 
+grandes en pantallas pequeñas y que el contenido sea legible sin necesidad de 
+hacer zoom.
+
+**En Bootstrap:**
+* Uso de componentes responsivos (`navbar`, `cards`).
+  
+* Uso de `spacing utilities` para ajustar márgenes y rellenos (`p-3`, `m-2`).
+
+**Beneficio:** Facilita la navegación y mejora la experiencia en diferentes 
+dispositivos.
+
+### 5. Priorizar el Contenido de la Página Web
+El diseño responsivo implica mostrar u ocultar elementos según el tamaño de 
+pantalla para mejorar la experiencia del usuario.
+
+**En Bootstrap:**
+
+```html
+<div class="d-none d-md-block">Contenido visible solo en pantallas medianas o más grandes</div>
+<div class="d-block d-md-none">Contenido visible solo en pantallas pequeñas</div>
+```
+**Beneficio:** Permite mostrar solo el contenido relevante para cada tipo de 
+dispositivo, manteniendo la interfaz limpia y fácil de usar.
 
 ---
 
