@@ -50,7 +50,7 @@ desde la CDN oficial. Esto permite cargar los estilos de Bootstrap desde
 servidores externos sin necesidad de instalar nada localmente.
 
 #### Pasos esenciales:
-1. Agregar el siguiente `<link>` en el `<head>` de tu archivo HTML:
+1. **Agregar el siguiente** `<link>` en el `<head>` de tu archivo HTML:
 
 ```html
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/css/bootstrap.min.css">
@@ -64,7 +64,7 @@ JavaScript desde la CDN también es sencilla.
 
 #### Pasos esenciales:
 
-1. Agregar el siguiente `<script>` antes del cierre del `<body>`:
+1. **Agregar el siguiente** `<script>` antes del cierre del `<body>`:
 
 ```html
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
@@ -96,18 +96,18 @@ trabajar offline, o personalizar el framework.
 
 ### Pasos para integrar Bootstrap mediante descarga:
 
-1. Descargar Bootstrap: Ve a la página oficial de descarga de Bootstrap: 
+1. **Descargar Bootstrap**: Ve a la página oficial de descarga de Bootstrap: 
    https://getbootstrap.com/docs/5.3/getting-started/download/.
 Aquí puedes descargar la versión compilada y minificada o el código fuente 
 completo.
 
-2. Estructura de Archivos: Descomprime el archivo descargado. Encontrarás al 
+2. **Estructura de Archivos**: Descomprime el archivo descargado. Encontrarás al 
    menos dos carpetas principales:
 
    * css/: Contiene los archivos CSS de Bootstrap.
    * js/: Contiene los archivos JavaScript de Bootstrap y Popper.js.
 
-3. Incluir el CSS: Agrega el archivo CSS a tu proyecto añadiendo un `<link>` en el 
+3. **Incluir el CSS**: Agrega el archivo CSS a tu proyecto añadiendo un `<link>` en el 
    `<head>` de tu archivo HTML:
 
    ```html
@@ -116,7 +116,7 @@ completo.
    Asegúrate de reemplazar `path/to/bootstrap` con la ruta correcta a los 
    archivos en tu proyecto.
 
-4. Incluir el JavaScript: Agrega el archivo JavaScript de Bootstrap antes del 
+4. **Incluir el JavaScript**: Agrega el archivo JavaScript de Bootstrap antes del 
    cierre del `<body>`:
 
    ```html
