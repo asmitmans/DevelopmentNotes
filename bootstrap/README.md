@@ -11,6 +11,7 @@
 - [Mobile First en Bootstrap](#mobile-first-en-bootstrap)
 - [Uso de Media Queries](#uso-de-media-queries)
 - [Diseño Responsivo en Bootstrap](#diseño-responsivo-en-bootstrap)
+- [Componentes de Bootstrap](#componentes-de-bootstrap)
 
 
 ## Introducción a Bootstrap
@@ -545,4 +546,108 @@ pantalla para mejorar la experiencia del usuario.
 dispositivo, manteniendo la interfaz limpia y fácil de usar.
 
 ---
+
+## Componentes de Bootstrap
+Bootstrap proporciona una variedad de componentes predefinidos que permiten 
+crear interfaces web de manera rápida y fácil. A continuación, se detallan 
+algunos de los componentes más utilizados junto con ejemplos de uso.
+
+**Nota Importante**
+> **Dato importante**:
+> * Los componentes de Bootstrap están compuestos de clases que colaboran para 
+>   que el componente se muestre de la manera que se expone en la documentación.
+> * Cuando quieras modificar o personalizar los estilos de un componente, es 
+>   importante identificar las clases involucradas y utilizar el inspector de 
+>   elementos para detallar las propiedades de CSS aplicadas.
+
+### Navbar
+La **Navbar** es un componente de navegación flexible que se adapta a diferentes 
+tamaños de pantalla.
+
+#### Uso básico de Navbar:
+```html
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <a class="navbar-brand" href="#">Navbar</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarNav">
+    <ul class="navbar-nav">
+      <li class="nav-item active">
+        <a class="nav-link" href="#">Inicio</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#">Enlace</a>
+      </li>
+    </ul>
+  </div>
+</nav>
+```
+
+#### Características:
+* La clase `navbar-expand-lg` permite que la navbar se colapse en pantallas 
+  pequeñas.
+* `navbar-light` y `bg-light` aplican estilos claros al texto y fondo.
+
+### Button
+Los **botones** son componentes básicos que se pueden personalizar con diferentes 
+clases.
+
+#### Uso básico de Button:
+```html
+<button type="button" class="btn btn-primary">Botón Primario</button>
+<button type="button" class="btn btn-secondary">Botón Secundario</button>
+```
+
+#### Características:
+* La clase `btn` es la base de todos los botones.
+* La clase `btn-primary` define el estilo del botón, en este caso un botón con 
+  color azul por defecto. Otros estilos disponibles son `btn-secondary`, 
+  `btn-success`, `btn-danger`, etc.
+
+
+### Accordion
+El **Accordion** es un componente de Bootstrap para mostrar y ocultar contenido de 
+forma colapsable.
+
+#### Uso básico de Accordion:
+```html
+<div class="accordion" id="accordionExample">
+  <div class="accordion-item">
+    <h2 class="accordion-header" id="headingOne">
+      <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne">
+        Sección 1
+      </button>
+    </h2>
+    <div id="collapseOne" class="accordion-collapse collapse show" data-bs-parent="#accordionExample">
+      <div class="accordion-body">
+        Contenido de la sección 1.
+      </div>
+    </div>
+  </div>
+</div>
+```
+
+#### Características:
+* `accordion` crea un contenedor para el componente.
+* `accordion-button` define el botón que muestra u oculta el contenido.
+* `accordion-collapse` controla la visibilidad del contenido.
+
+
+Estos componentes hacen parte del conjunto de herramientas que ofrece Bootstrap 
+para crear interfaces consistentes y funcionales, adaptables a cualquier 
+dispositivo y personalizables según tus necesidades.
+
+---
+
+
+
+
+
+
+
+
+
+
+
 
