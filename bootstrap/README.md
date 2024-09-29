@@ -6,6 +6,7 @@
 - [Documentación oficial de Bootstrap](#documentación-oficial-de-bootstrap)
 - [Integrando Bootstrap mediante Descarga](#integrando-bootstrap-mediante-descarga)
 - [Sistema de Grillas de Bootstrap](#sistema-de-grillas-de-bootstrap)
+- [Simular grid y flexbox de CSS en Bootstrap](#simular-grid-y-flexbox-de-css-en-bootstrap)
 
 
 ## Introducción a Bootstrap
@@ -199,6 +200,55 @@ En este caso:
 
 El uso de la clase `img-fluid` hace que la imagen sea responsiva, ajustándose al 
 ancho de su contenedor sin perder proporción.
+
+---
+
+## Simular grid y flexbox de CSS en Bootstrap
+
+
+### 1. Simular CSS Grid con Bootstrap
+```html
+<div class="container">
+  <div class="row">
+    <div class="col-6">Columna 1</div>
+    <div class="col-6">Columna 2</div>
+  </div>
+  <div class="row">
+    <div class="col-4">Columna 3</div>
+    <div class="col-4">Columna 4</div>
+    <div class="col-4">Columna 5</div>
+  </div>
+</div>
+```
+**Descripción:**
+* La primera fila tiene dos columnas que ocupan el 50% del ancho cada una.
+* La segunda fila tiene tres columnas, cada una ocupando un tercio del ancho.
+
+### 2. Flexbox no responsiva con Bootstrap
+```html
+<div class="d-flex justify-content-between">
+  <div>Elemento 1</div>
+  <div>Elemento 2</div>
+  <div>Elemento 3</div>
+</div>
+```
+**Descripción:**
+* Los elementos se distribuyen con espacio entre ellos, pero no se mueven hacia 
+  abajo si no caben.
+
+### 3. Flexbox responsiva con Bootstrap
+```html
+<div class="d-flex flex-wrap">
+  <div class="p-2">Elemento 1</div>
+  <div class="p-2">Elemento 2</div>
+  <div class="p-2">Elemento 3</div>
+  <div class="p-2">Elemento 4</div>
+</div>
+```
+**Descripción:**
+* La clase `flex-wrap` permite que los elementos se muevan hacia abajo 
+  automáticamente si no caben en la misma línea.
+* Los elementos se envuelven para ajustarse al ancho disponible.
 
 ---
 
