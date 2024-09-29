@@ -107,21 +107,21 @@ completo.
    * css/: Contiene los archivos CSS de Bootstrap.
    * js/: Contiene los archivos JavaScript de Bootstrap y Popper.js.
 
-3. Incluir el CSS: Agrega el archivo CSS a tu proyecto añadiendo un ´<link>´ en el 
-   ´<head>´ de tu archivo HTML:
+3. Incluir el CSS: Agrega el archivo CSS a tu proyecto añadiendo un `<link>` en el 
+   `<head>` de tu archivo HTML:
 
-   ´´´html
+   ```html
    <link rel="stylesheet" href="path/to/bootstrap/css/bootstrap.min.css">
-   ´´´
-   Asegúrate de reemplazar ´path/to/bootstrap´ con la ruta correcta a los 
+   ```
+   Asegúrate de reemplazar `path/to/bootstrap` con la ruta correcta a los 
    archivos en tu proyecto.
 
 4. Incluir el JavaScript: Agrega el archivo JavaScript de Bootstrap antes del 
-   cierre del ´<body>´:
+   cierre del `<body>`:
 
-   ´´´html
+   ```html
    <script src="path/to/bootstrap/js/bootstrap.bundle.min.js"></script>
-   ´´´
+   ```
    Este archivo incluye tanto el JavaScript de Bootstrap como Popper.js.
 
 Una vez integrados, puedes utilizar todas las características y componentes de 
