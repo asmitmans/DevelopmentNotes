@@ -3,6 +3,7 @@
 - [Bootstrap](#bootstrap)
 - [Introducción a Bootstrap](#introducción-a-bootstrap)
 - [Integrando CDN de Bootstrap](#integrando-cdn-de-bootstrap)
+- [Documentación oficial de Bootstrap](#documentación-oficial-de-bootstrap)
 
 
 ## Introducción a Bootstrap
@@ -75,3 +76,11 @@ correctamente y se aprovechen todas sus funcionalidades.
 
 ---
 
+## Documentación oficial de Bootstrap
+
+La documentación oficial de Bootstrap se encuentra en: https://getbootstrap.com/ 
+
+Es el recurso más actualizado y detallado para aprender sobre la integración, 
+componentes, utilidades y ejemplos de uso del framework.
+
+---
