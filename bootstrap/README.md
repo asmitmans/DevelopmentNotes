@@ -555,7 +555,6 @@ Bootstrap proporciona una variedad de componentes predefinidos que permiten
 crear interfaces web de manera rápida y fácil. A continuación, se detallan 
 algunos de los componentes más utilizados junto con ejemplos de uso.
 
-**Nota Importante**
 > **Dato importante**:
 > * Los componentes de Bootstrap están compuestos de clases que colaboran para 
 >   que el componente se muestre de la manera que se expone en la documentación.
