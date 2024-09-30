@@ -767,7 +767,7 @@ Bootstrap ofrece componentes avanzados que facilitan el diseño de interfaces m�
 complejas y atractivas. Aquí se detallan algunos de los componentes más útiles y 
 sus características.
 
-### 1. Componente Card
+### 1. Card
 Las cards son contenedores flexibles que permiten organizar contenido y se componen de varios elementos opcionales como títulos, textos, imágenes, y botones.
 
 #### Ejemplo de una Card Básica:
@@ -789,7 +789,7 @@ Las cards son contenedores flexibles que permiten organizar contenido y se compo
 * `.card-body`: Contenedor del contenido principal de la card (título, texto, etc.).
 
 
-### 2. Formularios de Contacto
+### 2. Formulario
 Bootstrap facilita la creación de formularios con componentes predefinidos para 
 inputs, botones, y validación de datos.
 
@@ -814,7 +814,7 @@ inputs, botones, y validación de datos.
 ```
 
 
-### 3. Carruseles
+### 3. Carrusel
 El carrusel es un componente que permite mostrar una serie de elementos 
 (imágenes o contenido) de forma deslizable.
 
@@ -844,7 +844,7 @@ El carrusel es un componente que permite mostrar una serie de elementos
 * `.carousel-item`: Cada diapositiva individual.
 
 
-### 4. Alertas de Bootstrap
+### 4. Alerta
 Las alertas se usan para mostrar mensajes importantes de una manera visual.
 
 #### Ejemplo básico de una Alerta:
