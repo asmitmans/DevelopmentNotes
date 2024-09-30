@@ -857,6 +857,7 @@ Las alertas se usan para mostrar mensajes importantes de una manera visual.
 * `.alert-primary`, `.alert-secondary`, `.alert-success`, `.alert-danger`, 
   `.alert-warning`, `.alert-info`, `.alert-light`, `.alert-dark`: Cambian el color y el 
 estilo de la alerta.
+```
 
 Las alertas también pueden ser desmontables con un botón de cierre:
 
@@ -868,6 +869,4 @@ Las alertas también pueden ser desmontables con un botón de cierre:
 ```
 
 ---
-
-
 
