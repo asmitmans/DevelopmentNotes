@@ -852,12 +852,13 @@ Las alertas se usan para mostrar mensajes importantes de una manera visual.
 <div class="alert alert-warning" role="alert">
   Este es un mensaje de alerta de advertencia.
 </div>
+```
 
 #### Clases principales:
 * `.alert-primary`, `.alert-secondary`, `.alert-success`, `.alert-danger`, 
   `.alert-warning`, `.alert-info`, `.alert-light`, `.alert-dark`: Cambian el color y el 
 estilo de la alerta.
-```
+
 
 Las alertas también pueden ser desmontables con un botón de cierre:
 
