@@ -15,6 +15,8 @@
 - [Contenedores de Bootstrap](#contenedores-de-bootstrap)
 - [Modificadores de Textos con Bootstrap](#modificadores-de-textos-con-bootstrap)
 - [Márgenes y Paddings](#márgenes-y-paddings)
+- [Background Color en Bootstrap](#background-color-en-bootstrap)
+- [Componentes Avanzados de Bootstrap](#componentes-avanzados-de-bootstrap)
 
 
 ## Introducción a Bootstrap
@@ -738,11 +740,134 @@ aplicar.
 * `.mb-0`: Sin margen en la parte inferior.
 
 ---
+## Background Color en Bootstrap
+
+Puedes cambiar el fondo de un elemento con clases de colores predefinidos.
+
+### Clases de background color:
+* `.bg-primary`: Azul (color primario).
+* `.bg-secondary`: Gris oscuro.
+* `.bg-success`: Verde.
+* `.bg-danger`: Rojo.
+* `.bg-warning`: Amarillo.
+* `.bg-info`: Cian.
+* `.bg-light`: Gris claro.
+* `.bg-dark`: Gris oscuro.
+* `.bg-white`: Blanco.
+
+**Ejemplo:**
+```html
+<div class="bg-primary text-white p-3">Fondo azul con texto blanco</div>
+```
+
+---
+
+## Componentes Avanzados de Bootstrap
+Bootstrap ofrece componentes avanzados que facilitan el diseño de interfaces más 
+complejas y atractivas. Aquí se detallan algunos de los componentes más útiles y 
+sus características.
+
+### 1. Componente Card
+Las cards son contenedores flexibles que permiten organizar contenido y se componen de varios elementos opcionales como títulos, textos, imágenes, y botones.
+
+#### Ejemplo de una Card Básica:
+
+```html
+<div class="card" style="width: 18rem;">
+  <img src="imagen.jpg" class="card-img-top" alt="...">
+  <div class="card-body">
+    <h5 class="card-title">Título de la card</h5>
+    <p class="card-text">Texto de ejemplo dentro de la card.</p>
+    <a href="#" class="btn btn-primary">Ir a algún lugar</a>
+  </div>
+</div>
+```
+
+#### Características:
+* `.card`: Crea la estructura básica de la card.
+* `.card-img-top`: Añade una imagen en la parte superior.
+* `.card-body`: Contenedor del contenido principal de la card (título, texto, etc.).
 
 
+### 2. Formularios de Contacto
+Bootstrap facilita la creación de formularios con componentes predefinidos para 
+inputs, botones, y validación de datos.
+
+#### Input Definidos para Formularios HTML:
+* **Clases principales:**
+  * `.form-control`: Para campos de texto, selects y textareas.
+  * `.form-check`: Para checkbox y radio buttons.
+
+* **Ejemplo de formulario básico:**
+```html
+<form>
+  <div class="mb-3">
+    <label for="exampleInputEmail1" class="form-label">Correo electrónico</label>
+    <input type="email" class="form-control" id="exampleInputEmail1">
+  </div>
+  <div class="mb-3">
+    <label for="exampleInputPassword1" class="form-label">Contraseña</label>
+    <input type="password" class="form-control" id="exampleInputPassword1">
+  </div>
+  <button type="submit" class="btn btn-primary">Enviar</button>
+</form>
+```
 
 
+### 3. Carruseles
+El carrusel es un componente que permite mostrar una serie de elementos 
+(imágenes o contenido) de forma deslizable.
 
+#### Ejemplo básico de Carrusel:
+```html
+<div id="carouselExample" class="carousel slide" data-bs-ride="carousel">
+  <div class="carousel-inner">
+    <div class="carousel-item active">
+      <img src="imagen1.jpg" class="d-block w-100" alt="...">
+    </div>
+    <div class="carousel-item">
+      <img src="imagen2.jpg" class="d-block w-100" alt="...">
+    </div>
+  </div>
+  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+    <span class="carousel-control-prev-icon"></span>
+  </button>
+  <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
+    <span class="carousel-control-next-icon"></span>
+  </button>
+</div>
+```
+
+#### Características:
+* `.carousel`: Contenedor principal del carrusel.
+* `.carousel-inner`: Contenedor para las diapositivas del carrusel.
+* `.carousel-item`: Cada diapositiva individual.
+
+
+### 4. Alertas de Bootstrap
+Las alertas se usan para mostrar mensajes importantes de una manera visual.
+
+#### Ejemplo básico de una Alerta:
+```html
+<div class="alert alert-warning" role="alert">
+  Este es un mensaje de alerta de advertencia.
+</div>
+
+#### Clases principales:
+* `.alert-primary`, `.alert-secondary`, `.alert-success`, `.alert-danger`, 
+  `.alert-warning`, `.alert-info`, `.alert-light`, `.alert-dark`: Cambian el color y el 
+estilo de la alerta.
+
+Las alertas también pueden ser desmontables con un botón de cierre:
+
+```html
+<div class="alert alert-success alert-dismissible fade show" role="alert">
+  Esta alerta puede cerrarse.
+  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+```
+
+---
 
 
 
