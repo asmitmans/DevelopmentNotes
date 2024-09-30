@@ -7,6 +7,8 @@
 - [Declaraciones y Sintaxis en JavaScript](#declaraciones-y-sintaxis-en-javascript)
 - [Operadores](#operadores)
 - [Expresiones](#expresiones)
+- [Palabras Claves](#palabras-claves)
+- [Comentarios](#comentarios)
 
 
 ## ¿Qué es JavaScript?
@@ -316,4 +318,58 @@ manipular los datos correctamente.
 
 ---
 
+## Palabras Claves
 
+Las **palabras claves** (keywords) son reservadas por el lenguaje y tienen un 
+significado específico en JavaScript. Estas no pueden utilizarse como nombres de 
+variables, funciones, o identificadores.
+
+### Algunas palabras claves comunes:
+
+* **Declaración de Variables y Constantes:**
+  * `let`: Declara una variable de bloque.
+  * `const`: Declara una constante, cuyo valor no puede cambiar.
+  * `var`: Declara una variable (no recomendado por problemas de alcance).
+
+* **Control de Flujo:**
+* if, else: Para condicionales.
+* switch, case: Para condicionales con múltiples casos.
+* for, while, do: Para bucles.
+
+* **Funciones:**
+* `function`: Declara una función.
+* `return`: Devuelve un valor desde una función.
+
+* **Manipulación de Objetos y Clases:**
+* `class`: Declara una clase.
+* `extends`: Define la herencia de clases.
+* `this`: Hace referencia al contexto actual del objeto.
+* `new`: Crea una instancia de un objeto.
+
+* **Otros:**
+* `try`, `catch`, `finally`: Manejo de excepciones.
+* `import`, `export`: Para importar y exportar módulos en ES6.
+
+---
+
+## Comentarios
+Los comentarios en JavaScript permiten agregar notas al código para que sea más legible, explicar lógica o desactivar fragmentos de código durante el desarrollo. Los comentarios no se ejecutan por el intérprete.
+
+Tipos de Comentarios:
+
+Comentarios de Línea: Usan // para comentar una sola línea.
+
+js
+Copiar código
+// Esto es un comentario de línea
+let x = 10; // Otro comentario de línea
+Comentarios de Bloque: Usan /* ... */ para comentar múltiples líneas.
+
+js
+Copiar código
+/*
+  Esto es un comentario de bloque.
+  Puede abarcar varias líneas.
+*/
+let y = 20;
+Los comentarios son útiles para documentar el código y hacer que sea más fácil de entender para ti y otros desarrolladores. Sin embargo, deben usarse con moderación para evitar saturar el código.
