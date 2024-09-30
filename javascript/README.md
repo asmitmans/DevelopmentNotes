@@ -228,7 +228,7 @@ la ejecución del programa. Se declaran con palabras clave como let, const, y va
 **Ejemplo de variable:**
 
 ```js
-let edad = 25;   // Variable que almacena un número
+let edad = 25;         // Variable que almacena un número
 const nombre = 'Ana';  // Variable constante que almacena un string
 ```
 
