@@ -290,7 +290,7 @@ evalúan para producir un valor.
 ```
 
 * **Expresiones de Asignación:** Asignan el resultado de una operación a una 
-* variable.
+  variable.
 
 ```js
 let resultado = 5 * 3; // `resultado` ahora es 15
