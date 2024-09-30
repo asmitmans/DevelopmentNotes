@@ -13,6 +13,8 @@
 - [Diseño Responsivo en Bootstrap](#diseño-responsivo-en-bootstrap)
 - [Componentes de Bootstrap](#componentes-de-bootstrap)
 - [Contenedores de Bootstrap](#contenedores-de-bootstrap)
+- [Modificadores de Textos con Bootstrap](#modificadores-de-textos-con-bootstrap)
+- [Márgenes y Paddings](#márgenes-y-paddings)
 
 
 ## Introducción a Bootstrap
@@ -658,9 +660,84 @@ centrar el contenido en la página, y sirven como base para el diseño responsiv
 
 ---
 
+## Modificadores de Textos con Bootstrap
+Bootstrap incluye una serie de utilidades para estilizar y alinear textos, así 
+como para aplicar márgenes y rellenos (padding). Aquí se resumen sus principales 
+características.
 
+### 1. Color
+Bootstrap proporciona clases para cambiar el color del texto rápidamente.
 
- 
+* **Ejemplos de clases de color de texto:**
+  * `.text-primary`: Azul (color primario).
+  * `.text-secondary`: Gris oscuro.
+  * `.text-success`: Verde.
+  * `.text-danger`: Rojo.
+  * `.text-warning`: Amarillo.
+  * `.text-info`: Cian.
+  * `.text-light`: Gris claro.
+  * `.text-dark`: Gris oscuro.
+  * `.text-white`: Blanco.
+  * `.text-muted`: Gris más claro, para texto secundario.
+
+### 2. Alineamiento del Texto
+Utiliza clases para alinear el texto de diferentes formas.
+
+* **Clases de alineación:**
+  * `.text-start`: Alinea a la izquierda.
+  * `.text-center`: Centra el texto.
+  * `.text-end`: Alinea a la derecha.
+
+### 3. Tamaño del Texto
+Puedes ajustar el tamaño del texto con clases específicas.
+
+* **Clases para cambiar el tamaño del texto:**
+  * `.fs-1` a `.fs-6`: Cambian el tamaño de la fuente desde `fs-1` (más grande) a 
+    `fs-6` (más pequeño).
+
+### 4. Display
+Para cambiar la propiedad de visualización de un texto (títulos grandes, 
+encabezados), puedes usar las clases de display.
+
+* **Clases de display:**
+  * `.display-1` a `.display-6`: Aumentan el tamaño del texto progresivamente 
+    (siendo `display-1` el más grande).
+
+---
+
+## Márgenes y Paddings
+Bootstrap incluye utilidades para agregar márgenes (`m-`) y rellenos (`p-`). La 
+sintaxis es flexible y te permite especificar de manera detallada el espacio a 
+aplicar.
+
+### Sintaxis General
+`{propiedad}-{lado}-{tamaño}`
+
+* **Propiedad:**
+  * `m`: Margen.
+  * `p`: Padding (relleno).
+
+* **Lado:**
+  * `t`: Top (arriba).
+  * `b`: Bottom (abajo).
+  * `s`: Start (left o `left` en idiomas LTR, `right` en RTL).
+  * `e`: End (right o `right` en LTR, `left` en RTL).
+  * `x`: Horizontal (left y right).
+  * `y`: Vertical (top y bottom).
+  * **Sin especificar lado:** Aplica a todos los lados.
+
+* **Tamaño:**
+* `0`: Elimina el margen o padding.
+* `1` a `5`: Niveles progresivos de espacio (de pequeño a grande).
+* `auto`: Ajusta automáticamente el margen.
+
+### Ejemplos de uso:
+* `.m-3`: Margen en todos los lados con tamaño 3.
+* `.p-t-2`: Padding solo en la parte superior con tamaño 2.
+* `.mx-auto`: Margen automático a los lados horizontales (usado para centrar elementos).
+* `.mb-0`: Sin margen en la parte inferior.
+
+---
 
 
 
