@@ -5,6 +5,8 @@
 - [Agregando JavaScript (JS)](#agregando-javascript-js)
 - [`console.log`](#consolelog)
 - [Declaraciones y Sintaxis en JavaScript](#declaraciones-y-sintaxis-en-javascript)
+- [Operadores](#operadores)
+- [Expresiones](#expresiones)
 
 
 ## ¿Qué es JavaScript?
@@ -236,4 +238,82 @@ Las variables permiten manipular datos de manera dinámica y flexible dentro del
 programa.
 
 ---
+
+## Operadores
+
+JavaScript utiliza **operadores** y **expresiones** para realizar cálculos, 
+comparaciones, asignaciones y otras operaciones.
+
+### 1. Operadores
+Los **operadores** son símbolos que realizan operaciones sobre valores (operandos). 
+Se clasifican en varios tipos:
+
+* **Operadores Aritméticos:** Realizan operaciones matemáticas.
+  * `+` (suma), `-` (resta), `*` (multiplicación), `/` (división), `%` (módulo)
+  * **Ejemplo:** `5 + 3` resulta en `8`.
+
+* **Operadores de Asignación:** Asignan valores a variables.
+  * `=` (asigna), `+=` (asigna y suma), `-=` (asigna y resta)
+  * **Ejemplo:** `x = 10` asigna el valor `10` a `x`.
+
+* **Operadores de Comparación:** Comparan dos valores y devuelven un resultado 
+  booleano (`true` o `false`).
+  * `==` (igual), `===` (estrictamente igual), `!=` (diferente), 
+    `!==` (estrictamente diferente), `>` (mayor que), `<` (menor que)
+  * Ejemplo: `5 === '5'` devuelve `false` (comparación estricta).
+
+* **Operadores Lógicos:** Realizan operaciones lógicas sobre valores booleanos.
+  * `&&` (AND), `||` (OR), `!` (NOT)
+  * **Ejemplo:** `(5 > 3)` && `(2 < 4)` devuelve true.
+
+* **Operadores de Incremento/Decremento:** Modifican el valor de una variable en 1.
+  * `++` (incrementa), `--` (decrementa)
+  * Ejemplo: `x++` aumenta el valor de `x` en 1.
+  
+* **Operadores de Concatenación (para strings):** Usados para unir cadenas de texto.
+  * `+` (concatena cadenas)
+  * **Ejemplo:** `'Hola' + ' Mundo'` resulta en `'Hola Mundo'`.
+
+---
+
+## Expresiones
+
+Una **expresión** es una combinación de valores, variables y operadores que se 
+evalúan para producir un valor.
+
+### Tipos de expresiones:
+
+* **Expresiones Aritméticas:** Realizan operaciones matemáticas.
+
+```js
+10 + 5 // Resulta en 15
+```
+
+* **Expresiones de Asignación:** Asignan el resultado de una operación a una 
+* variable.
+
+```js
+let resultado = 5 * 3; // `resultado` ahora es 15
+```
+
+* **Expresiones Lógicas:** Evalúan condiciones y devuelven un valor booleano (`true` o 
+  `false`).
+
+```js
+(10 > 5) && (5 < 8) // Resulta en `true`
+```
+
+* **Expresiones de Concatenación:** Unen cadenas de texto.
+
+```js
+let saludo = 'Hola' + ' ' + 'Mundo'; // `saludo` es 'Hola Mundo'
+```
+
+Las expresiones son piezas fundamentales del código que pueden combinarse y 
+usarse en declaraciones de control, asignaciones y cálculos dentro de un 
+programa. Los operadores actúan sobre estas expresiones para darles sentido y 
+manipular los datos correctamente.
+
+---
+
 
