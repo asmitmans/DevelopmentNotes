@@ -9,6 +9,10 @@
 - [Expresiones](#expresiones)
 - [Palabras Claves](#palabras-claves)
 - [Comentarios](#comentarios)
+- [Variable](#variable)
+- [`prompt()`](#prompt)
+- [`document.write()`](#documentwrite)
+- [jQuery](#jquery)
 
 
 ## ¿Qué es JavaScript?
@@ -353,23 +357,186 @@ variables, funciones, o identificadores.
 ---
 
 ## Comentarios
-Los comentarios en JavaScript permiten agregar notas al código para que sea más legible, explicar lógica o desactivar fragmentos de código durante el desarrollo. Los comentarios no se ejecutan por el intérprete.
 
-Tipos de Comentarios:
+Los **comentarios** en JavaScript permiten agregar notas al código para que sea más 
+legible, explicar lógica o desactivar fragmentos de código durante el desarrollo. 
+Los comentarios no se ejecutan por el intérprete.
 
-Comentarios de Línea: Usan // para comentar una sola línea.
+### Tipos de Comentarios:
 
-js
-Copiar código
+* **Comentarios de Línea:** Usan `//` para comentar una sola línea.
+
+```js
 // Esto es un comentario de línea
 let x = 10; // Otro comentario de línea
-Comentarios de Bloque: Usan /* ... */ para comentar múltiples líneas.
+```
 
-js
-Copiar código
+* **Comentarios de Bloque:** Usan `/* ... */` para comentar múltiples líneas.
+
+```js
 /*
   Esto es un comentario de bloque.
   Puede abarcar varias líneas.
 */
 let y = 20;
-Los comentarios son útiles para documentar el código y hacer que sea más fácil de entender para ti y otros desarrolladores. Sin embargo, deben usarse con moderación para evitar saturar el código.
+```
+
+---
+
+## Variable
+
+Una **variable** es un contenedor que almacena un valor que puede cambiar durante la 
+ejecución del programa. Es un espacio en la memoria que guarda datos como 
+números, cadenas de texto, booleanos, etc. Las variables permiten reutilizar y 
+manipular datos de forma dinámica.
+
+### Características de las variables en JavaScript:
+* Pueden almacenar diferentes tipos de datos (números, strings, objetos, etc.).
+* Su valor puede ser actualizado (con `let` o `var`).
+* Una vez declaradas con `const`, su valor no puede cambiar.
+
+### Sintaxis de una Variable
+Para declarar una variable en JavaScript, se utilizan palabras clave como let, 
+const, o var. La forma más común es let para variables que cambian de valor, y 
+const para constantes.
+
+#### Sintaxis básica:
+
+```js
+let nombreVariable = valor;
+const nombreConstante = valorFijo;
+```
+
+**Ejemplos:**
+
+```js
+// Usando let para declarar una variable que puede cambiar
+let edad = 25; // Declaración de una variable llamada "edad" con valor 25
+edad = 30; // Actualización del valor de "edad"
+
+// Usando const para declarar una constante
+const nombre = 'Ana'; // Declaración de una constante que no puede cambiar
+// nombre = 'Luis'; // Esto generaría un error, ya que "nombre" es constante
+```
+
+#### Reglas de Sintaxis:
+
+* Los nombres de variables deben comenzar con una letra, `$`, o `_`.
+* No pueden empezar con un número y no deben contener espacios.
+* JavaScript es sensible a mayúsculas y minúsculas (`edad` y `Edad` son diferentes).
+
+---
+
+## `prompt()`
+
+`prompt()` es una función integrada de JavaScript que muestra un cuadro de diálogo 
+al usuario con un campo de entrada de texto. Es utilizada para solicitar datos o 
+información directamente desde el navegador.
+
+**Características**
+* Interactividad: Pausa la ejecución del script hasta que el usuario ingresa un 
+  valor y presiona "Aceptar" o "Cancelar".
+* Devuelve un Valor de Texto: Retorna el valor ingresado por el usuario como un 
+  string. Si el usuario presiona "Cancelar", la función devuelve `null`.
+* Uso Sencillo: No requiere configuración adicional, solo un texto que indique 
+  qué información se solicita.
+
+**Sintaxis**
+
+```js
+let resultado = prompt('Escribe algo:');
+```
+
+En este ejemplo, un cuadro de diálogo aparecerá con el mensaje `"Escribe algo:"`, 
+y el valor ingresado por el usuario se almacenará en la variable `resultado`.
+
+`prompt()` es útil para obtener datos rápidamente del usuario durante la 
+ejecución del programa, pero se usa menos en desarrollos modernos debido a su 
+estilo de interacción que detiene el flujo natural de la aplicación. Para 
+experiencias de usuario más complejas y atractivas, se prefieren formularios 
+HTML y otras interfaces personalizadas.
+
+---
+
+## `document.write()`
+
+`document.write()` es un método de JavaScript que permite escribir contenido 
+directamente en el documento HTML desde el cual se está ejecutando el script. 
+Inserta el texto o HTML especificado en la página web.
+
+**Características**
+* **Inserta Contenido Dinámicamente:** Permite añadir texto, HTML, o resultados de 
+  operaciones directamente en el documento mientras se está cargando.
+* **Ejecución Durante la Carga:** Si se usa después de que el documento HTML ha sido 
+  completamente cargado, reemplaza todo el contenido existente de la página con 
+  el nuevo contenido proporcionado.
+
+**Sintaxis**
+```js
+document.write('¡Hola, mundo!');
+```
+Este ejemplo insertará el texto `"¡Hola, mundo!"` en la página.
+
+**Uso y Desventajas**
+* **Uso Histórico:** document.write() fue muy usado en los primeros días del 
+  desarrollo web para crear contenido dinámico.
+* **Desventajas en Desarrollos Modernos:** Ya no se recomienda su uso, ya que es 
+  intrusivo y puede sobrescribir todo el contenido de la página si se usa después 
+  de la carga inicial. Además, puede afectar el rendimiento y la experiencia del 
+  usuario.
+
+Para insertar contenido de manera dinámica y segura, se prefieren métodos 
+modernos como `innerHTML` o manipulaciones más detalladas del DOM (Modelo de 
+Objetos del Documento).
+
+---
+
+## jQuery
+
+**jQuery** es una **librería de JavaScript rápida, pequeña, y rica en funcionalidades** 
+que simplifica la manipulación del **DOM**, el manejo de **eventos**, la **animación**, y 
+las **solicitudes AJAX**. Su objetivo principal es facilitar la escritura de código 
+JavaScript que sea compatible con todos los navegadores.
+
+### Características principales
+* **Simplificación de la Sintaxis:** jQuery proporciona una sintaxis más sencilla y 
+  corta para realizar tareas comunes como seleccionar elementos del DOM, 
+  manipularlos y gestionar eventos.
+* **Compatibilidad de Navegadores:** Abstrae las diferencias de implementación de 
+  JavaScript entre navegadores, asegurando que el código funcione de manera 
+  consistente.
+* **Selección de Elementos con Selectores CSS:** jQuery permite seleccionar y 
+  manipular elementos del DOM usando selectores similares a los de CSS.
+* **Manipulación de Contenido y Atributos:** Facilita agregar, quitar y cambiar 
+  contenido y atributos HTML de forma rápida.
+* **Gestión de Eventos:** Proporciona una forma sencilla de añadir y manejar eventos 
+  (clics, teclas, etc.) en los elementos de la página.
+* **Animaciones y Efectos:** Ofrece métodos simples para animar elementos y crear 
+  efectos como deslizamiento y desvanecimiento.
+* **AJAX Simplificado:** Facilita la realización de solicitudes asíncronas para 
+  cargar datos sin recargar la página completa.
+
+### Uso Actual
+Aunque jQuery sigue siendo popular y útil para ciertos proyectos, su uso ha 
+disminuido con la introducción de librerías y frameworks más modernos (como 
+React, Vue, Angular) que proporcionan un enfoque más avanzado y estructurado 
+para el desarrollo web.
+
+jQuery sigue siendo una herramienta poderosa para simplificar tareas de 
+desarrollo web, especialmente si se busca compatibilidad y un aprendizaje rápido 
+para manipular el DOM y gestionar eventos.
+
+Para una página o sitio simple: jQuery sigue siendo útil y rápido de 
+implementar. Para un sistema grande o aplicación compleja: Es recomendable usar 
+un framework más avanzado como React, Vue, o Angular para tener un desarrollo 
+más estructurado y escalable.
+
+---
+
+
+
+
+
+
+
+
