@@ -16,6 +16,7 @@
 - [Formas de Integrar jQuery](#formas-de-integrar-jquery)
 - [Sintaxis de jQuery](#sintaxis-de-jquery)
 - [Callback o Función Anónima en jQuery](#callback-o-función-anónima-en-jquery)
+- [Selectores en jQuery](#selectores-en-jquery)
 
 
 ## ¿Qué es JavaScript?
@@ -651,7 +652,7 @@ de que la página ha terminado de cargarse.
 
 ## Callback o Función Anónima en jQuery
 
-### ¿Qué es una Callback (Función Anónima)?
+### Callback (Función Anónima)
 Una **callback** es una función que se pasa como parámetro a otra función y se 
 ejecuta después de que se completa una operación o evento específico. Las 
 callbacks pueden ser **funciones anónimas** (sin nombre) o funciones con nombre.
@@ -701,6 +702,80 @@ saludar('Ana', function() {
 ```
 Aquí, la función anónima `function() {...}` se pasa como callback a `saludar`, y se
 ejecuta justo después de que la función `saludar` completa su operación.
+
+---
+
+## Selectores en jQuery
+
+`#Revisar`
+
+Los **selectores** en jQuery se usan para encontrar y seleccionar elementos del DOM 
+con los que se desea trabajar. Funcionan de manera similar a los selectores de 
+CSS, lo que hace que la sintaxis sea familiar y fácil de usar.
+
+### Tipos de Selectores Comunes
+
+1. **Selector por Etiqueta:** Selecciona todos los elementos de un tipo específico 
+   (como <div>, <p>, <a>).
+```js
+$('p') // Selecciona todos los párrafos <p>
+```
+
+2. **Selector por ID:** Selecciona un elemento único con un atributo id específico.
+```js
+$('#miId') // Selecciona el elemento con id="miId"
+```
+
+3. **Selector por Clase:** Selecciona todos los elementos con una clase específica. 
+```js
+$('.miClase') // Selecciona todos los elementos con class="miClase"
+```
+
+4. **Selectores de Atributo:** Selecciona elementos basados en el valor de sus 
+   atributos.
+```js
+$('input[type="text"]') // Selecciona todos los <input> de tipo texto
+```
+
+5. **Selector Universal (`*`):** Selecciona todos los elementos del DOM.
+```js
+$('*') // Selecciona todos los elementos en la página
+```
+
+### Combinando Selectores
+Los selectores se pueden combinar para ser más específicos:
+
+* **Múltiples Selectores:**
+```js
+$('p, .miClase') // Selecciona todos los <p> y los elementos con class="miClase"
+```
+
+* **Selectores Descendientes:**
+```js
+$('div p') // Selecciona todos los <p> que sean descendientes de <div>
+```
+
+* **Selectores Hijos Directos:**
+```js
+$('div > p') // Selecciona todos los <p> que sean hijos directos de <div>
+```
+
+### Funciones de Selección Adicionales
+* **`.first()` y `.last()`:** Seleccionan el primer o último elemento de un grupo.
+```js
+$('p').first() // Selecciona el primer párrafo <p>
+```
+
+* **`.eq(index)`:** Selecciona el elemento en una posición específica.
+```js
+$('li').eq(2) // Selecciona el tercer elemento <li>
+```
+
+* Pseudo-Selectores de Estado: jQuery también admite pseudo-selectores como 
+  `:visible`, `:hidden`, `:checked`.
+```js
+$(':checked') // Selecciona todos los elementos <input> que estén seleccionados
+```
 
 ---
 
