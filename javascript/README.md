@@ -14,6 +14,8 @@
 - [`document.write()`](#documentwrite)
 - [jQuery](#jquery)
 - [Formas de Integrar jQuery](#formas-de-integrar-jquery)
+- [Sintaxis de jQuery](#sintaxis-de-jquery)
+- [Callback o Función Anónima en jQuery](#callback-o-función-anónima-en-jquery)
 
 
 ## ¿Qué es JavaScript?
@@ -583,11 +585,122 @@ Este ejemplo usa el CDN de Google para cargar la última versión de jQuery.
 
 ---
 
+## Sintaxis de jQuery
+La sintaxis de jQuery es simple y se basa en el **signo `$`** seguido de una función 
+que selecciona elementos y aplica acciones sobre ellos. Esto facilita la 
+manipulación del DOM y la ejecución de eventos.
+
+### Sintaxis Básica:
+
+```js
+$(selector).acción();
+```
+
+### Componentes de la Sintaxis
+* **`$` (Selector de jQuery):** El símbolo `$` indica que estás utilizando jQuery. Es 
+  una forma abreviada de llamar a la función principal de jQuery.
+
+* `selector`: Es un **selector de elementos del DOM** similar a los selectores CSS 
+  (`id`, `class`, `etiqueta`). Sirve para seleccionar el elemento o los elementos 
+  sobre los que se quiere realizar una acción.
+  * **Ejemplos de selectores:**
+    * `$('p')`: Selecciona todos los elementos `<p>`.
+    * `$('#miId')`: Selecciona el elemento con `id="miId"`.
+    * `$('.miClase')`: Selecciona todos los elementos con `class="miClase"`.
+
+* `.acción()`: Es un **método** que define la acción a realizar sobre los elementos 
+  seleccionados (por ejemplo, ocultar, mostrar, cambiar texto).
+  * **Ejemplos de acciones comunes:**
+    * `.hide()`: Oculta los elementos seleccionados.
+    * `.show()`: Muestra los elementos seleccionados.
+    * `.css('propiedad', 'valor')`: Cambia una propiedad CSS.
+
+### Ejemplos de Uso de la Sintaxis jQuery
+
+**Ocultar todos los párrafos:**
+
+```js
+$('p').hide();
+```
 
 
+**Cambiar el texto de un elemento con id #miId:**
+
+```js
+$('#miId').text('Nuevo texto');
+```
 
 
+**Cambiar el color de fondo de los elementos con la clase .miClase:**
 
+```js
+$('.miClase').css('background-color', 'yellow');
+```
 
+**Esperar a que el DOM esté listo antes de ejecutar el código:**
 
+```js
+$(document).ready(function() {
+  console.log('El DOM está listo');
+});
+```
+La función `$(document).ready()` garantiza que el código se ejecute solo después 
+de que la página ha terminado de cargarse.
+
+---
+
+## Callback o Función Anónima en jQuery
+
+### ¿Qué es una Callback (Función Anónima)?
+Una **callback** es una función que se pasa como parámetro a otra función y se 
+ejecuta después de que se completa una operación o evento específico. Las 
+callbacks pueden ser **funciones anónimas** (sin nombre) o funciones con nombre.
+
+En el contexto de jQuery, una **función anónima** es una **callback** comúnmente 
+utilizada para ejecutar código después de que un evento ocurra, como la carga 
+del DOM con `.ready()`.
+
+### Características de una Callback (Función Anónima)
+* **Ejecuta Código Después de un Evento:** Se usa para ejecutar acciones solo cuando 
+  sucede algo, como la carga del DOM, clics del usuario, etc.
+* **Sin Nombre (Anónima):** Muchas veces se escribe directamente como parámetro de 
+  otra función, sin necesidad de asignarle un nombre.
+* **Sintaxis Simple:** Define el comportamiento deseado de forma concisa.
+
+**Ejemplo de Callback con `.ready()`**
+
+```js
+$(document).ready(function() {
+  console.log('El DOM está listo');
+});
+```
+
+* `function() {...}`: Esta es una **función anónima** pasada como callback.
+* Propósito: Cuando el DOM esté completamente cargado, la callback se ejecuta y 
+  muestra el mensaje "El DOM está listo" en la consola.
+
+### ¿Cuándo Usar Callbacks?
+* **Eventos Asíncronos:** Cuando necesitas que cierto código se ejecute después de 
+  un evento asíncrono, como la carga de un documento, un temporizador 
+  (`setTimeout`), o una solicitud AJAX.
+* **Controlar el Flujo de Código:** Aseguran que el código se ejecute en el momento 
+  adecuado, evitando errores al manipular elementos que aún no están 
+  disponibles.
+
+### Ejemplo General de una Callback:
+
+```js
+function saludar(nombre, callback) {
+  console.log('Hola ' + nombre);
+  callback();
+}
+
+saludar('Ana', function() {
+  console.log('¡Esta es una callback!');
+});
+```
+Aquí, la función anónima `function() {...}` se pasa como callback a `saludar`, y se
+ejecuta justo después de que la función `saludar` completa su operación.
+
+---
 
