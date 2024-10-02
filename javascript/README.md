@@ -13,6 +13,7 @@
 - [`prompt()`](#prompt)
 - [`document.write()`](#documentwrite)
 - [jQuery](#jquery)
+- [Formas de Integrar jQuery](#formas-de-integrar-jquery)
 
 
 ## ¿Qué es JavaScript?
@@ -532,6 +533,56 @@ un framework más avanzado como React, Vue, o Angular para tener un desarrollo
 más estructurado y escalable.
 
 ---
+
+## Formas de Integrar jQuery
+
+`#Revisar`
+
+Existen dos formas principales de agregar jQuery a un proyecto: **descargando el 
+archivo** o usando una **CDN** (Content Delivery Network). Ambas opciones tienen sus 
+ventajas dependiendo de tus necesidades.
+
+### 1. Descargando el Archivo
+Puedes descargar el archivo de jQuery y hospedarlo localmente en tu proyecto.
+
+#### Pasos para descargar jQuery:
+1. Ve al sitio oficial de jQuery: https://jquery.com/download/.
+2. Descarga la última versión de jQuery, ya sea en formato comprimido 
+   (`jquery.min.js`) o sin comprimir (`jquery.js`).
+3. Incluye el archivo descargado en tu proyecto.
+
+#### Ejemplo de inclusión en HTML:
+
+```html
+<script src="path/to/jquery.min.js"></script>
+```
+Reemplaza `path/to/` con la ruta real donde se encuentra el archivo jQuery en tu 
+proyecto.
+
+#### Ventajas de la descarga local:
+* Funciona offline, sin depender de conexión a internet.
+* Control total sobre la versión utilizada.
+
+### 2. CDN (Content Delivery Network)
+Usar un CDN significa cargar jQuery desde un servidor externo, lo que suele 
+mejorar la velocidad de carga y el rendimiento.
+
+#### Incluir jQuery desde un CDN:
+
+```html
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+```
+Este ejemplo usa el CDN de Google para cargar la última versión de jQuery.
+
+#### Ventajas de usar un CDN:
+* Velocidad de carga mejorada: Si el usuario ya ha visitado un sitio que usa el 
+  mismo CDN, es probable que el archivo esté en caché y la página cargue más 
+  rápido.
+* Reducción de carga en tu servidor: La carga del archivo se realiza desde el 
+  servidor del CDN y no desde tu propio servidor.
+
+---
+
 
 
 
