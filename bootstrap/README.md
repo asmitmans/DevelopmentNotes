@@ -17,6 +17,10 @@
 - [Márgenes y Paddings](#márgenes-y-paddings)
 - [Background Color en Bootstrap](#background-color-en-bootstrap)
 - [Componentes Avanzados de Bootstrap](#componentes-avanzados-de-bootstrap)
+- [Bootstrap JS: Popover, Modal, Tooltip y Dropdown](#bootstrap-js-popover-modal-tooltip-y-dropdown)
+- [Uso de `data-*` Atributos en Bootstrap](#uso-de-data--atributos-en-bootstrap)
+- [Uso de data-\* atributos](#uso-de-data--atributos)
+- [Carousel](#carousel)
 
 
 ## Introducción a Bootstrap
@@ -871,3 +875,393 @@ Las alertas también pueden ser desmontables con un botón de cierre:
 
 ---
 
+## Bootstrap JS: Popover, Modal, Tooltip y Dropdown
+
+`#Revisar`
+
+Bootstrap JS ofrece componentes interactivos que mejoran la usabilidad de una 
+página. Estos componentes añaden información adicional, ventanas emergentes, y 
+menús desplegables de forma elegante y fácil de implementar.
+
+### 1. Popover
+
+El **popover** es un cuadro de información flotante similar a un tooltip, pero más 
+robusto ya que puede incluir contenido HTML y más información.
+
+### Cómo usar un Popover:
+
+1. Incluye `data-bs-toggle="popover"` en el elemento objetivo.
+2. Inicializa con JavaScript.
+
+**Ejemplo:**
+```html
+<button type="button" class="btn btn-secondary" data-bs-toggle="popover" data-bs-content="Más información aquí">
+  Haz clic para popover
+</button>
+
+<script>
+  var popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'));
+  var popoverList = popoverTriggerList.map(function (popoverTriggerEl) {
+    return new bootstrap.Popover(popoverTriggerEl);
+  });
+</script>
+```
+
+### 2. Modal
+
+El modal es una ventana emergente que se muestra sobre el contenido principal de 
+la página, deshabilitando la interacción con el resto del contenido hasta que el 
+modal se cierra.
+
+### Cómo usar un Modal:
+
+1. Crea la estructura HTML con `.modal`.
+2. Abre el modal con un botón con `data-bs-toggle="modal"`.
+
+**Ejemplo:**
+```html
+<!-- Botón que activa el modal -->
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#miModal">
+  Abrir Modal
+</button>
+
+<!-- Estructura del Modal -->
+<div class="modal fade" id="miModal" tabindex="-1" aria-labelledby="miModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="miModalLabel">Título del Modal</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+      </div>
+      <div class="modal-body">
+        Contenido del Modal...
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+        <button type="button" class="btn btn-primary">Guardar Cambios</button>
+      </div>
+    </div>
+  </div>
+</div>
+```
+
+### 3. Tooltip
+
+El **tooltip** es una pequeña etiqueta flotante que muestra información breve al 
+pasar el ratón o enfocar un elemento. Es similar al popover, pero más simple y 
+solo soporta texto.
+
+#### Cómo usar un Tooltip:
+
+1. Añade `data-bs-toggle="tooltip"` al elemento objetivo.
+2. Inicializa con JavaScript.
+
+**Ejemplo:**
+```html
+<button type="button" class="btn btn-secondary" data-bs-toggle="tooltip" data-bs-placement="top" title="Información del botón">
+  Pasa el ratón por aquí
+</button>
+
+<script>
+  var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+  var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+    return new bootstrap.Tooltip(tooltipTriggerEl);
+  });
+</script>
+```
+
+### 4. Dropdown
+
+El **dropdown** es un componente para crear menús desplegables, que muestran una 
+lista de opciones al hacer clic en un botón.
+
+**Cómo usar un Dropdown:**
+
+1. Añade `data-bs-toggle="dropdown"` a un botón.
+2. Crea la lista con `.dropdown-menu`.
+
+**Ejemplo:**
+```html
+<!-- Botón que activa el dropdown -->
+<div class="dropdown">
+  <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Menú desplegable
+  </button>
+  <!-- Lista del dropdown -->
+  <ul class="dropdown-menu">
+    <li><a class="dropdown-item" href="#">Acción 1</a></li>
+    <li><a class="dropdown-item" href="#">Acción 2</a></li>
+    <li><a class="dropdown-item" href="#">Otra acción</a></li>
+  </ul>
+</div>
+```
+
+
+### Inicialización con JavaScript
+
+Para inicializar estos componentes, usa el archivo bootstrap.bundle.js, que 
+incluye las funcionalidades de Bootstrap JS y Popper.js (necesario para 
+popovers, tooltips y dropdowns).
+
+---
+
+## Uso de `data-*` Atributos en Bootstrap
+
+### ¿Qué son los `data-*` Atributos?
+
+Los **`data-*` atributos** son atributos personalizados permitidos por el 
+estándar **HTML5** que permiten añadir información adicional a elementos HTML. 
+Estos atributos pueden ser usados para extender el HTML de manera flexible y 
+segura sin interferir con el funcionamiento estándar del elemento.
+
+Bootstrap utiliza estos atributos como **`data-bs-*`** para activar y configurar 
+componentes interactivos (como **modals**, **dropdowns**, y **tooltips**) sin 
+necesidad de escribir código JavaScript explícito.
+
+### ¿Por Qué Existen los `data-*` Atributos?
+
+- **Extendibilidad del HTML:** HTML5 permite añadir atributos personalizados que 
+  sigan el formato `data-*`. Esto da flexibilidad para almacenar datos adicionales 
+  directamente en el HTML sin alterar la semántica de los elementos.
+
+- **Compatibilidad con HTML Estándar:** Todos los navegadores modernos reconocen 
+  los `data-*` atributos y los ignoran si no están siendo utilizados, lo que evita 
+  errores y problemas de compatibilidad.
+
+### Uso de `data-*` Atributos con Bootstrap
+
+Bootstrap aprovecha los `data-*` atributos para hacer la inicialización de sus 
+componentes interactivos de manera declarativa y simple. Por ejemplo, un botón 
+para abrir un modal se puede definir solo con HTML de esta manera:
+
+```html
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#miModal">
+  Abrir Modal
+</button>
+```
+En este caso:
+* `data-bs-toggle="modal"`: Indica que este elemento activa un modal.
+* `data-bs-target="#miModal`": Apunta al id del modal que se abrirá.
+Gracias a estos atributos, Bootstrap no requiere que escribas JavaScript 
+adicional para inicializar el componente.
+
+### Cómo Usar y Acceder a los data-* Atributos
+
+Los `data-*` atributos pueden ser usados en cualquier elemento HTML para almacenar 
+información personalizada. Estos datos pueden ser accedidos y manipulados 
+fácilmente con JavaScript a través de la propiedad .dataset.
+
+**Ejemplo:**
+`html`
+<div data-user-id="12345" data-role="admin">
+  Información del usuario
+</div>
+```
+
+**Acceso con JavaScript:**
+```js
+const div = document.querySelector('div');
+console.log(div.dataset.userId); // "12345"
+console.log(div.dataset.role); // "admin"
+```
+
+---
+
+## Uso de data-* atributos
+
+El uso de **`data-*` atributos** es bastante común en el desarrollo con **JavaScript** 
+**estándar** o **jQuery**, incluso fuera del contexto de frameworks como Bootstrap. Son 
+utilizados para almacenar y asociar datos directamente con elementos del DOM de 
+forma sencilla y semántica.
+
+
+### Razones para Usar `data-*` Atributos
+
+1. **Asociar Datos a Elementos del DOM:**
+* Los `data-*` atributos permiten añadir información específica a los elementos 
+  HTML de una forma que es fácil de acceder con JavaScript.
+
+* Es una alternativa más limpia y semántica que sobrecargar clases (`class`) o 
+  identificadores (`id`) para almacenar información adicional.
+
+2. **Facilitar la Interacción JS-DOM:**
+* Ayudan a conectar la lógica de JavaScript con el DOM al hacer que los datos 
+  estén disponibles de forma declarativa.
+
+* Permiten que ciertos datos permanezcan en el DOM y sean independientes de la 
+  lógica de la aplicación (evitando mantener los datos solo en variables de JS).
+
+
+### Ejemplos Comunes de Uso
+
+**Ejemplo 1: Lista de Productos con data-* Atributos**
+```html
+<ul>
+  <li data-product-id="101" data-category="electronics">Producto 1</li>
+  <li data-product-id="102" data-category="books">Producto 2</li>
+  <li data-product-id="103" data-category="clothing">Producto 3</li>
+</ul>
+```
+En este caso, cada `<li>` contiene información adicional sobre el producto (como 
+`product-id` y `category`) que puede ser utilizada por JavaScript para cualquier 
+funcionalidad (por ejemplo, filtrado, selección).
+
+**Ejemplo 2: Asociar Datos a un Botón**
+```html
+<button data-action="eliminar" data-item-id="456">
+  Eliminar
+</button>
+```
+En este caso, el botón tiene atributos `data-*` que indican la acción y el 
+identificador del elemento a eliminar. Esto puede ser útil para manejar la 
+lógica de eventos.
+
+**Acceso con JavaScript:**
+
+```js
+const boton = document.querySelector('button');
+console.log(boton.dataset.action); // "eliminar"
+console.log(boton.dataset.itemId); // "456"
+```
+
+### Ventajas del Uso de `data-*` Atributos
+
+* **Semántica y Claridad:** Los `data-*` atributos proporcionan una forma limpia de 
+  añadir datos a elementos HTML sin afectar la estructura o estilo.
+
+* **Accesibilidad con JavaScript:** Acceder y modificar datos con la propiedad 
+  `.dataset` es simple y directo.
+
+* **Evita Sobrecargar Clases/IDs:** Usar clases o IDs para almacenar datos 
+  adicionales puede hacer que el código sea difícil de mantener y leer. Los 
+  `data-*` atributos son una alternativa más semántica.
+
+
+### ¿Cuándo Usar `data-*` Atributos?
+
+1. **Para Almacenar Información Ligera:** Si necesitas asociar datos pequeños y 
+   estáticos (como identificadores, estados, etc.) con elementos del DOM.
+
+2. **Para Interacción JS-DOM Declarativa:** Cuando desees hacer tu lógica de 
+   JavaScript más declarativa, como en el caso de eventos o elementos dinámicos.
+
+
+### ¿Cuándo No Usarlos?
+
+* **Datos Complejos o Grandes:** Si necesitas manejar datos grandes o complejos (por 
+  ejemplo, objetos o arrays), es preferible usar variables de JavaScript u otros 
+  mecanismos de almacenamiento (como `localStorage` o `sessionStorage`).
+
+* **Datos Sensibles:** Los `data-*` atributos son visibles en el HTML y accesibles 
+  para cualquier persona que inspeccione el DOM, por lo que no deben usarse para 
+  datos sensibles o privados.
+
+---
+
+## Carousel
+
+El carousel de Bootstrap es un componente que permite crear carruseles o sliders 
+para mostrar una serie de elementos como imágenes, texto o contenido multimedia 
+de forma deslizante. Es una manera efectiva de presentar contenido en un espacio 
+compacto con transiciones animadas.
+
+
+### Características del Carousel
+
+* **Deslizable y Controlable:** Puedes navegar a través de los elementos de forma 
+  automática o manual.
+
+* **Responsivo:** Adapta su tamaño a diferentes pantallas.
+
+* **Controles y Paginación:** Incluye controles para navegar y elementos indicadores 
+  que muestran el progreso.
+
+
+### Cómo Usar el Carousel
+
+El carousel se define con una estructura HTML específica y se controla mediante 
+los atributos de Bootstrap.
+
+**Ejemplo de Código HTML para un Carousel:**
+```html
+<!-- Incluye los archivos CSS y JS de Bootstrap -->
+<link href="https://stackpath.bootstrapcdn.com/bootstrap/5.1.3/css/bootstrap.min.css" rel="stylesheet">
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script>
+
+<!-- Carousel Container -->
+<div id="miCarousel" class="carousel slide" data-bs-ride="carousel">
+  
+  <!-- Indicadores (Opcionales) -->
+  <div class="carousel-indicators">
+    <button type="button" data-bs-target="#miCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+    <button type="button" data-bs-target="#miCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
+    <button type="button" data-bs-target="#miCarousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
+  </div>
+
+  <!-- Elementos del Carousel -->
+  <div class="carousel-inner">
+    <div class="carousel-item active">
+      <img src="imagen1.jpg" class="d-block w-100" alt="Imagen 1">
+    </div>
+    <div class="carousel-item">
+      <img src="imagen2.jpg" class="d-block w-100" alt="Imagen 2">
+    </div>
+    <div class="carousel-item">
+      <img src="imagen3.jpg" class="d-block w-100" alt="Imagen 3">
+    </div>
+  </div>
+
+  <!-- Controles de Navegación -->
+  <button class="carousel-control-prev" type="button" data-bs-target="#miCarousel" data-bs-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Anterior</span>
+  </button>
+  <button class="carousel-control-next" type="button" data-bs-target="#miCarousel" data-bs-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Siguiente</span>
+  </button>
+</div>
+```
+
+**Explicación de la Estructura**
+
+* **Contenedor Principal del Carousel (`.carousel.slide`):**
+  * `id="miCarousel"`: Identificador único del carousel.
+  * `data-bs-ride="carousel"`: Activa el funcionamiento automático del carousel.
+
+* **Indicadores (`.carousel-indicators`):**
+  * Son botones de navegación que indican la cantidad de elementos y la posición 
+    actual del carousel.
+  * Usan `data-bs-slide-to` para moverse a un slide específico.
+
+* **Elementos (`.carousel-inner` y `.carousel-item`):**
+  * `.carousel-inner`: Contenedor de todos los elementos (slides) del carousel.
+  * `.carousel-item`: Cada elemento individual del carousel. La primera debe tener 
+    la clase `.active` para que se muestre inicialmente.
+  * Dentro de cada `.carousel-item`, puedes incluir imágenes, texto u otros elementos.
+
+* **Controles de Navegación (`.carousel-control-prev` y `.carousel-control-next`):**
+  * Permiten navegar manualmente hacia el slide anterior (`prev`) o siguiente (`next`).
+  * Usan `data-bs-target` para indicar a cuál carousel pertenecen.
+
+
+### Personalización del Carousel
+
+* **Automático vs. Manual:**
+  * Si quieres que el carousel funcione automáticamente, mantén 
+    `data-bs-ride="carousel"`.
+  * Si prefieres controlarlo manualmente, elimina el atributo `data-bs-ride`.
+
+* **Intervalo de Deslizamiento:**
+  * Puedes cambiar la velocidad con la que se mueve el carousel con el atributo 
+    `data-bs-interval`.
+```html
+<div id="miCarousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="3000">
+```
+Esto hará que los slides cambien cada **3000 ms (3 segundos)**.
+
+* **Controles de Transición y Efectos:**
+  * Bootstrap usa transiciones suaves por defecto (`slide`), pero puedes añadir 
+    más estilos o efectos personalizados usando clases adicionales o CSS.
+
+---
