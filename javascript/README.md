@@ -19,6 +19,7 @@
 - [Selectores](#selectores)
 - [Eventos y Funciones](#eventos-y-funciones)
 - [Métodos](#métodos)
+- [Smooth Scroll](#smooth-scroll)
 
 
 ## ¿Qué es JavaScript?
@@ -966,3 +967,97 @@ $('#caja').toggleClass('activo'); // Añade o elimina la clase "activo"
 
 ---
 
+## Smooth Scroll
+
+El **Smooth Scroll** (desplazamiento suave) es un efecto que permite que la página 
+se desplace lentamente hacia un punto específico, en lugar de hacerlo de forma 
+instantánea y brusca. Esto mejora la experiencia del usuario al hacer clic en 
+enlaces de navegación o botones que redirigen a secciones internas de la página.
+
+
+### Implementar Smooth Scroll con jQuery
+
+**Ejemplo de implementación:**
+```html
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Smooth Scroll</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <style>
+    section {
+      height: 100vh;
+      padding: 20px;
+    }
+  </style>
+</head>
+<body>
+
+  <a href="#seccion2" class="smooth-scroll">Ir a la Sección 2</a>
+
+  <section id="seccion1">Sección 1</section>
+  <section id="seccion2">Sección 2</section>
+
+  <script>
+    $(document).ready(function(){
+      $('.smooth-scroll').on('click', function(event) {
+        // Prevenir el comportamiento por defecto del enlace
+        event.preventDefault();
+
+        // Obtener la dirección del enlace (hash)
+        var target = $(this.hash);
+
+        // Animar el desplazamiento hacia el objetivo
+        $('html, body').animate({
+          scrollTop: target.offset().top
+        }, 800); // Duración de la animación en milisegundos (800ms = 0.8s)
+      });
+    });
+  </script>
+
+</body>
+</html>
+```
+
+**Funcionamiento**
+
+* **Estructura HTML:** Se tiene un enlace (`<a href="#seccion2">`) que apunta a una 
+  sección interna identificada con `id="seccion2"`.
+
+* **jQuery Script:**
+Al hacer clic en el enlace con clase .smooth-scroll, se ejecuta una función que: 
+* Previene el comportamiento por defecto del enlace (`event.preventDefault()`).
+* Obtiene la sección objetivo usando el hash del enlace (`this.hash`).
+* Desplaza la página hacia la posición de la sección con una animación 
+  (`.animate()`).
+
+**Detalles:**
+* **`scrollTop`:** Ajusta la posición de desplazamiento vertical.
+* **Duración (`800` ms):** Controla la velocidad del desplazamiento (más bajo, más 
+  rápido).
+
+
+**Explicacion por que prevenir el evento por defecto**
+
+`event.preventDefault()` se utiliza para **prevenir el comportamiento predeterminado** 
+del evento que ha ocurrido. En el contexto del ejemplo de **smooth scroll** con jQuery, su función es evitar que el navegador salte instantáneamente a la sección cuando se hace clic en un enlace de anclaje (`<a href="#seccion2">`).
+
+**¿Por Qué Es Necesario?**
+En un enlace con un `href` que apunta a una sección interna (ancla) de la página 
+(`#seccion2`), el comportamiento por defecto del navegador es **desplazarse 
+inmediatamente** a esa sección cuando el enlace es clickeado. Esto genera un salto 
+brusco.
+
+Al usar `event.preventDefault()`, estás diciendo al navegador que **no realice el 
+desplazamiento inmediato** al hacer clic en el enlace. En su lugar, podrás manejar 
+manualmente el desplazamiento mediante el código jQuery, aplicando un efecto 
+suave con `.animate()`.
+
+**Ejemplo:**
+Sin `event.preventDefault()`, el navegador se desplazará automáticamente a 
+`#seccion2` de forma brusca, y tu animación personalizada no se verá. Al usar 
+`event.preventDefault()`, anulas ese comportamiento automático, lo que te permite 
+controlar el desplazamiento de manera suave y programada.
+
+---
