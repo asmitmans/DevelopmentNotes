@@ -16,7 +16,9 @@
 - [Formas de Integrar jQuery](#formas-de-integrar-jquery)
 - [Sintaxis de jQuery](#sintaxis-de-jquery)
 - [Callback o Función Anónima en jQuery](#callback-o-función-anónima-en-jquery)
-- [Selectores en jQuery](#selectores-en-jquery)
+- [Selectores](#selectores)
+- [Eventos y Funciones](#eventos-y-funciones)
+- [Métodos](#métodos)
 
 
 ## ¿Qué es JavaScript?
@@ -705,7 +707,7 @@ ejecuta justo después de que la función `saludar` completa su operación.
 
 ---
 
-## Selectores en jQuery
+## Selectores
 
 `#Revisar`
 
@@ -775,6 +777,191 @@ $('li').eq(2) // Selecciona el tercer elemento <li>
   `:visible`, `:hidden`, `:checked`.
 ```js
 $(':checked') // Selecciona todos los elementos <input> que estén seleccionados
+```
+
+---
+
+## Eventos y Funciones
+
+`#Revisar`
+
+En jQuery (y JavaScript en general), los **eventos** son acciones o sucesos que 
+ocurren en la página web y pueden ser detectados para ejecutar una función. 
+Estos eventos pueden ser acciones del usuario (clics, teclas presionadas, 
+movimientos de ratón) o eventos del sistema (carga de página, cambios de 
+tamaño).
+
+Al usar jQuery, puedes "escuchar" estos eventos y responder con **funciones** 
+(callbacks) que se ejecutan cuando el evento ocurre.
+
+### Ejemplo de Eventos
+
+1. **Evento de Click:**
+```js
+$('#miBoton').click(function() {
+  alert('¡Botón clickeado!');
+});
+```
+* Aquí, se detecta el evento `click` en un elemento con `id="miBoton"`.
+* Cuando el usuario hace clic en ese elemento, se ejecuta la función que muestra 
+  una alerta.
+
+2. **Evento `mouseover` (pasar el ratón por encima):**
+```js
+$('.miClase').mouseover(function() {
+  console.log('Mouse sobre el elemento');
+});
+```
+* Detecta cuando el ratón pasa sobre un elemento con `class="miClase"`.
+
+### Sintaxis de los Eventos
+
+La sintaxis para trabajar con eventos en jQuery sigue el patrón:
+```js
+$(selector).evento(function() {
+  // Código a ejecutar cuando ocurra el evento
+});
+```
+* `$(selector)`: Selecciona el elemento del DOM sobre el que se quiere escuchar el 
+  evento.
+* `.evento`: Es el evento que se quiere detectar, como `click`, `mouseover`, `keydown`, 
+  etc.
+* `function() { ... }`: La función (callback) que se ejecutará cuando el evento 
+  ocurra.
+
+### Métodos de Eventos Comunes
+
+1. `.click(function)`: Detecta cuando se hace clic en un elemento.
+```js
+$('#elemento').click(function() { /* ... */ });
+```
+
+2. `.dblclick(function)`: Detecta cuando se hace doble clic en un elemento.
+```js
+$('#elemento').dblclick(function() { /* ... */ });
+```
+
+3. `.keydown(function)`: Detecta cuando una tecla es presionada.
+```js
+$(document).keydown(function(event) { /* ... */ });
+```
+
+4. `.focus(function)`: Detecta cuando un campo de formulario recibe el foco.
+```js
+$('input').focus(function() { /* ... */ });
+```
+
+### Delegación de Eventos (Para Elementos Dinámicos)
+
+jQuery permite usar **delegación de eventos** para manejar eventos de elementos 
+añadidos dinámicamente al DOM:
+```js
+$(document).on('click', '.miClaseDinamica', function() {
+  alert('Elemento dinámico clickeado');
+});
+```
+* Aquí, se usa `$(document).on(...)` para delegar el evento `click` a cualquier 
+  elemento con `class="miClaseDinamica"` que se agregue después de que la página 
+  haya cargado.
+
+---
+
+## Métodos
+
+Los **métodos** en jQuery son funciones integradas que permiten realizar operaciones 
+comunes en los elementos del DOM de manera sencilla y eficiente. Estas 
+operaciones incluyen aplicar efectos, manipular contenido HTML y modificar 
+estilos CSS.
+
+### 1. Métodos de Efectos
+
+Los métodos de efectos en jQuery se utilizan para mostrar, ocultar, y animar 
+elementos de la página. Los más comunes son:
+
+* **`.show()` y `.hide()`:** Muestran u ocultan elementos.
+```js
+$('#elemento').hide(); // Oculta el elemento
+$('#elemento').show(); // Muestra el elemento
+```
+
+* **`.toggle()`:** Alterna entre mostrar y ocultar un elemento.
+```js
+$('#elemento').toggle(); // Muestra u oculta dependiendo del estado actual
+```
+
+* **`.fadeIn()` y `.fadeOut()`:** Muestran y ocultan un elemento con un efecto de 
+  desvanecimiento.
+```js
+$('#elemento').fadeIn('slow'); // Desvanece lentamente para mostrar
+$('#elemento').fadeOut('fast'); // Desvanece rápidamente para ocultar
+```
+
+* **`.slideUp()` y `.slideDown()`:** Deslizan un elemento hacia arriba (para ocultar) 
+  o hacia abajo (para mostrar).
+```js
+$('#elemento').slideUp(); // Oculta el elemento con deslizamiento hacia arriba
+$('#elemento').slideDown(); // Muestra el elemento con deslizamiento hacia abajo
+```
+
+* **`.animate()`:** Permite animar propiedades CSS (números como width, height, 
+  opacity).
+```js
+$('#elemento').animate({ width: '50%' }, 'slow'); // Cambia el ancho al 50%
+```
+
+### 2. Manipulación de HTML y CSS
+
+jQuery facilita la manipulación del contenido HTML, atributos, y estilos CSS de 
+los elementos.
+
+#### Manipulación del Contenido HTML:
+
+* **`.html()`:** Obtiene o establece el contenido HTML de un elemento.
+```js
+$('#contenedor').html('<p>Nuevo contenido</p>'); // Cambia el HTML interno
+```
+
+* **`.text()`:** Obtiene o establece solo el texto de un elemento (sin HTML).
+```js
+$('#contenedor').text('Nuevo texto'); // Cambia el texto interno
+```
+
+* `.append()` y `.prepend()`: Añaden contenido al final o al principio de un 
+  elemento.
+```js
+$('#lista').append('<li>Nuevo elemento</li>'); // Añade al final de la lista
+$('#lista').prepend('<li>Nuevo elemento</li>'); // Añade al principio
+```
+
+#### Manipulación de Atributos:
+
+* **`.attr()`:** Obtiene o establece el valor de un atributo.
+```js
+$('#imagen').attr('src', 'nueva-imagen.jpg'); // Cambia el atributo `src` de la imagen
+```
+
+* **`.removeAttr()`**: Elimina un atributo específico.
+```js
+$('#link').removeAttr('href'); // Elimina el atributo `href`
+```
+
+#### Manipulación de Estilos CSS:
+
+* **`.css()`:** Obtiene o establece propiedades CSS.
+```js
+$('#caja').css('background-color', 'blue'); // Cambia el color de fondo
+```
+
+* **`.addClass()` y `.removeClass()`:** Añaden o eliminan clases de CSS a un elemento.
+```js
+$('#caja').addClass('activo'); // Añade la clase "activo"
+$('#caja').removeClass('activo'); // Elimina la clase "activo"
+```
+
+* **`.toggleClass()`:** Alterna una clase; si la clase está presente, se elimina, si 
+  no, se añade.
+```js
+$('#caja').toggleClass('activo'); // Añade o elimina la clase "activo"
 ```
 
 ---
