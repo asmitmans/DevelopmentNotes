@@ -312,3 +312,128 @@ decisiones antes de confirmar o subir cambios al repositorio.
 
 ---
 
+## GitHub
+
+**GitHub** es una **plataforma de alojamiento de repositorios Git** que permite 
+gestionar, compartir, y colaborar en proyectos de software. Es uno de los 
+servicios más populares para alojar código fuente y trabajar en equipo, además 
+de ofrecer herramientas para la gestión de proyectos, control de versiones, y 
+automatización.
+
+* **Funcionalidades Principales:**
+  * **Repositorios Remotos:** Permite almacenar y compartir repositorios de Git en 
+    línea.
+  * **Colaboración en Equipo:** Facilita la colaboración a través de pull requests, 
+    revisiones de código y comentarios.
+  * **Control de Versiones:** Sincroniza repositorios locales y remotos usando Git.
+  * **Herramientas Adicionales:** Ofrece issues para seguimiento de errores y tareas, 
+    actions para automatización, projects para gestión de tableros tipo Kanban, y 
+    más.
+
+---
+
+## Configuración de GitHub
+
+
+### 1. Crear una Cuenta:
+* Ve a GitHub y regístrate para crear una cuenta gratuita.
+  https://github.com/
+
+
+### 2. Configurar Git para Usar GitHub:
+* Configura tu nombre y correo electrónico (si no lo has hecho anteriormente):
+```sh
+git config --global user.name "Tu Nombre"
+git config --global user.email "tuemail@ejemplo.com"
+```
+
+### 3. Generar una Clave SSH (Opcional pero Recomendado):
+
+`#Revisar`
+
+* Para evitar ingresar tu nombre de usuario y contraseña cada vez que 
+  interactúes con un repositorio remoto, genera una clave SSH.
+```sh
+ssh-keygen -t ed25519 -C "tuemail@ejemplo.com"
+```
+* Copia la clave pública generada (`~/.ssh/id_ed25519.pub`) y agrégala a tu cuenta 
+  de GitHub en **Settings > SSH and GPG keys.**
+
+### 4. Autenticarte en GitHub con Token (Alternativa a SSH):
+
+* Si prefieres usar HTTPS en lugar de SSH, puedes generar un Token de Acceso 
+  Personal en GitHub (Settings > Developer settings > Personal access tokens).
+
+* Usa este token cuando se te solicite la contraseña al hacer git push o git 
+* pull.
+
+### 5. Autenticarte en GitHub con Usando gh (Alternativa SSH, Token)
+
+Forma mas sencilla de autenticarse, para subir cambios
+
+* 1. **Instalar la CLI de GitHub (`gh`)**
+  * Para instalar `gh` en sistemas Linux/Ubuntu:
+```sh
+sudo apt install gh
+```
+
+* 2. **Autenticación con GitHub Usando `gh`**
+  * Abre la terminal y ejecuta el siguiente comando para iniciar la 
+    autenticación: 
+```sh
+gh auth login
+```
+* Elige **GitHub.com** y selecciona el método de autenticación:
+  * **Browser (recomendado):** Sigue el enlace generado por gh para autenticarte en 
+    tu navegador.
+  * Una vez autenticado, el token de acceso se configurará automáticamente.
+
+* 3. **Configurar Git para Usar GitHub con `gh`**
+* `gh` configurará automáticamente Git para que use HTTPS con el token generado 
+  para todas las operaciones de Git relacionadas con GitHub.
+* Esto evita que necesites ingresar tu usuario y contraseña cada vez que 
+  realizas git push o git pull.
+
+* 5. **Verificar la Configuración Global**
+* Después de autenticarse, asegúrate de que `gh` ha configurado Git para manejar 
+  credenciales a nivel global:
+```sh
+git config --global credential.helper
+```
+Esto debe mostrar algo como `gh auth git-credential`, indicando que `gh` está 
+gestionando las credenciales de Git.
+
+### 6. Clonar o Crear repositorio
+
+#### Clonar un Repositorio
+* **Con HTTPS:**
+```sh
+git clone https://github.com/usuario/repositorio.git
+```
+* Si `gh` gestiona las credenciales, no se te pedirá usuario y contraseña.
+
+* **Con SSH (si configuraste `gh` para usar SSH):**
+```sh
+git clone git@github.com:usuario/repositorio.git
+```
+
+#### Vincular un Repositorio Local a un Repositorio Remoto
+* **Agregar un repositorio remoto a un repositorio local existente:**
+```sh
+git remote add origin https://github.com/usuario/repositorio.git
+```
+* Este comando sigue siendo válido y `gh` gestionará las credenciales para las 
+  operaciones posteriores (`git push`, `git pull`).
+
+#### Crear Repositorios
+* Creación Estándar en GitHub (usando el navegador):
+  * Puedes crear un repositorio desde la interfaz web de GitHub y luego 
+    vincularlo con tu repositorio local usando:
+```sh
+git remote add origin https://github.com/usuario/repositorio.git
+```
+
+---
+
+
+
