@@ -682,6 +682,204 @@ git push origin --delete master
 
 ---
 
+## Git Branch
+
+### Conociendo las Ramas del Proyecto
+
+Las **ramas (branches)** en Git permiten trabajar en diferentes líneas de desarrollo 
+dentro de un mismo proyecto, manteniendo el código organizado. Cada rama es una 
+versión paralela del proyecto que se puede modificar sin afectar otras ramas.
 
 
+### `git branch`
 
+* **Listar Ramas Disponibles:**
+```sh
+git branch
+```
+Muestra una lista de todas las ramas locales, destacando la rama activa (con un 
+`*`).
+
+
+### ¿Cuándo Generar una Nueva Rama?
+
+Crear una nueva rama es útil cuando:
+* **Desarrollas Nuevas Funcionalidades:** Trabajar en una nueva característica sin 
+  afectar el código en la rama principal.
+* **Corregir Errores (Bugs):** Crear una rama específica para arreglar un error.
+* **Experimentar o Prototipar:** Probar cambios sin interferir con el desarrollo 
+  principal.
+
+
+### Crear y Cambiar de Ramas
+
+1. **Crear una Nueva Rama (`git branch`):**
+```sh
+git branch nueva_branch
+```
+Esto crea una nueva rama llamada `nueva_branch` sin cambiar a ella.
+
+2. **Cambiar de Rama (`git checkout`):**
+```sh
+git checkout nueva_branch
+```
+Cambia la rama actual a `nueva_branch`.
+
+3. **Crear y Cambiar a una Nueva Rama (Comando Combinado):**
+```sh
+git checkout -b otra_branch
+```
+Crea una nueva rama llamada `otra_branch` y cambia a ella inmediatamente.
+
+---
+
+## Git Stash
+
+`git stash` es una herramienta que permite **guardar temporalmente cambios no** 
+**confirmados (commits)** en tu área de trabajo para que puedas volver a ellos más 
+adelante sin necesidad de hacer un commit.
+
+
+### Comandos de `git stash`
+
+1. **Guardar Cambios con `git stash`:**
+```sh
+git stash
+```
+Esto guarda todos los cambios no confirmados (modificaciones y archivos no 
+rastreados) en una especie de "pila de almacenamiento temporal" y deja el 
+directorio de trabajo limpio (como en el último commit).
+
+2. **Ver el Contenido de la Pila con `git stash list`:**
+```sh
+git stash list
+```
+Muestra una lista de los cambios guardados en la pila de stash, permitiéndote 
+ver todos los conjuntos de cambios que se han guardado temporalmente.
+
+3. **Aplicar Cambios Guardados con `git stash apply`:**
+```sh
+git stash apply
+```
+Restaura los cambios más recientes guardados en la pila, manteniéndolos en el 
+stash para seguir disponibles si necesitas volver a aplicarlos.
+   * Si quieres aplicar un stash específico (no el más reciente), puedes 
+     referenciarlo por su identificador:
+```sh
+git stash apply stash@{0}
+```
+
+### Resumen del Flujo de `git stash`
+1. Guardar cambios no confirmados para trabajar en algo más (con git stash).
+2. Listar y verificar qué cambios hay guardados (con git stash list).
+3. Restaurar los cambios guardados cuando quieras continuar trabajando en ellos 
+   (con git stash apply).
+
+`git stash` es una manera efectiva de administrar cambios temporales y mantener 
+tu trabajo organizado sin la necesidad de realizar commits intermedios.
+
+---
+
+## Git Rebase
+
+`git rebase` es un comando de Git que se utiliza para **reaplicar commits de una** 
+**rama sobre otra**, reorganizando el historial de commits. La idea principal de 
+`rebase` es tomar los cambios que están en una rama y **colocarlos al final de otra**, 
+reescribiendo el historial.
+
+
+### ¿Cuándo se Usa `git rebase`?
+
+* **Mantener un Historial Lineal y Limpio:** A diferencia de `git merge`, que crea un 
+  commit de fusión, `git rebase` reorganiza los commits para crear una historia 
+  más limpia y fácil de leer.
+
+* **Actualizar una Rama con Cambios de Otra Rama:** Por ejemplo, si trabajas en una 
+  rama de característica (`feature`) y quieres traer los últimos cambios de `main`, 
+  puedes usar `rebase` para que tus commits aparezcan después de los cambios más 
+  recientes de `main`.
+
+* **Resolver Conflictos antes de un Merge:** Preparar tus cambios para fusionarse 
+  fácilmente con la rama de destino, lo que es útil al colaborar con otros 
+  desarrolladores.
+
+
+### Cómo Usar `git rebase`
+```sh
+git rebase otra_branch
+```
+Esto toma los commits de la **rama actual** y los reaplica sobre la rama 
+`otra_branch`.
+
+**Ejemplo de Uso:** Si estás trabajando en una rama `feature` y quieres actualizarla 
+con los últimos cambios de `main`, te aseguras de estar en `feature` y luego haces:
+```sh
+git rebase main
+```
+Esto coloca los commits de `feature` sobre `main`, reorganizando el historial de 
+commits para que `feature` esté al día con `main`.
+
+
+### Resumen del Flujo de `rebase`:
+1. **Reorganiza el Historial de Commits:** Aplica los commits de la rama actual 
+   sobre otra.
+2. **Mantén un Historial Limpio y Lineal:** Útil para mantener un historial más 
+   fácil de seguir.
+3. **Cuidado con los Conflictos:** Durante el `rebase`, pueden surgir conflictos, que 
+   se deben resolver manualmente antes de continuar.
+
+`git rebase` es una herramienta poderosa para mantener un historial de commits 
+limpio, pero debe usarse con cuidado para evitar reescribir cambios que otros 
+desarrolladores puedan estar utilizando.
+
+---
+
+## GitHub Pages
+
+**GitHub Pages** es un servicio gratuito que permite alojar sitios web directamente 
+desde un repositorio de GitHub. Es ideal para mostrar proyectos, documentación, 
+blogs o sitios estáticos.
+
+
+### Subiendo una Página a GitHub Pages
+
+Puedes subir tu página a GitHub Pages directamente desde un repositorio. El 
+contenido del repositorio se publica automáticamente y está disponible para 
+cualquier usuario.
+
+#### Dos Formas de Subir una Página a GitHub Pages
+
+1. **Por Comandos (Terminal)**
+   1. **Crear un Repositorio:** Si no lo tienes ya, crea un repositorio en GitHub 
+      para tu sitio web.
+   2. **Configurar y Subir el Proyecto Localmente:**
+      * Si tu contenido está en la rama `main`, y deseas que la página se 
+        despliegue desde el directorio raíz:
+```sh
+git add .
+git commit -m "Subiendo página a GitHub Pages"
+git push origin main
+```
+   3. **Configurar GitHub Pages:** Ve a la página del repositorio en GitHub, 
+      selecciona **Settings > Pages**, elige la fuente (branch y carpeta), y guarda.
+
+
+2. **Por Interfaz Gráfica de GitHub**
+   1. **Crear o Seleccionar el Repositorio:** Si aún no lo tienes, crea un nuevo 
+      repositorio o selecciona uno existente.
+
+   2. **Subir Archivos Manualmente:**
+      * Ve a la pestaña de **Code** del repositorio.
+      * Haz clic en **Add file > Upload files** y sube los archivos de tu página 
+        web.
+
+   3. **Configurar GitHub Pages:**
+      * Dirígete a **Settings > Pages**.
+      * En "Source", selecciona la **branch** (generalmente `main`) y la carpeta 
+        (usualmente `/root` o `/docs`).
+      * Haz clic en **Save**.
+
+Una vez configurado, GitHub procesará los archivos y la página estará disponible 
+en una URL similar a `https://usuario.github.io/repositorio/`.
+
+---
