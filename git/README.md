@@ -563,5 +563,65 @@ Un **Pull Request (PR)** es una solicitud para fusionar los cambios de una rama
 
 ---
 
+## Manejo de Repositorios Remotos
+
+Git permite administrar múltiples repositorios remotos, lo cual facilita la 
+sincronización y el trabajo colaborativo.
+
+`git remote`
+El comando `git remote` se utiliza para gestionar y listar los repositorios 
+remotos vinculados con tu repositorio local.
+
+* **Listar Repositorios Remotos:**
+```sh
+git remote
+```
+Muestra una lista de los remotos asociados (por defecto suele ser `origin`).
 
 
+`git remote -v`
+* **Listar Detalles de los Remotos:**
+```sh
+git remote -v
+```
+Muestra la lista de repositorios remotos junto con sus direcciones URL para 
+**fetch (obtener)** y **push (subir)**.
+
+
+`git remote add [nombre] [dirección del repositorio]`
+* **Agregar un Nuevo Repositorio Remoto:**
+```sh
+git remote add nombre_remoto https://github.com/usuario/repositorio.git
+```
+Esto añade un nuevo repositorio remoto con el **nombre especificado** (por ejemplo, 
+`origin`, `upstream`) y la **URL del repositorio.**
+
+
+`git remote show [nombre]`
+Mostrar Información de un Remoto Específico:
+```sh
+git remote show nombre_remoto
+```
+Proporciona detalles sobre el remoto especificado, incluyendo las ramas 
+rastreadas y la configuración actual de fetch y push.
+
+
+### Modificar y Eliminar Repositorios Remotos
+
+`git remote rename`
+Renombrar un Repositorio Remoto:
+```sh
+git remote rename antiguo_nombre nuevo_nombre
+```
+Cambia el nombre del remoto de `antiguo_nombre` a `nuevo_nombre`.
+
+
+`git remote rm`
+Eliminar un Repositorio Remoto:
+```sh
+git remote rm nombre_remoto
+```
+Elimina el remoto especificado, desvinculando el repositorio local de la URL 
+asociada.
+
+---
