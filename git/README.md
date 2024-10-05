@@ -435,5 +435,133 @@ git remote add origin https://github.com/usuario/repositorio.git
 
 ---
 
+## Subiendo y Bajando Cambios con Git
+
+### Subiendo Cambios al Repositorio Remoto
+Para subir los cambios locales al repositorio remoto, se utiliza el comando 
+`git push`.
+
+**Uso Básico:**
+```sh
+git push origin nombre_rama
+```
+* `origin`: El nombre por defecto del repositorio remoto.
+* `nombre_rama`: La rama a la que quieres subir los cambios (ej: `main`, `master`).
+
+**Ejemplo:**
+```sh
+git push origin main
+```
+Esto sube los commits de la rama local `main` al repositorio remoto.
+
+En muchos casos puedes usar simplemente `git push` como una forma abreviada de 
+`git push origin main`, pero esto depende de la configuración de tu repositorio 
+y el estado actual de tu rama.
+
+Cuando usas solo `git push`, Git intenta hacer un "push" de la rama actual al 
+remoto asociado (generalmente llamado `origin`) y a la rama remota con el mismo 
+nombre. Sin embargo, para que esto funcione, deben cumplirse algunas 
+condiciones:
+
+1. **Rama predeterminada configurada:** La rama local debe estar configurada para 
+   hacer "push" automáticamente a una rama remota específica. Esto generalmente 
+   ocurre cuando ya has hecho un "push" previo de esa rama o cuando la 
+   configuración de Git (el archivo `.git/config`) define una rama de seguimiento.
+
+2. **Remoto predeterminado:** Git debe saber a qué remoto enviar los cambios. 
+   Normalmente, si solo tienes un remoto configurado (llamado `origin`), 
+   `git push` lo usará por defecto.
+
+
+### Bajando Cambios del Repositorio Remoto
+
+Para traer cambios desde el repositorio remoto al repositorio local, se utiliza 
+el comando `git pull`.
+
+**Uso Básico:**
+```sh
+git pull origin nombre_rama
+```
+* `origin`: El nombre del repositorio remoto.
+* `nombre_rama`: La rama de la que deseas obtener los cambios.
+
+**Ejemplo:**
+```sh
+git pull origin main
+```
+Este comando actualiza tu rama local `main` con los cambios más recientes del 
+repositorio remoto.
+
+> **Nota:** `git pull` es una combinación de `git fetch` (descargar los cambios) 
+> y `git merge` (fusionarlos en la rama actual).
+
+---
+
+## Git Push
+
+El comando `git push` se utiliza para subir los cambios confirmados (commits) de 
+tu repositorio local a un repositorio remoto. Este es un paso esencial para 
+sincronizar tu trabajo con un repositorio alojado en un servicio como **GitHub** o 
+**GitLab**.
+
+### Cómo Funciona el `git push`
+
+El flujo típico de `git push` consiste en:
+
+1. Subir los commits de la rama local actual a una rama remota con el mismo
+   nombre.
+2. Si no especificas una rama de destino, Git asume que la rama remota será la 
+   misma que la local.
+
+**Ejemplo Básico:**
+```sh
+git push origin nombre_rama
+```
+* `origin`: Nombre del repositorio remoto.
+* `nombre_rama`: La rama a la que subirás los cambios.
+
+**Comportamiento por Defecto**
+1. **Subida a una Rama Remota con el Mismo Nombre:**
+   Si ejecutas `git push origin` desde una rama llamada `new_feature`, Git sube los 
+   cambios a la rama remota `new_feature`.
+
+   Esto significa que, por defecto, Git hace `push` de la rama local actual (en la 
+   que estás trabajando) a la rama remota con el mismo nombre, si existe.
+
+2. **Especificar la Rama de Destino (Rara Vez Necesario):**
+   Si deseas subir los cambios de una rama local a una rama remota con un nombre 
+   diferente:
+```sh
+git push origin rama_local:rama_destino
+```
+
+**Ejemplo:**
+```sh
+git push origin new_feature:main
+```
+Esto intenta subir los cambios de la rama `new_feature` local directamente a `main` 
+en el repositorio remoto.
+
+
+**Empujar Cambios Directamente a `main`**
+Aunque es posible subir cambios de cualquier rama local directamente a `main`, 
+esto no es una buena práctica en equipos de desarrollo. Hacer `push` directo a 
+`main` puede introducir cambios no revisados y causar problemas.
+
+En la mayoría de los casos, los equipos utilizan un flujo basado en 
+**Pull Requests (PRs)** o **Merge Requests (MRs)**, donde los cambios de una rama 
+(`new_feature`) son revisados y aprobados antes de ser fusionados con `main`.
+
+
+### ¿Qué Son los Pull Requests (PRs)?
+
+Un **Pull Request (PR)** es una solicitud para fusionar los cambios de una rama 
+(`new_feature`) con otra (`main`). Esto permite:
+* **Revisar los cambios** antes de fusionarlos.
+* **Discutir los cambios** con otros colaboradores.
+* **Aprobar o solicitar modificaciones** antes de que se integren en `main`.
+
+---
+
 
 
