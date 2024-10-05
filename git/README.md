@@ -638,18 +638,19 @@ git clone https://github.com/usuario/repositorio.git
 * Esto permite trabajar localmente en el proyecto clonado.
 
 
-`fork`
+### `fork`
 * **Crear un Fork (Copia Propia de un Repositorio):**
 * Un fork es una copia de un repositorio de GitHub en tu propia cuenta.
 * Es útil para contribuir a proyectos donde no tienes permisos directos para 
   hacer cambios.
 * Una vez creado el fork, puedes clonar tu copia del repositorio y trabajar en 
   ella.
+
 * **Flujo Común de Forks:**
-1. Forkear el repositorio original.
-2. Clonar el fork a tu máquina local.
-3. Hacer cambios y subirlos a tu fork.
-4. Abrir un Pull Request al repositorio original para proponer tus cambios.
+  1. Forkear el repositorio original.
+  2. Clonar el fork a tu máquina local.
+  3. Hacer cambios y subirlos a tu fork.
+  4. Abrir un Pull Request al repositorio original para proponer tus cambios.
 
 ---
 
