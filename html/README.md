@@ -498,7 +498,6 @@ estructurados.
 * **Estructura: `<article>Contenido del artículo</article>`**
 * **Ejemplo:**
 ```html
-Copiar código
 <article>
     <h2>Título del Artículo</h2>
     <p>Este es el contenido de un artículo independiente...</p>
