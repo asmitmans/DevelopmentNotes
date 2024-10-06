@@ -268,7 +268,33 @@ manera lógica.
 - **Dato extra:** El atributo **`target="_blank"`** se puede usar para abrir el enlace en
 una nueva pestaña.
 
+### Vinculación de Elementos con `id`
+
+Para enlazar un elemento específico dentro de una página web, la forma más 
+efectiva es asignarle un id único y luego crear un enlace hacia ese id.
+
+**Pasos para Vincular**
+1. **Asignar un `id` al elemento destino:**
+```html
+<h2 id="seccion1">Sección 1</h2>
+```
+Esto identifica el elemento como un objetivo de enlace.
+
+2. **Crear un enlace al `id`:**
+```html
+<a href="#seccion1">Ir a Sección 1</a>
+```
+El `href` con `#` seguido del `id` enlaza directamente al elemento con ese `id`.
+
+**Resultado**
+Al hacer clic en el enlace, la página se desplazará automáticamente hacia el 
+elemento con el `id` correspondiente. Esto es útil para crear menús de 
+navegación que lleven a diferentes secciones de la misma página.
+
+Este método es estándar y garantiza que el enlace sea preciso y funcional.
+
 ---
+
 ## Etiqueta `<ul>` y `<ol>` (Listas):
 - **Estructura**: 
   - **Listas no ordenadas: `<ul><li>Elemento 1</li><li>Elemento 2</li></ul>`**
