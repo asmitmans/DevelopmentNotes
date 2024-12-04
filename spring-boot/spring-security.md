@@ -9,6 +9,7 @@
 - [Configuración de usuarios y roles con JPA en Spring Security](#configuración-de-usuarios-y-roles-con-jpa-en-spring-security)
 - [Implementación de Spring Security](#implementación-de-spring-security)
 - [Implementación de Spring Security con JWT](#implementación-de-spring-security-con-jwt)
+- [¿Pueden convivir autenticación con estado (stateful) y sin estado (stateless) en Spring Security?](#pueden-convivir-autenticación-con-estado-stateful-y-sin-estado-stateless-en-spring-security)
 
 
 ---
@@ -304,7 +305,7 @@ manejar la autenticación y autorización usando Spring Security.
 
 ---
 
-### ¿Pueden convivir autenticación con estado (stateful) y sin estado (stateless) en Spring Security?
+## ¿Pueden convivir autenticación con estado (stateful) y sin estado (stateless) en Spring Security?
 
 **Sí**, es posible combinar autenticación con estado y sin estado en una misma 
 aplicación utilizando **Spring Security**:

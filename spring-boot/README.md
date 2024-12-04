@@ -3,6 +3,7 @@
 - [Spring Boot](#spring-boot)
 - [Definición de HTML](#definición-de-html)
 - [Spring Security](#spring-security)
+- [Pasos para Desarrollar una API REST con Spring Boot](#pasos-para-desarrollar-una-api-rest-con-spring-boot)
 
 ---
 
@@ -18,5 +19,10 @@ para crear experiencias web interactivas y visualmente atractivas.
 
 ## Spring Security
 [Spring Security](spring-security.md)
+
+---
+
+## Pasos para Desarrollar una API REST con Spring Boot
+[Pasos Desarrollo API](pasos-creacion-api.md)
 
 ---
