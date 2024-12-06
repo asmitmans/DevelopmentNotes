@@ -5,8 +5,8 @@
 - [Paso 1: Crear excepciones personalizadas](#paso-1-crear-excepciones-personalizadas)
 - [Paso 2: Crear un modelo para la respuesta de error](#paso-2-crear-un-modelo-para-la-respuesta-de-error)
 - [Paso 3: Crear un controlador global para excepciones](#paso-3-crear-un-controlador-global-para-excepciones)
-- [Paso 4: Lanza excepciones desde los controladores](#paso-4-lanza-excepciones-desde-los-controladores)
-- [Pasos:](#pasos-3)
+- [Paso 4: Usar excepciones en el servicio](#paso-4-usar-excepciones-en-el-servicio)
+- [Nota final: Cómo funciona el sistema de excepciones](#nota-final-cómo-funciona-el-sistema-de-excepciones)
 
 ---
 
@@ -146,27 +146,52 @@ public class ExceptionController {
 
 ---
 
-## Paso 4: Lanza excepciones desde los controladores
+## Paso 4: Usar excepciones en el servicio
 
 ### Definición
-Los controladores deben lanzar excepciones personalizadas cuando ocurran 
-errores en la lógica de negocio, delegando el manejo al controlador global. 
+La capa de servicio es responsable de la lógica de negocio. Las excepciones 
+deben lanzarse desde aquí para mantener la separación de responsabilidades y 
+permitir que el controlador global gestione los errores.
 
-## Pasos:
-1. Usa servicios para realizar la lógica de negocio.
-2. Lanza excepciones personalizadas cuando sea necesario.
-3. Deja que el controlador global maneje la respuesta al cliente.
+### Pasos:
+1. Identifica los casos donde sea necesario lanzar una excepción.
+2. Usa excepciones personalizadas para representar errores específicos.
+3. Lanza la excepción desde el servicio con `throw`.
 
 ### Ejemplo:
 ```java
-@GetMapping("/clients/{rut}")
-public ResponseEntity<Client> findByRut(@PathVariable String rut) {
-    Client client = clientService.findByRut(rut);
-    if (client == null) {
-        throw new ClientNotFoundException(String.format("El cliente con rut %s no existe", rut));
-    }
-    return ResponseEntity.ok(client);
+@Override
+public Client findByRut(String rut) {
+    return clients.stream()
+        .filter(client -> client.getRut().equals(rut))
+        .findFirst()
+        .orElseThrow(() -> new ClientNotFoundException(
+            String.format("El cliente con rut %s no existe", rut)
+        ));
 }
 ```
+
+---
+
+## Nota final: Cómo funciona el sistema de excepciones
+
+1. **Excepciones desde el servicio:**
+- La lógica de negocio lanza excepciones personalizadas, como 
+  ClientNotFoundException, cuando ocurre un error.
+
+2. **Controlador común:**
+- El controlador no maneja las excepciones directamente. Se limita a delegar 
+  la lógica al servicio.
+
+3. **Controlador global:**
+- Captura cualquier excepción lanzada desde el servicio o el controlador.
+- Devuelve una respuesta uniforme y clara al cliente con un modelo como 
+  `ApiError`.
+
+4. **Flujo general:**
+- El cliente realiza una solicitud.
+- Si ocurre un error, el servicio lanza una excepción.
+- El controlador global captura la excepción y responde con un mensaje bien 
+  formateado.
 
 ---
