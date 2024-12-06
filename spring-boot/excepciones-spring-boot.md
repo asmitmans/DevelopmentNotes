@@ -5,6 +5,8 @@
 - [Paso 1: Crear excepciones personalizadas](#paso-1-crear-excepciones-personalizadas)
 - [Paso 2: Crear un modelo para la respuesta de error](#paso-2-crear-un-modelo-para-la-respuesta-de-error)
 - [Paso 3: Crear un controlador global para excepciones](#paso-3-crear-un-controlador-global-para-excepciones)
+- [Paso 4: Lanza excepciones desde los controladores](#paso-4-lanza-excepciones-desde-los-controladores)
+- [Pasos:](#pasos-3)
 
 ---
 
@@ -142,3 +144,29 @@ public class ExceptionController {
 }
 ```
 
+---
+
+## Paso 4: Lanza excepciones desde los controladores
+
+### Definición
+Los controladores deben lanzar excepciones personalizadas cuando ocurran 
+errores en la lógica de negocio, delegando el manejo al controlador global. 
+
+## Pasos:
+1. Usa servicios para realizar la lógica de negocio.
+2. Lanza excepciones personalizadas cuando sea necesario.
+3. Deja que el controlador global maneje la respuesta al cliente.
+
+### Ejemplo:
+```java
+@GetMapping("/clients/{rut}")
+public ResponseEntity<Client> findByRut(@PathVariable String rut) {
+    Client client = clientService.findByRut(rut);
+    if (client == null) {
+        throw new ClientNotFoundException(String.format("El cliente con rut %s no existe", rut));
+    }
+    return ResponseEntity.ok(client);
+}
+```
+
+---
