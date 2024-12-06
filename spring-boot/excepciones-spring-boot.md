@@ -2,6 +2,9 @@
 
 - [Manejo de Excepciones en Spring Boot](#manejo-de-excepciones-en-spring-boot)
 - [Introducción](#introducción)
+- [Paso 1: Crear excepciones personalizadas](#paso-1-crear-excepciones-personalizadas)
+- [Paso 2: Crear un modelo para la respuesta de error](#paso-2-crear-un-modelo-para-la-respuesta-de-error)
+- [Paso 3: Crear un controlador global para excepciones](#paso-3-crear-un-controlador-global-para-excepciones)
 
 ---
 
@@ -20,4 +23,122 @@ respuestas claras y uniformes en APIs REST. Las excepciones deben:
    necesario.
 
 ---
+
+## Paso 1: Crear excepciones personalizadas
+
+### Definición
+Las excepciones personalizadas representan errores específicos de la lógica 
+de negocio. Estas excepciones extienden `RuntimeException` para simplificar 
+su manejo.
+
+### Pasos:
+1. Ubica las excepciones en un paquete dedicado (`exceptions`).
+2. Extiende la clase `RuntimeException`.
+3. Define un constructor que reciba un mensaje para describir el error.
+
+### Ejemplo:
+```java
+package com.example.exceptions;
+
+public class ClientNotFoundException extends RuntimeException {
+    public ClientNotFoundException(String message) {
+        super(message);
+    }
+}
+
+```
+
+---
+
+## Paso 2: Crear un modelo para la respuesta de error
+
+### Definición
+El modelo de respuesta de error define la estructura que recibirán los 
+clientes cuando ocurra un error en la API.
+
+### Pasos:
+1. Crea una clase en el paquete `model`.
+2. Usa un nombre descriptivo como `ApiError` para evitar conflictos con 
+   clases de Java (`Error`).
+3. Incluye los siguientes atributos:
+   - `String message`: Mensaje del error.
+   - `String error`: Detalles técnicos.
+   - `LocalDateTime timestamp`: Fecha y hora del error.
+   - `Integer status`: Código de estado HTTP.
+
+### Ejemplo:
+```java
+package com.example.model;
+
+import java.time.LocalDateTime;
+
+public class ApiError {
+    private String message;
+    private String error;
+    private LocalDateTime timestamp;
+    private Integer status;
+
+    public ApiError(String message, String error, LocalDateTime timestamp, Integer status) {
+        this.message = message;
+        this.error = error;
+        this.timestamp = timestamp;
+        this.status = status;
+    }
+    // Getters y setters
+}
+```
+
+---
+
+## Paso 3: Crear un controlador global para excepciones
+
+### Definición
+El controlador global maneja todas las excepciones de manera centralizada.
+Esto simplifica la lógica y asegura respuestas consistentes.
+
+### Pasos:
+1. Crea una clase en el paquete `exceptions` o `controllers`.
+2. Anota la clase con `@RestControllerAdvice`.
+3. Define métodos con `@ExceptionHandler` para manejar excepciones 
+   específicas.
+4. Devuelve una instancia del modelo `ApiError` como respuesta al cliente.
+
+### Ejemplo:
+```java
+package com.example.exceptions;
+
+import com.example.model.ApiError;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
+
+import java.time.LocalDateTime;
+
+@RestControllerAdvice
+public class ExceptionController {
+
+    @ExceptionHandler(ClientNotFoundException.class)
+    public ResponseEntity<ApiError> handleClientNotFound(ClientNotFoundException ex) {
+        ApiError error = new ApiError(
+            "Cliente no encontrado",
+            ex.getMessage(),
+            LocalDateTime.now(),
+            HttpStatus.NOT_FOUND.value()
+        );
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error);
+    }
+
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<ApiError> handleGeneralException(Exception ex) {
+        ApiError error = new ApiError(
+            "Error interno del servidor",
+            ex.getMessage(),
+            LocalDateTime.now(),
+            HttpStatus.INTERNAL_SERVER_ERROR.value()
+        );
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(error);
+    }
+}
+```
 
