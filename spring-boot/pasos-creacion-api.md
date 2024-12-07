@@ -94,4 +94,55 @@ La capa `service` maneja la lógica de negocio y las operaciones sobre los datos
   al resto del proyecto.
 
 
+## 5. Desarrollo de la Capa Controlador
+
+### Definición
+La capa de controladores (`controller`) es responsable de manejar las 
+solicitudes HTTP y delegar la lógica de negocio al servicio correspondiente. 
+Es el punto de entrada para las operaciones de la API REST.
+
+---
+
+### Recomendaciones
+
+1. **Organización de Controladores:**
+   - Ubica los controladores en el paquete `controller`.
+   - Usa nombres descriptivos como `EntityController` (por ejemplo, 
+     `ClientController`).
+
+2. **Anotaciones Principales:**
+   - `@RestController`: Declara la clase como un controlador REST.
+   - `@RequestMapping("/path")`: Define el prefijo común para todas las 
+     rutas del controlador.
+
+3. **Definición de Métodos:**
+   - Define métodos para cada operación CRUD.
+   - Usa las siguientes anotaciones según el método HTTP:
+     - `@GetMapping`: Para solicitudes GET.
+     - `@PostMapping`: Para solicitudes POST.
+     - `@PutMapping`: Para solicitudes PUT.
+     - `@DeleteMapping`: Para solicitudes DELETE.
+
+4. **Delegación al Servicio:**
+   - Inyecta el servicio correspondiente usando un constructor o 
+     `@Autowired`.
+   - Llama a los métodos del servicio desde los métodos del controlador.
+
+5. **Formato de Respuesta:**
+   - Opcional: Usa `ResponseEntity<T>` para tener control sobre el 
+     estado HTTP y la estructura de la respuesta.
+   - Por simplicidad, puedes devolver directamente los datos en 
+     proyectos pequeños.
+
+### Notas Finales
+
+1. Mantén los controladores simples y enfocados en manejar solicitudes HTTP. 
+   La lógica de negocio debe estar en la capa service.
+
+2. Opcional: Usa `ResponseEntity<T>` para mayor control y personalización de las 
+   respuestas HTTP.
+3. Delega el manejo de excepciones al controlador global 
+   (`@RestControllerAdvice`).
+
+---
 
