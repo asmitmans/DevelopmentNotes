@@ -21,7 +21,7 @@ respuestas claras y uniformes en APIs REST. Las excepciones deben:
 1. Define excepciones personalizadas que extiendan `RuntimeException`.
 2. Crea un modelo para las respuestas de error (por ejemplo, `ApiError`).
 3. Centraliza el manejo de excepciones con `@RestControllerAdvice`.
-4. Lanza excepciones personalizadas desde los controladores según sea 
+4. Lanza excepciones personalizadas desde los servicios según sea 
    necesario.
 
 ---
