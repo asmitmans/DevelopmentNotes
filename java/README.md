@@ -10,6 +10,7 @@
   - [Acceso a atributo heredado de superclase](#acceso-a-atributo-heredado-de-superclase-1)
   - [Porque es recomendable usar Maven para un proyecto](#porque-es-recomendable-usar-maven-para-un-proyecto)
   - [**Crear un proyecto Maven con el arquetipo Quickstart**](#crear-un-proyecto-maven-con-el-arquetipo-quickstart)
+  - [ArrayList vs LinkedList](#arraylist-vs-linkedlist)
 
 ---
 
@@ -284,5 +285,48 @@ sistema-gestion-tareas/
 1. **Plantilla lista para empezar**: Incluye las estructuras y dependencias necesarias.
 2. **Prueba inicial con JUnit incluida**: Proporciona un test básico para validar la configuración.
 3. **Compatible con IntelliJ y Eclipse**: Puedes compartir el proyecto sin problemas entre ambos IDEs.
+
+--------------------------------------------------------------------------------
+
+## ArrayList vs LinkedList
+
+### **Características Generales**
+| Aspecto                  | **ArrayList**                              | **LinkedList**                             |
+|--------------------------|--------------------------------------------|-------------------------------------------|
+| **Estructura Interna**   | Array dinámico                             | Nodos enlazados (doblemente enlazados)    |
+| **Acceso Aleatorio**     | Muy eficiente (O(1))                       | Lento (O(n)), requiere recorrer la lista  |
+| **Inserción/Eliminación**| Lenta al modificar elementos internos (O(n))| Rápida en posiciones arbitrarias (O(1))   |
+| **Uso de Memoria**       | Menor (solo datos)                         | Mayor (almacena referencias adicionales)  |
+| **Iteración**            | Más rápida debido a la contigüidad en memoria | Más lenta por el acceso indirecto        |
+
+
+### **Casos de Uso Recomendados**
+1. **Usar `ArrayList` cuando:**
+   - Se requiere **acceso rápido a elementos por índice**.
+   - La lista tiene operaciones de **lectura frecuente** y pocas modificaciones.
+   - No hay necesidad de insertar o eliminar elementos en posiciones arbitrarias con frecuencia.
+
+2. **Usar `LinkedList` cuando:**
+   - La lista tiene **mucha inserción/eliminación en posiciones arbitrarias**.
+   - El tamaño de la lista cambia constantemente y no se conoce de antemano.
+   - No es necesario acceder frecuentemente a elementos por índice.
+
+
+### Estado Actual
+- En la mayoría de las aplicaciones modernas, **`ArrayList` es preferido** porque:
+  - Es más rápido para iteraciones y acceso aleatorio, que son comunes en los sistemas actuales.
+  - Las operaciones de inserción/eliminación en el medio de la lista son menos frecuentes.
+
+- **`LinkedList` tiene usos específicos**:
+  - Cuando las inserciones/eliminaciones arbitrarias son prioritarias.
+  - En escenarios donde el costo de realinear elementos en un array sería muy alto.
+
+### **Notas Finales**
+1. **Rendimiento:** En términos generales, `ArrayList` es más eficiente para la 
+   mayoría de los casos comunes, como colecciones grandes que se iteran o buscan 
+   frecuentemente.
+2. **Prácticas Profesionales:** Evalúa el patrón de uso antes de decidir. Si 
+   dudas, comienza con `ArrayList` y optimiza después según las necesidades del 
+   rendimiento.
 
 --------------------------------------------------------------------------------
