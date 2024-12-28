@@ -206,28 +206,33 @@ El arquetipo **"maven-archetype-quickstart"** es ideal para proyectos simples y
 educativos.
 
 ### Para IntelliJ IDEA (Community Edition)
-1. **Crear el proyecto:**
+1. **Abrir el asistente para nuevos proyectos:**
    - Ve a `File > New > Project`.
-   - Selecciona `Maven` y activa la casilla `Create from archetype`.
-   - En la lista de arquetipos disponibles, busca y selecciona:
+   - En el menú de la izquierda, selecciona `Maven Archetype`.
+
+2. **Configurar el proyecto:**
+   - **Name:** Escribe el nombre del proyecto (por ejemplo, `sistema-gestion-tareas`).
+   - **Location:** Selecciona el directorio donde deseas guardar el proyecto.
+   - **JDK:** Elige la versión adecuada (por ejemplo, OpenJDK 17 o superior).
+
+3. **Seleccionar el arquetipo:**
+   - En el campo **Archetype**, escribe directamente `quickstart`.
+   - Selecciona:
      ```
      org.apache.maven.archetypes:maven-archetype-quickstart
      ```
-   - Si no aparece en la lista:
-     - Haz clic en `Add Archetype`.
-     - Llena los datos:
-       - Group ID: `org.apache.maven.archetypes`
-       - Artifact ID: `maven-archetype-quickstart`
-       - Version: `1.4`
-     - Haz clic en `OK`.
+   - Elige la versión disponible (en tu caso, `1.1`).
 
-2. **Configura los datos del proyecto:**
-   - Group ID: `com.tuorganizacion`
-   - Artifact ID: `sistema-gestion-tareas`
-   - Version: `1.0-SNAPSHOT`.
+4. **Completar los datos del proyecto:**
+   - Rellena los campos:
+     - **Group ID:** `com.tuorganizacion`
+     - **Artifact ID:** `sistema-gestion-tareas`
+     - **Version:** `1.0-SNAPSHOT` (dejar esta versión estándar).
 
-3. **Finaliza el asistente:**
-   - IntelliJ descargará las dependencias y generará la estructura estándar.
+5. **Finalizar el asistente:**
+   - Haz clic en **Create**.
+   - IntelliJ generará automáticamente el proyecto con la estructura estándar y 
+     descargará las dependencias necesarias.
 
 
 ### **Para Eclipse**
@@ -255,7 +260,6 @@ educativos.
 4. **Finaliza el asistente:**
    - Eclipse generará la estructura estándar y descargará las dependencias.
 
----
 
 ### **Estructura generada por el arquetipo Quickstart**
 La estructura será:
