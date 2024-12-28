@@ -11,6 +11,7 @@
   - [Porque es recomendable usar Maven para un proyecto](#porque-es-recomendable-usar-maven-para-un-proyecto)
   - [**Crear un proyecto Maven con el arquetipo Quickstart**](#crear-un-proyecto-maven-con-el-arquetipo-quickstart)
   - [ArrayList vs LinkedList](#arraylist-vs-linkedlist)
+  - [Diferencias entre `forEach`, `for-each loop` y `Streams`](#diferencias-entre-foreach-for-each-loop-y-streams)
 
 ---
 
@@ -328,5 +329,82 @@ sistema-gestion-tareas/
 2. **Prácticas Profesionales:** Evalúa el patrón de uso antes de decidir. Si 
    dudas, comienza con `ArrayList` y optimiza después según las necesidades del 
    rendimiento.
+
+--------------------------------------------------------------------------------
+
+## Diferencias entre `forEach`, `for-each loop` y `Streams`
+
+### **A) `for-each loop` (bucle clásico):**
+```java
+for (Task task : taskList) {
+    if (task.getId() == id) {
+        return task;
+    }
+}
+```
+
+- **Ventajas:**
+  - Muy sencillo y directo.
+  - Compatible con todas las versiones de Java.
+  - Menor consumo de memoria que un `Stream` porque no crea un flujo intermedio.
+
+- **Desventajas:**
+  - Menos expresivo y funcional que las operaciones de `Stream`.
+  - No tiene la fluidez de los métodos encadenados.
+
+
+### **B) `stream`:**
+```java
+return taskList.stream()
+               .filter(task -> task.getId() == id)
+               .findFirst()
+               .orElse(null);
+```
+
+- **Ventajas:**
+  - Expresivo, conciso y funcional.
+  - Encadenamiento fluido para combinar múltiples operaciones (como `filter`, `map`, etc.).
+  - Puedes paralelizar con `parallelStream()` en caso de operaciones costosas (aunque no muy útil para `LinkedList`).
+
+- **Desventajas:**
+  - Puede ser menos eficiente que un bucle clásico en estructuras como `LinkedList`, ya que `Stream` no está optimizado para acceso secuencial.
+  - Consume más memoria debido a la creación de un flujo intermedio.
+
+
+### **C) `forEach` (método de la interfaz `Iterable`):**
+```java
+taskList.forEach(task -> {
+    if (task.getId() == id) {
+        // Lógica
+    }
+});
+```
+
+- **Ventajas:**
+  - Similar al `for-each loop`, pero utiliza lambdas para mayor expresividad.
+  - Ideal para operaciones simples como imprimir elementos.
+
+- **Desventajas:**
+  - No devuelve resultados directamente, por lo que no es tan útil para operaciones que necesitan devolver un valor (como encontrar un `Task` por ID).
+  - Menos fluido que `Stream`.
+
+
+### ¿Cuál es más recomendado?
+La elección depende del caso de uso:
+
+| **Escenario**                            | **Recomendación**                            |
+|------------------------------------------|----------------------------------------------|
+| Necesitas **simplicidad**                | Usa el `for-each loop`.                      |
+| Necesitas **fluidez y funcionalidad**    | Usa `stream` (para filtrar, mapear, etc.).   |
+| Solo iteras **sin devolver resultados**  | Usa el método `forEach`.                     |
+| **Desempeño crítico** con `LinkedList`   | Usa el `for-each loop` (más eficiente).      |
+
+
+### ¿Para `LinkedList`, cuál sería la mejor opción?
+Aunque `Stream` es más moderno y expresivo, en el caso de una `LinkedList`, donde 
+el acceso secuencial es la norma, **el bucle clásico `for-each loop` es más 
+eficiente**, ya que evita la sobrecarga de crear flujos intermedios.
+
+Si priorizas la **legibilidad y expresividad**, `Stream` es excelente.
 
 --------------------------------------------------------------------------------
