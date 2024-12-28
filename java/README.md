@@ -6,6 +6,9 @@
   - [Listas sin tipos](#listas-sin-tipos)
   - [Uso de `<T extends Number>`](#uso-de-t-extends-number)
   - [Acceso a atributo heredado de superclase](#acceso-a-atributo-heredado-de-superclase)
+  - [Porque crear un proyecto Java usando Maven](#porque-crear-un-proyecto-java-usando-maven)
+  - [Acceso a atributo heredado de superclase](#acceso-a-atributo-heredado-de-superclase-1)
+  - [Porque es recomendable usar Maven para un proyecto](#porque-es-recomendable-usar-maven-para-un-proyecto)
 
 ---
 
@@ -139,5 +142,56 @@ class SubClase extends SuperClase {
 ```
 Aquí, **`this.atributo`** en **`SubClase`** se refiere al atributo **`atributo`**
 que es heredado de **`SuperClase`**.
+
+--------------------------------------------------------------------------------
+
+## Porque crear un proyecto Java usando Maven
+
+Usar Maven es altamente recomendable porque:
+
+* **Facilita la gestión de dependencias**, como JUnit.
+* Permite **estructurar el proyecto de forma estándar**, facilitando su portabilidad.
+* Simplifica la compilación y ejecución del proyecto, especialmente en equipos o 
+  IDEs distintos.
+
+Además, el proyecto podrá abrirse tanto en IntelliJ IDEA como en Eclipse sin 
+problemas, ya que ambos soportan proyectos Maven.
+
+--------------------------------------------------------------------------------
+
+## Acceso a atributo heredado de superclase
+En Java se puede acceder a un atributo heredado de una superclase desde una
+subclase usando **`this.`**. siempre que el atributo no esté declarado como
+**`private`**. Si el atributo es **`protected`**, **`public`**, o tiene acceso 
+por defecto (si están en el mismo paquete), puedes acceder a él directamente con
+**`this.`**.
+
+Por ejemplo:
+
+```java
+class SuperClase {
+    protected int atributo;
+}
+
+class SubClase extends SuperClase {
+    public void metodo() {
+        this.atributo = 10; // Acceso al atributo de la superclase
+    }
+}
+```
+Aquí, **`this.atributo`** en **`SubClase`** se refiere al atributo **`atributo`**
+que es heredado de **`SuperClase`**.
+
+--------------------------------------------------------------------------------
+
+## Porque es recomendable usar Maven para un proyecto
+Usar Maven es altamente recomendable porque:
+- **Facilita la gestión de dependencias**, como JUnit.
+- Permite **estructurar el proyecto de forma estándar**, facilitando su portabilidad.
+- Simplifica la compilación y ejecución del proyecto, especialmente en equipos o 
+  IDEs distintos.
+
+Además, el proyecto podrá abrirse tanto en IntelliJ IDEA como en Eclipse sin 
+problemas, ya que ambos soportan proyectos Maven.
 
 --------------------------------------------------------------------------------
