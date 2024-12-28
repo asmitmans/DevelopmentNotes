@@ -9,6 +9,7 @@
   - [Porque crear un proyecto Java usando Maven](#porque-crear-un-proyecto-java-usando-maven)
   - [Acceso a atributo heredado de superclase](#acceso-a-atributo-heredado-de-superclase-1)
   - [Porque es recomendable usar Maven para un proyecto](#porque-es-recomendable-usar-maven-para-un-proyecto)
+  - [**Crear un proyecto Maven con el arquetipo Quickstart**](#crear-un-proyecto-maven-con-el-arquetipo-quickstart)
 
 ---
 
@@ -193,5 +194,91 @@ Usar Maven es altamente recomendable porque:
 
 Además, el proyecto podrá abrirse tanto en IntelliJ IDEA como en Eclipse sin 
 problemas, ya que ambos soportan proyectos Maven.
+
+--------------------------------------------------------------------------------
+
+## **Crear un proyecto Maven con el arquetipo Quickstart**
+
+### **¿Qué es un arquetipo en Maven?**
+Un arquetipo es una plantilla predefinida para proyectos Maven que incluye una 
+estructura básica de archivos y configuraciones. 
+El arquetipo **"maven-archetype-quickstart"** es ideal para proyectos simples y 
+educativos.
+
+### Para IntelliJ IDEA (Community Edition)
+1. **Crear el proyecto:**
+   - Ve a `File > New > Project`.
+   - Selecciona `Maven` y activa la casilla `Create from archetype`.
+   - En la lista de arquetipos disponibles, busca y selecciona:
+     ```
+     org.apache.maven.archetypes:maven-archetype-quickstart
+     ```
+   - Si no aparece en la lista:
+     - Haz clic en `Add Archetype`.
+     - Llena los datos:
+       - Group ID: `org.apache.maven.archetypes`
+       - Artifact ID: `maven-archetype-quickstart`
+       - Version: `1.4`
+     - Haz clic en `OK`.
+
+2. **Configura los datos del proyecto:**
+   - Group ID: `com.tuorganizacion`
+   - Artifact ID: `sistema-gestion-tareas`
+   - Version: `1.0-SNAPSHOT`.
+
+3. **Finaliza el asistente:**
+   - IntelliJ descargará las dependencias y generará la estructura estándar.
+
+
+### **Para Eclipse**
+1. **Crear el proyecto:**
+   - Ve a `File > New > Maven Project`.
+   - Asegúrate de marcar **"Create a simple project"** si quieres una lista de arquetipos.
+   - Haz clic en `Next`.
+
+2. **Selecciona el arquetipo:**
+   - En la lista, selecciona:
+     ```
+     org.apache.maven.archetypes:maven-archetype-quickstart
+     ```
+   - Si no está, haz clic en `Add Archetype` y proporciona:
+     - Group ID: `org.apache.maven.archetypes`
+     - Artifact ID: `maven-archetype-quickstart`
+     - Version: `1.4`.
+   - Haz clic en `Next`.
+
+3. **Configura los datos del proyecto:**
+   - Group ID: `com.tuorganizacion`
+   - Artifact ID: `sistema-gestion-tareas`
+   - Version: `1.0-SNAPSHOT`.
+
+4. **Finaliza el asistente:**
+   - Eclipse generará la estructura estándar y descargará las dependencias.
+
+---
+
+### **Estructura generada por el arquetipo Quickstart**
+La estructura será:
+```
+sistema-gestion-tareas/
+├── src/
+│   ├── main/
+│   │   └── java/
+│   │       └── com/tuorganizacion/App.java
+│   └── test/
+│       └── java/
+│           └── com/tuorganizacion/AppTest.java
+├── pom.xml
+```
+
+- **App.java**: Contendrá un método `main()` para iniciar el proyecto.
+- **AppTest.java**: Ejemplo básico de prueba con JUnit.
+
+---
+
+### **Ventajas del arquetipo Quickstart**
+1. **Plantilla lista para empezar**: Incluye las estructuras y dependencias necesarias.
+2. **Prueba inicial con JUnit incluida**: Proporciona un test básico para validar la configuración.
+3. **Compatible con IntelliJ y Eclipse**: Puedes compartir el proyecto sin problemas entre ambos IDEs.
 
 --------------------------------------------------------------------------------
