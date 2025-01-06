@@ -76,6 +76,121 @@ concisas y detalles clave:
   - Muy eficiente para búsquedas repetidas o en grandes volúmenes de texto.
   - Consume más memoria debido a la estructura adicional.
 
+### Explicación del Índice Invertido
+1. **Concepto:**
+   - Es un **diccionario** que asocia palabras clave con los **objetos** que contienen 
+  esas palabras en alguno de sus campos (título, descripción, etc.).
+
+2. **Proceso de construcción:**
+   - Recorremos la lista de objetos (en este caso, tareas).
+   - Dividimos los textos de cada objeto (título y descripción) en palabras.
+   - Para cada palabra, la añadimos como clave al índice y asociamos el objeto que la 
+  contiene.
+
+3. **Búsqueda:**
+   - Dividimos la consulta en palabras clave.
+   - Para cada palabra, consultamos en el índice los objetos relacionados.
+   - Combinamos los resultados para devolver los objetos correspondientes.
+
+
+### **Pseudocódigo Genérico del Índice Invertido**
+
+#### **Construcción del Índice Invertido**
+```plaintext
+1. Crear un mapa vacío `invertedIndex`
+2. Para cada objeto en la lista:
+   a. Obtener los campos relevantes para la búsqueda (pueden ser varios).
+   b. Combinar los campos relevantes en un solo texto.
+   c. Dividir el texto en palabras clave.
+   d. Para cada palabra clave:
+      - Normalizar la palabra (e.g., convertir a minúsculas).
+      - Si la palabra no existe en `invertedIndex`, añadirla con una lista vacía.
+      - Agregar el objeto a la lista asociada a la palabra en `invertedIndex`.
+```
+
+#### **Búsqueda en el Índice**
+```plaintext
+1. Dividir el término de búsqueda en palabras clave.
+2. Crear un conjunto vacío `resultados` para almacenar los objetos encontrados.
+3. Para cada palabra clave en la consulta:
+   a. Si la palabra está en `invertedIndex`:
+      - Agregar todos los objetos asociados a esa palabra al conjunto `resultados`.
+4. Devolver `resultados` como una lista.
+```
+
+
+### **Implementación Genérica en Java**
+
+#### **Método Genérico para Construir el Índice**
+```java
+public void buildIndex(Function<Task, String> fieldExtractor) {
+    invertedIndex.clear();
+
+    for (Task task : taskList) {
+        
+        String combinedText = fieldExtractor.apply(task);
+
+        String[] words = combinedText.split("\\s+");
+
+        for (String word : words) { 
+            word = word.toLowerCase();
+            
+            invertedIndex.computeIfAbsent(word, k -> new LinkedList<>()).add(task);
+        }
+    }
+}
+```
+
+**Detalles clave:**
+- **`Function<Task, String>`:** Permite personalizar la combinación de campos 
+  relevantes para cada caso, sin limitarse a "título" y "descripción".
+- **Uso del índice genérico:** Este enfoque se adapta a cualquier tipo de objeto y 
+  conjunto de campos.
+
+
+#### **Búsqueda Genérica en el Índice**
+```java
+public List<Task> searchTasks(String query) {
+    Set<Task> resultSet = new HashSet<>(); 
+
+    String[] words = query.toLowerCase().split("\\s+");
+    for (String word : words) { 
+        List<Task> tasks = invertedIndex.get(word);
+        if (tasks != null) {
+            resultSet.addAll(tasks);
+        }
+    }
+
+    return new LinkedList<>(resultSet);
+}
+```
+
+#### **Cómo Usarlo en Diferentes Escenarios**
+
+**Caso 1: Usar Título y Descripción**
+```java
+manager.buildIndex(task -> task.getTitle() + " " + task.getDescription());
+```
+
+**Caso 2: Usar Solo Título**
+```java
+manager.buildIndex(Task::getTitle);
+```
+
+**Caso 3: Usar Campos Personalizados**
+Si el objeto tiene campos como "etiquetas" o "categorías":
+```java
+manager.buildIndex(task -> task.getTags() + " " + task.getCategory());
+```
+
+#### **Ventajas del Enfoque Genérico**
+1. **Reutilizable:** Puedes adaptarlo a cualquier tipo de objeto o conjunto de campos 
+   relevantes para búsqueda.
+2. **Escalable:** Permite extender la lógica sin modificar la estructura del índice.
+3. **Profesional:** Se basa en conceptos de programación funcional (`Function`) y sigue 
+   principios de abstracción y encapsulación.
+
+
 --------------------------------------------------------------------------------
 
 ## Cuando usar cada uno
