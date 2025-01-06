@@ -12,6 +12,7 @@
   - [**Crear un proyecto Maven con el arquetipo Quickstart**](#crear-un-proyecto-maven-con-el-arquetipo-quickstart)
   - [ArrayList vs LinkedList](#arraylist-vs-linkedlist)
   - [Diferencias entre `forEach`, `for-each loop` y `Streams`](#diferencias-entre-foreach-for-each-loop-y-streams)
+  - [**Programación Funcional en Java: Lambdas y Referencias a Métodos**](#programación-funcional-en-java-lambdas-y-referencias-a-métodos)
 
 ---
 
@@ -406,5 +407,96 @@ el acceso secuencial es la norma, **el bucle clásico `for-each loop` es más
 eficiente**, ya que evita la sobrecarga de crear flujos intermedios.
 
 Si priorizas la **legibilidad y expresividad**, `Stream` es excelente.
+
+--------------------------------------------------------------------------------
+
+## **Programación Funcional en Java: Lambdas y Referencias a Métodos**
+
+Con la llegada de **Java 8**, se introdujo el soporte para **programación funcional**, 
+permitiendo trabajar con **lambdas** y pasar funciones como parámetros. Esta 
+característica moderniza el lenguaje, haciéndolo más flexible y conciso, especialmente 
+para el procesamiento de datos.
+
+### **Conceptos Clave**
+
+#### **1. Expresiones Lambda**
+- **Definición:** Una lambda es una forma concisa de implementar interfaces funcionales 
+  (interfaces con un único método abstracto).
+- **Sintaxis:**
+  ```java
+  (argumentos) -> { cuerpo };
+  ```
+
+#### **2. Interfaces Funcionales**
+- **Definición:** Una interfaz funcional es aquella que tiene exactamente **un método abstracto**.
+- **Ejemplos comunes (en `java.util.function`):**
+  - `Function<T, R>`: Toma un argumento (`T`) y devuelve un resultado (`R`).
+  - `Consumer<T>`: Toma un argumento (`T`) y no devuelve nada.
+  - `Supplier<T>`: No toma argumentos, pero devuelve un resultado (`T`).
+  - `Predicate<T>`: Evalúa una condición sobre un argumento (`T`) y devuelve un booleano.
+
+#### **3. Referencias a Métodos**
+- **Definición:** Una referencia a método es una forma de reutilizar métodos existentes 
+  como lambdas.
+- **Sintaxis:**
+  ```java
+  ClassName::methodName
+  ```
+
+### **Ejemplo de Uso**
+
+#### **A) Uso de Lambdas con `Function`:**
+```java
+import java.util.function.Function;
+
+Function<String, Integer> stringLength = s -> s.length();
+System.out.println(stringLength.apply("Hola")); // Salida: 4
+```
+
+#### **B) Referencias a Métodos:**
+```java
+Function<String, Integer> stringLength = String::length;
+System.out.println(stringLength.apply("Hola")); // Salida: 4
+```
+
+#### **C) Streams y Programación Funcional:**
+```java
+List<String> nombres = Arrays.asList("Juan", "Ana", "Luis");
+nombres.stream()
+       .map(String::toUpperCase) // Convierte cada nombre a mayúsculas
+       .forEach(System.out::println);
+```
+
+
+### **Ventajas**
+
+1. **Concisión:** Reduce el código boilerplate al evitar clases anónimas para implementar 
+   interfaces.
+2. **Reutilización:** Permite pasar comportamientos genéricos a métodos.
+3. **Flexibilidad:** Facilita operaciones como map, filter y reduce en Streams.
+
+
+### **Ejemplo en un Método Genérico**
+Un método genérico que procesa objetos con lambdas:
+```java
+import java.util.function.Function;
+import java.util.List;
+
+public static <T, R> void processList(List<T> list, Function<T, R> function) {
+    for (T item : list) {
+        System.out.println(function.apply(item));
+    }
+}
+
+// Uso:
+List<String> nombres = Arrays.asList("Juan", "Ana", "Luis");
+processList(nombres, String::toUpperCase); // Salida: JUAN, ANA, LUIS
+```
+
+### **Conclusión**
+La programación funcional en Java, basada en **lambdas**, **interfaces funcionales**, y 
+**referencias a métodos**, permite escribir código más limpio, reutilizable y moderno. 
+Su adopción es crucial para trabajar con APIs como **Streams** y mejorar la eficiencia 
+en el desarrollo.
 
 --------------------------------------------------------------------------------
