@@ -13,6 +13,7 @@
   - [ArrayList vs LinkedList](#arraylist-vs-linkedlist)
   - [Diferencias entre `forEach`, `for-each loop` y `Streams`](#diferencias-entre-foreach-for-each-loop-y-streams)
   - [**Programación Funcional en Java: Lambdas y Referencias a Métodos**](#programación-funcional-en-java-lambdas-y-referencias-a-métodos)
+  - [Buenas Prácticas para Menús e Ingreso de Datos en Terminal](#buenas-prácticas-para-menús-e-ingreso-de-datos-en-terminal)
 
 ---
 
@@ -500,3 +501,142 @@ Su adopción es crucial para trabajar con APIs como **Streams** y mejorar la efi
 en el desarrollo.
 
 --------------------------------------------------------------------------------
+
+## Buenas Prácticas para Menús e Ingreso de Datos en Terminal
+
+1. **Estructura del Menú**
+   - Los menús deben ser claros, simples y numerados.
+   - Usa títulos y divisores para separar secciones.
+   - Ofrece una opción de salida (`Salir` o `Volver al menú anterior`).
+   - Muestra mensajes de error claros si el usuario ingresa una opción inválida.
+
+   **Ejemplo básico**:
+   ```
+   === Menú Principal ===
+   1. Crear usuario
+   2. Ver reporte
+   3. Salir
+   Seleccione una opción: _
+   ```
+
+2. **Validación de Entrada**
+   - Verifica que las entradas sean válidas (números dentro del rango de opciones).
+   - Maneja excepciones (como `NumberFormatException` para entradas no numéricas).
+
+3. **Bucles para la Navegación**
+   - Usa bucles `while` para mantener al usuario dentro del menú hasta que seleccione salir.
+
+4. **Separación de Responsabilidades**
+   - Divide el código en métodos para cada opción del menú.
+   - Ejemplo:
+     - Método `showMenu()`: Imprime el menú.
+     - Método `handleOption(int option)`: Procesa la opción seleccionada.
+
+5. **Estilización**
+   - Usa líneas o símbolos (`===`, `---`) para mejorar la legibilidad.
+   - Agrega mensajes como `Presione ENTER para continuar` para pausar entre acciones.
+
+
+### Librerías Opcionales
+Si bien no necesitas gráficos avanzados, podrías usar estas librerías para 
+facilitar el diseño del menú o mejorar su aspecto:
+
+1. **[JLine](https://github.com/jline/jline3)**
+   - Proporciona entrada/salida avanzada para terminales.
+   - Permite agregar autocompletado o navegación en menús.
+
+2. **[Lanterna](https://github.com/mabe02/lanterna)**
+   - Permite crear interfaces de usuario de texto más organizadas con ventanas y menús.
+   - Es opcional si deseas menús más avanzados.
+
+
+### Ejemplo Básico: Menú con Validación
+
+Aquí tienes un ejemplo de cómo implementar un menú simple y profesional en Java:
+
+```java
+import java.util.Scanner;
+
+public class MenuApp {
+
+    public static void main(String[] args) {
+        MenuApp app = new MenuApp();
+        app.run();
+    }
+
+    public void run() {
+        Scanner scanner = new Scanner(System.in);
+        int option = -1;
+
+        while (option != 3) {
+            showMenu();
+            System.out.print("Seleccione una opción: ");
+            try {
+                option = Integer.parseInt(scanner.nextLine());
+                handleOption(option);
+            } catch (NumberFormatException e) {
+                System.out.println("Error: Ingrese un número válido.");
+            }
+        }
+
+        System.out.println("Gracias por usar la aplicación. ¡Adiós!");
+    }
+
+    private void showMenu() {
+        System.out.println("\n=== Menú Principal ===");
+        System.out.println("1. Crear usuario");
+        System.out.println("2. Ver reporte");
+        System.out.println("3. Salir");
+    }
+
+    private void handleOption(int option) {
+        switch (option) {
+            case 1:
+                createUser();
+                break;
+            case 2:
+                viewReport();
+                break;
+            case 3:
+                break; // Salir del menú
+            default:
+                System.out.println("Error: Opción no válida.");
+        }
+    }
+
+    private void createUser() {
+        System.out.println("\n[Crear Usuario]");
+        System.out.print("Ingrese el nombre del usuario: ");
+        Scanner scanner = new Scanner(System.in);
+        String name = scanner.nextLine();
+        System.out.println("Usuario '" + name + "' creado exitosamente.");
+    }
+
+    private void viewReport() {
+        System.out.println("\n[Ver Reporte]");
+        System.out.println("Reporte aún no implementado.");
+    }
+}
+```
+
+
+### Buenas Prácticas en el Código
+1. **Separación por Clases**:
+   - Si el programa crece, divide el menú y las funcionalidades en clases:
+     - Clase `MenuApp`: Controla el menú.
+     - Clase `UserManager`: Gestiona usuarios.
+     - Clase `ReportManager`: Maneja reportes.
+
+2. **Mensajes Claros**:
+   - Incluye confirmaciones después de cada acción (por ejemplo: `Usuario creado exitosamente`).
+   - Usa colores con librerías como `JAnsi` para destacar errores o confirmaciones.
+
+3. **Extensibilidad**:
+   - Diseña el menú para que sea fácil añadir nuevas opciones sin alterar la lógica principal.
+
+4. **Control de Excepciones**:
+   - Maneja entradas inválidas sin que el programa se detenga.
+   - Usa excepciones personalizadas si es necesario.
+
+--------------------------------------------------------------------------------
+
