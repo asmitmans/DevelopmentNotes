@@ -7,6 +7,7 @@
 - [Implementación en un Proyecto Java Maven](#implementación-en-un-proyecto-java-maven)
 - [Anotaciones Relevantes de JUnit 5](#anotaciones-relevantes-de-junit-5)
 - [Notas Relevantes](#notas-relevantes)
+- [Razonamiento detrás de los casos a probar](#razonamiento-detrás-de-los-casos-a-probar)
 
 ---
 
@@ -84,7 +85,11 @@ Las pruebas unitarias se escriben utilizando bibliotecas específicas como **JUn
    </dependencies>
    ```
 
-3. **Estructura de una clase de prueba:**
+3. **Eliminar clases de prueba generadas automáticamente:**
+   Si el proyecto genera una clase como `AppTest` al crearse, elimínala o 
+   refactórala según tus necesidades, ya que suele ser un ejemplo genérico.
+
+4. **Estructura de una clase de prueba:**
    ```java
    import org.junit.jupiter.api.*;
 
@@ -112,14 +117,14 @@ Las pruebas unitarias se escriben utilizando bibliotecas específicas como **JUn
    }
    ```
 
-4. **Ejecutar las pruebas:**
+5. **Ejecutar las pruebas:**
    Ejecuta los tests usando Maven desde la línea de comandos:
    ```bash
    mvn test
    ```
    Esto buscará todas las pruebas en `src/test/java` y mostrará los resultados.
 
-5. **Analizar resultados:**
+6. **Analizar resultados:**
    Maven muestra cuántas pruebas pasaron y cuántas fallaron. Si alguna falla, 
    revisa los mensajes y ajusta el código o los datos de prueba según sea 
    necesario.
@@ -151,5 +156,19 @@ Las pruebas unitarias se escriben utilizando bibliotecas específicas como **JUn
 3. **Evitar pruebas demasiado detalladas:**
    No pruebes funcionalidades de bibliotecas externas, como los métodos de 
    listas (e.g., `add` o `remove`), ya que eso es innecesario.
+
+---
+
+## Razonamiento detrás de los casos a probar
+
+1. **Cubrir los casos positivos y negativos:** Garantiza que el código funcione tanto 
+   en escenarios ideales como cuando recibe entradas no válidas.
+2. **Casos límite:** Ayudan a validar que el sistema maneja correctamente entradas 
+   extremas o inusuales, como valores nulos, listas vacías o IDs inexistentes.
+3. **Comprobaciones específicas de los métodos:**
+   - Métodos como `addTask` deben verificar que los datos se almacenen 
+  correctamente.
+   - Métodos como `editTask` y `deleteTask` requieren pruebas adicionales para 
+  garantizar que las operaciones no afecten otras tareas.
 
 ---
