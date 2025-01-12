@@ -1,19 +1,25 @@
-# Java
+## Java
 
 - [Java](#java)
-  - [Excepción división por cero](#excepción-división-por-cero)
-  - [Definir un método como `final`](#definir-un-método-como-final)
-  - [Listas sin tipos](#listas-sin-tipos)
-  - [Uso de `<T extends Number>`](#uso-de-t-extends-number)
-  - [Acceso a atributo heredado de superclase](#acceso-a-atributo-heredado-de-superclase)
-  - [Porque crear un proyecto Java usando Maven](#porque-crear-un-proyecto-java-usando-maven)
-  - [Acceso a atributo heredado de superclase](#acceso-a-atributo-heredado-de-superclase-1)
-  - [Porque es recomendable usar Maven para un proyecto](#porque-es-recomendable-usar-maven-para-un-proyecto)
-  - [**Crear un proyecto Maven con el arquetipo Quickstart**](#crear-un-proyecto-maven-con-el-arquetipo-quickstart)
-  - [ArrayList vs LinkedList](#arraylist-vs-linkedlist)
-  - [Diferencias entre `forEach`, `for-each loop` y `Streams`](#diferencias-entre-foreach-for-each-loop-y-streams)
-  - [**Programación Funcional en Java: Lambdas y Referencias a Métodos**](#programación-funcional-en-java-lambdas-y-referencias-a-métodos)
-  - [Buenas Prácticas para Menús e Ingreso de Datos en Terminal](#buenas-prácticas-para-menús-e-ingreso-de-datos-en-terminal)
+- [Pruebas Unitarias](#pruebas-unitarias)
+- [Excepción división por cero](#excepción-división-por-cero)
+- [Definir un método como `final`](#definir-un-método-como-final)
+- [Listas sin tipos](#listas-sin-tipos)
+- [Uso de `<T extends Number>`](#uso-de-t-extends-number)
+- [Acceso a atributo heredado de superclase](#acceso-a-atributo-heredado-de-superclase)
+- [Porque crear un proyecto Java usando Maven](#porque-crear-un-proyecto-java-usando-maven)
+- [Acceso a atributo heredado de superclase](#acceso-a-atributo-heredado-de-superclase-1)
+- [Porque es recomendable usar Maven para un proyecto](#porque-es-recomendable-usar-maven-para-un-proyecto)
+- [**Crear un proyecto Maven con el arquetipo Quickstart**](#crear-un-proyecto-maven-con-el-arquetipo-quickstart)
+- [ArrayList vs LinkedList](#arraylist-vs-linkedlist)
+- [Diferencias entre `forEach`, `for-each loop` y `Streams`](#diferencias-entre-foreach-for-each-loop-y-streams)
+- [**Programación Funcional en Java: Lambdas y Referencias a Métodos**](#programación-funcional-en-java-lambdas-y-referencias-a-métodos)
+- [Buenas Prácticas para Menús e Ingreso de Datos en Terminal](#buenas-prácticas-para-menús-e-ingreso-de-datos-en-terminal)
+
+---
+
+## Pruebas Unitarias
+- [Pruebas Unitarias](./pruebas-unitarias.md)
 
 ---
 
