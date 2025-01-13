@@ -15,6 +15,7 @@
 - [Diferencias entre `forEach`, `for-each loop` y `Streams`](#diferencias-entre-foreach-for-each-loop-y-streams)
 - [**Programación Funcional en Java: Lambdas y Referencias a Métodos**](#programación-funcional-en-java-lambdas-y-referencias-a-métodos)
 - [Buenas Prácticas para Menús e Ingreso de Datos en Terminal](#buenas-prácticas-para-menús-e-ingreso-de-datos-en-terminal)
+- [Crear un Proyecto Maven en IntelliJ: Configuración y POM Recomendado](#crear-un-proyecto-maven-en-intellij-configuración-y-pom-recomendado)
 
 ---
 
@@ -646,3 +647,122 @@ public class MenuApp {
 
 --------------------------------------------------------------------------------
 
+## Crear un Proyecto Maven en IntelliJ: Configuración y POM Recomendado
+
+Esta guía describe cómo crear un proyecto Maven en IntelliJ IDEA desde cero, 
+configurar su estructura y generar un archivo POM estándar.
+
+
+### 1. Creación del Proyecto Maven
+
+1. **Abrir IntelliJ IDEA:**
+   - Selecciona `File > New Project`.
+
+2. **Elegir Maven:**
+   - En la ventana emergente, selecciona `Maven Archetype` como tipo de proyecto.
+
+3. **Seleccionar Arquetipo Quickstart:**
+   - En los arquetipos, selecciona `org.apache.maven.archetypes:maven-archetype-quickstart`.
+  Este arquetipo genera una estructura básica del proyecto Maven con una clase de 
+  ejemplo y configuración inicial.
+
+4. **Configuraciones iniciales:**
+   - **GroupId:** Nombre del paquete base (por ejemplo, `com.ejemplo`).
+   - **ArtifactId:** Nombre del artefacto del proyecto (por ejemplo, `mi-aplicacion`).
+   - **Version:** Deja el valor predeterminado o establece uno específico (por 
+  ejemplo, `1.0-SNAPSHOT`).
+   - Asegúrate de que la casilla `Create Git repository` esté marcada si deseas 
+  inicializar control de versiones.
+
+5. **Seleccionar SDK:**
+   - Configura el SDK como Java 17 o superior.
+   - En `Advanced Settings`, asegúrate de que la opción `Add sample code` esté 
+  desmarcada si quieres un proyecto limpio.
+
+6. **Crear el proyecto:**
+   - Haz clic en `Create` para finalizar.
+
+
+### 2. Estructura del Proyecto Maven
+
+Al crear el proyecto, Maven genera la siguiente estructura básica:
+```
+src/
+├── main/
+│   ├── java/           # Código fuente principal
+│   └── resources/      # Archivos de configuración y recursos
+├── test/
+│   ├── java/           # Pruebas unitarias
+│   └── resources/      # Recursos para pruebas
+pom.xml                 # Archivo de configuración Maven
+```
+
+
+### 3. Configuración del POM Recomendado
+
+Usa el siguiente ejemplo basado en el proyecto desarrollado:
+
+```xml
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.futuro</groupId>
+    <artifactId>sistema-gestion-tareas</artifactId>
+    <version>1.0</version>
+    <packaging>jar</packaging>
+
+    <name>Sistema Gestión Tareas</name>
+
+    <properties>
+        <java.version>17</java.version>
+        <maven.compiler.source>${java.version}</maven.compiler.source>
+        <maven.compiler.target>${java.version}</maven.compiler.target>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter</artifactId>
+            <version>5.10.0</version>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.10.1</version>
+                <configuration>
+                    <source>${java.version}</source>
+                    <target>${java.version}</target>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <version>3.1.0</version>
+                <configuration>
+                    <mainClass>com.futuro.sistema_gestion_tareas.App</mainClass>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+</project>
+```
+
+#### 4. Notas de Ajuste
+
+- **GroupId y ArtifactId:** Personaliza estos valores para reflejar el propósito 
+  del proyecto.
+- **Versión de Java:** Asegúrate de que `<java.version>` coincida con el SDK 
+  configurado.
+- **Dependencias:** Añade otras librerías necesarias según los requisitos del 
+  proyecto.
+- **Main Class:** Actualiza el valor de `mainClass` en el `exec-maven-plugin` para 
+  que coincida con la clase principal de tu aplicación.
+
+--------------------------------------------------------------------------------
