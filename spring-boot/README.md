@@ -5,6 +5,7 @@
 - [Spring Security](#spring-security)
 - [Pasos para Desarrollar una API REST con Spring Boot](#pasos-para-desarrollar-una-api-rest-con-spring-boot)
 - [Manejo de Excepciones en Spring Boot](#manejo-de-excepciones-en-spring-boot)
+- [Crear Proyecto SpringBoot + MongoDB](#crear-proyecto-springboot--mongodb)
 
 ---
 
@@ -30,6 +31,11 @@ para crear experiencias web interactivas y visualmente atractivas.
 
 ## Manejo de Excepciones en Spring Boot
 [Manejo de Excepciones en Spring Boot](excepciones-spring-boot.md)
+
+---
+
+## Crear Proyecto SpringBoot + MongoDB
+[Crear Proyecto SpringBoot + MongoDB](mongodb.md)
 
 ---
 
