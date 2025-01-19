@@ -615,6 +615,38 @@ CREATE TABLE usuarios (
 );
 ```
 
+- Ejemplo con restricciones y valor por defecto
+```sql
+CREATE TABLE productos (
+	id SERIAL PRIMARY KEY,
+	codigo_producto VARCHAR(25) NOT NULL,
+	precio_unitario INT NOT NULL,
+	stock INT DEFAULT 0 NOT NULL
+);
+```
+
+- Ejemplo con tipo de dato de fecha
+```sql
+CREATE TABLE ordenes_compra (
+	id SERIAL PRIMARY KEY,
+	emision DATE NOT NULL,
+	entrega DATE NOT NULL,
+	solicitada DATE NOT NULL
+);
+```
+
+- Ejemplo restricción de foreign key
+```sql
+CREATE TABLE detalle (
+	id SERIAL PRIMARY KEY,
+	codigo_producto VARCHAR(25) NOT NULL,
+	cantidad INT DEFAULT 0 NOT NULL,
+	total_detalle INT DEFAULT 0 NOT NULL,
+	orden_id INT NOT NULL,
+	CONSTRAINT fk_orden FOREIGN KEY (orden_id) REFERENCES ordenes_compra(id)
+);
+```
+
 --------------------------------------------------------------------------------
 
 ## Insertar Registros en Tabla en PostgreSQL
