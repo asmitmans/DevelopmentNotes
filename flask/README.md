@@ -209,3 +209,30 @@ Luego, el controlador llamaría a este repositorio en lugar de interactuar
 directamente con el modelo.
 
 ---
+
+## **Ejemplo de cómo se usa `db` en la app**
+
+```python
+from flask import Flask
+from flask_sqlalchemy import SQLAlchemy
+
+app = Flask(__name__)
+app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///test.db"
+db = SQLAlchemy(app)  # Se inicializa el objeto único `db`
+
+class SensorData(db.Model):  # La tabla "sensor_data" en la base de datos
+    id = db.Column(db.Integer, primary_key=True)
+    temperature = db.Column(db.Float, nullable=False)
+    humidity = db.Column(db.Float, nullable=False)
+
+# Crear la base de datos
+with app.app_context():
+    db.create_all()  # Crea las tablas si no existen
+```
+
+- `db.Model` es equivalente a `@Entity` en Spring Boot.
+- `class SensorData(db.Model)` **hereda** de `db.Model`, no lo recibe como argumento.
+- `db = SQLAlchemy()` es un objeto global único en la app, maneja la conexión con la BD.
+- `db.create_all()` genera las tablas definidas en los modelos.
+
+---
