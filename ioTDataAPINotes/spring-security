@@ -1,0 +1,111 @@
+## Capítulo 1 — Autenticación y Autorización en APIs REST
+
+### Objetivo del capítulo
+
+Entender y aplicar las principales estrategias de autenticación y autorización 
+para proteger APIs RESTful, con énfasis en **Spring Security**. Se cubren 
+tecnologías implementadas y otras comúnmente usadas en la industria:
+
+- JWT (JSON Web Token)
+- API Keys
+- OAuth 2.0
+- mTLS para IoT
+
+---
+
+## I. ¿Qué es autenticación y qué es autorización?
+
+- **Autenticación**: ¿Quién eres tú? Verifica identidad del cliente.
+- **Autorización**: ¿Tienes permiso? Controla el acceso a recursos según el rol o privilegios.
+
+---
+
+## II. Estrategias comunes de autenticación en APIs
+
+| Estrategia       | Autenticación | Autorización | Estado | Casos de uso típicos |
+|------------------|---------------|--------------|--------|-----------------------|
+| API Key          | Sí            | Limitada     | Stateless | Sensores, integraciones simples |
+| JWT              | Sí            | Sí (con roles) | Stateless | Apps modernas, SPAs, móviles |
+| OAuth 2.0        | Sí (delegada) | Sí           | Stateless | Login social, acceso federado |
+| Session Cookie   | Sí            | Sí           | Stateful | Web tradicionales (Thymeleaf) |
+| mTLS (certificados) | Sí         | Limitada     | Stateless | IoT, comunicación segura cliente-servidor |
+
+---
+
+## III. JWT — JSON Web Token
+
+### ¿Qué es?
+- Token firmado que contiene los datos de identidad y roles.
+- Se envía en cada solicitud: `Authorization: Bearer <token>`
+- No requiere estado en el servidor.
+
+### ¿Ventajas?
+- Rápido, ligero y ampliamente soportado
+- Fácil de usar en frontend separado (Angular, React)
+
+### ¿Desventajas?
+- No se puede revocar (a menos que se use lista de revocados)
+- Si se expone el token, se pierde seguridad (requiere HTTPS)
+
+---
+
+## IV. API Key
+
+### ¿Qué es?
+- Clave secreta enviada en cada solicitud (header o parámetro)
+- Se compara con una lista válida en el backend
+
+### ¿Ventajas?
+- Muy simple de implementar
+- Ideal para integrar sensores o scripts
+
+### ¿Desventajas?
+- No permite roles ni permisos detallados
+- Poco segura si no se transmite por HTTPS
+- Difícil de rotar sin coordinación
+
+---
+
+## V. OAuth 2.0
+
+### ¿Qué es?
+- Protocolo estándar para autenticación delegada (login con Google, GitHub, etc.)
+- Involucra flujos como `Authorization Code` o `Client Credentials`
+
+### ¿Ventajas?
+- Muy usado en apps públicas
+- Delegación de identidad (no almacenas usuarios tú mismo)
+
+### ¿Desventajas?
+- Mucho más complejo de implementar
+- Requiere manejar tokens de terceros, callbacks, scopes
+
+---
+
+## VI. mTLS — Autenticación Mutua con Certificados
+
+### ¿Qué es?
+- Ambos extremos (cliente y servidor) se autentican con certificados X.509
+- Muy usado en sistemas industriales o IoT
+
+### ¿Ventajas?
+- Seguridad extremadamente robusta
+- No depende de contraseñas o tokens
+
+### ¿Desventajas?
+- Complejo de configurar
+- Requiere provisión y gestión de certificados
+
+---
+
+## VII. ¿Cuál usar y cuándo?
+
+| Caso                                        | Recomendación principal        |
+|--------------------------------------------|--------------------------------|
+| App web moderna (Angular, React)           | JWT                            |
+| Backend para sensores / dispositivos       | API Key o mTLS                 |
+| Sistema con login social o delegación      | OAuth 2.0                      |
+| Web tradicional con sesión                 | Cookie + Session (no token)   |
+| App crítica de IoT o industria             | mTLS con certificados únicos  |
+
+---
