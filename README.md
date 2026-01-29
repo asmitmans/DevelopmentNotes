@@ -17,3 +17,4 @@ Apuntes sobre diferentes temas de desarrollo de software.
 - [Algoritmos de Búsqueda Fundamentales]()
 - [Production Guidelines](production-guidelines.md)
 - [Flask](./flask/README.md)
+- [Rust](./rust/README.md)
