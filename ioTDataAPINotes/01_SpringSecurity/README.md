@@ -146,10 +146,6 @@ HMACSHA256(base64url(header) + "." + base64url(payload), clave_secreta)
 
 ---
 
-Perfecto, lo tienes muy bien organizado y estás siguiendo una estructura muy profesional. Vamos a consolidarlo como guía definitiva de este capítulo. A continuación te explico **qué conservar, qué eliminar y cómo reorganizarlo**, para que quede coherente con tu enfoque teórico → implementación → extensiones.
-
----
-
 # Parte 2: Implementación práctica
 
 ## 1. Requisitos
@@ -186,7 +182,7 @@ Perfecto, lo tienes muy bien organizado y estás siguiendo una estructura muy pr
 
 ```
 src/main/java/
-└── com/example/securitydemo/
+└── com/example/springsecurityjwtdemo/
     ├── controller/
     │   └── AuthController.java
     ├── model/
@@ -216,28 +212,34 @@ src/main/java/
 
 * Usar convención `ROLE_USER`, `ROLE_ADMIN`, etc.
 
-### 3.3. Servicio `UserDetailsService`
+### 3.3 Ajuste inicial de Spring Security para H2 (desarrollo)
+
+* Permitir `/h2-console/**`
+* Ignorar CSRF para esa ruta
+* Habilitar frames same-origin
+
+### 3.4. Servicio `UserDetailsService`
 
 * Implementar método `loadUserByUsername`
 
-### 3.4. `JwtService`
+### 3.5. `JwtService`
 
 * Generar tokens con `Jwts.builder()`
 * Validar tokens, extraer claims
 
-### 3.5. `JwtFilter`
+### 3.6. `JwtFilter`
 
 * Revisar header `Authorization`
 * Validar y cargar usuario en el `SecurityContextHolder`
 
-### 3.6. `SecurityConfig`
+### 3.7. `SecurityConfig`
 
 * Configurar seguridad sin estado (`STATELESS`)
 * Permitir rutas públicas (`/auth/**`)
 * Proteger otras con roles
 * Inyectar el filtro antes de `UsernamePasswordAuthenticationFilter`
 
-### 3.7. `AuthController`
+### 3.8. `AuthController`
 
 * POST `/auth/login`
 * Verifica credenciales, genera y retorna el token
@@ -356,7 +358,7 @@ Abre el archivo `src/main/resources/application.properties` y reemplaza su conte
 spring.datasource.url=jdbc:h2:mem:testdb
 spring.datasource.driver-class-name=org.h2.Driver
 spring.datasource.username=sa
-spring.datasource.password=
+spring.datasource.password=sa
 
 # Usar Hibernate (JPA)
 spring.jpa.hibernate.ddl-auto=update
@@ -366,12 +368,31 @@ spring.jpa.show-sql=true
 spring.h2.console.enabled=true
 spring.h2.console.path=/h2-console
 ```
+> Usuario y contraseña se definen explícitamente para simplificar el acceso a
+> la consola H2 durante desarrollo.
+> En entornos reales, estas credenciales no deben exponerse ni versionarse.
 
 Esto hará que:
 
 * Se cree una base de datos en memoria al iniciar la app
 * La consola esté accesible en `http://localhost:8080/h2-console`
 * Las tablas se generen automáticamente desde tus entidades
+
+
+### Nota práctica: añadir `application.properties` al `.gitignore`
+
+Se recomienda **añadir `src/main/resources/application.properties` al archivo `.gitignore`** para evitar subir claves secretas, contraseñas u otras configuraciones sensibles al repositorio.
+
+**Excepto** en casos como este proyecto, donde:
+
+* Se usa una base de datos en memoria (H2),
+* No se exponen datos reales ni secretos.
+
+**Para ignorarlo**, puedes hacerlo así:
+
+```bash
+echo src/main/resources/application.properties >> .gitignore
+```
 
 ---
 
@@ -380,7 +401,7 @@ Esto hará que:
 En el paquete `model/`, crea un archivo `Role.java`:
 
 ```java
-package com.example.springsecurityjwtdemo.model;
+package com.example.SpringSecurityJWTDemo.model;
 
 import jakarta.persistence.*;
 
@@ -415,7 +436,7 @@ public class Role {
 En el mismo paquete, crea `User.java`:
 
 ```java
-package com.example.springsecurityjwtdemo.model;
+package com.example.SpringSecurityJWTDemo.model;
 
 import jakarta.persistence.*;
 import java.util.Set;
@@ -460,28 +481,122 @@ public class User {
 }
 ```
 
-### Nota práctica: añadir `application.properties` al `.gitignore`
+---
 
-Se recomienda **añadir `src/main/resources/application.properties` al archivo `.gitignore`** para evitar subir claves secretas, contraseñas u otras configuraciones sensibles al repositorio.
+# Capítulo 3.3 — Ajuste inicial de Spring Security para entorno de desarrollo (H2 Console)
 
-**Excepto** en casos como este proyecto, donde:
+## 1. Contexto del problema
 
-* Se usa una base de datos en memoria (H2),
-* No se exponen datos reales ni secretos.
+Al añadir la dependencia `spring-boot-starter-security`, Spring Security protege
+**todas las rutas HTTP por defecto**.
+Esto incluye la consola web de H2 (`/h2-console`), impidiendo el acceso incluso
+en entornos de desarrollo.
 
-**Para ignorarlo**, puedes hacerlo así:
+En este punto del proyecto:
 
-```bash
-echo src/main/resources/application.properties >> .gitignore
+* No existe aún autenticación real
+* No existen usuarios funcionales
+* No se ha implementado JWT
+* El objetivo es **validar la persistencia JPA**
+
+Por lo tanto, es necesario realizar un ajuste **temporal** de seguridad.
+
+---
+
+## 2. Objetivo de este paso
+
+Permitir el acceso a la consola H2 **exclusivamente en desarrollo**, para:
+
+* Verificar la correcta creación de tablas
+* Validar las entidades y relaciones
+* Comprobar que la base de datos funciona antes de continuar
+
+Este ajuste **no representa la configuración final de seguridad**.
+
+---
+
+## 3. Ajuste mínimo requerido en `SecurityConfig`
+
+Se define una configuración de seguridad que:
+
+* Permite el acceso a `/h2-console/**`
+* Mantiene el resto de rutas protegidas
+* Desactiva CSRF solo para H2
+* Permite el uso de frames necesarios para la consola
+
+```java
+@Configuration
+public class SecurityConfig {
+
+    @Bean
+    public SecurityFilterChain securityFilterChain(HttpSecurity http)
+            throws Exception {
+
+        http
+            .authorizeHttpRequests(auth -> auth
+                .requestMatchers("/h2-console/**").permitAll()
+                .anyRequest().authenticated()
+            )
+            .csrf(csrf -> csrf
+                .ignoringRequestMatchers("/h2-console/**")
+            )
+            .headers(headers -> headers
+                .frameOptions(frame -> frame.sameOrigin())
+            );
+
+        return http.build();
+    }
+}
 ```
 
 ---
 
-¿Te dejo listo ahora el capítulo 3.3 con los repositorios y datos de prueba?
+## 4. Explicación de la configuración
 
+* `requestMatchers("/h2-console/**").permitAll()`
+  Permite el acceso sin autenticación a la consola H2.
 
+* `csrf().ignoringRequestMatchers(...)`
+  La consola H2 utiliza formularios internos que no son compatibles con CSRF.
 
+* `frameOptions().sameOrigin()`
+  H2 utiliza iframes para su interfaz web, lo que requiere habilitar frames del
+  mismo origen.
 
+---
 
+## 5. Alcance y limitaciones
 
+Este ajuste:
 
+* Es **temporal**
+* Es válido **solo para desarrollo local**
+* No debe utilizarse en producción
+
+En entornos productivos, la consola H2 normalmente se deshabilita o se protege
+estrictamente.
+
+---
+
+## 6. Resultado esperado
+
+Al iniciar la aplicación:
+
+* La aplicación arranca correctamente
+* Se puede acceder a `http://localhost:8080/h2-console`
+* Las tablas generadas por JPA son visibles
+* La persistencia queda validada
+
+Este paso cierra la fase de configuración básica de base de datos y permite
+continuar con la implementación de autenticación real.
+
+Verificación mínima:
+
+1. Iniciar la aplicación.
+2. Abrir http://localhost:8080/h2-console
+3. JDBC URL: jdbc:h2:mem:testdb
+4. Usuario: sa
+5. Contraseña: sa
+6. Confirmar que existen las tablas generadas por JPA
+
+---
