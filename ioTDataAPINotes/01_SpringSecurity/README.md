@@ -600,3 +600,627 @@ Verificación mínima:
 6. Confirmar que existen las tablas generadas por JPA
 
 ---
+
+# Capítulo 3.4 — Integración de usuarios con Spring Security (`UserDetailsService`)
+
+## 1. Objetivo de este paso
+
+Hasta ahora:
+
+* La base de datos funciona
+* Las entidades `User` y `Role` están definidas
+* Spring Security está activo
+* La aplicación exige autenticación para cualquier ruta (excepto H2)
+
+Sin embargo, Spring Security todavía **no sabe cómo cargar usuarios desde la base de datos**.
+
+El objetivo de este paso es:
+
+* Integrar Spring Security con nuestra entidad `User`
+* Permitir que el framework pueda autenticar contra la base de datos
+* Preparar el sistema para el login real (que luego usará JWT)
+
+---
+
+## 2. Rol de `UserDetailsService` en Spring Security
+
+Spring Security define la interfaz:
+
+```java
+org.springframework.security.core.userdetails.UserDetailsService
+```
+
+Esta interfaz tiene un único método:
+
+```java
+UserDetails loadUserByUsername(String username)
+```
+
+Su responsabilidad es:
+
+* Buscar el usuario por su identificador (normalmente `username`)
+* Retornar un objeto `UserDetails`
+* Lanzar `UsernameNotFoundException` si no existe
+
+Spring utiliza esta interfaz internamente cuando:
+
+* Se ejecuta un proceso de autenticación
+* Se validan credenciales
+* Se construye el contexto de seguridad
+
+---
+
+## 3. Decisión de diseño
+
+No se recomienda que la entidad `User` implemente directamente la interfaz `UserDetails`.
+
+Motivos:
+
+* Evita acoplar el modelo de dominio a Spring Security
+* Mantiene separación de responsabilidades
+* Facilita reutilización del modelo en otros contextos
+
+En su lugar, se implementará un servicio que:
+
+* Lea la entidad `User` desde la base
+* La adapte al tipo `UserDetails`
+
+---
+
+## 4. Crear el repositorio de usuarios
+
+Si aún no existe, crear en `repository/`:
+
+```java
+package com.example.springsecurityjwtdemo.repository;
+
+import com.example.springsecurityjwtdemo.model.User;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import java.util.Optional;
+
+public interface UserRepository extends JpaRepository<User, Long> {
+
+    Optional<User> findByUsername(String username);
+}
+```
+
+Este método será utilizado por `UserDetailsService`.
+
+---
+
+## 5. Implementar `UserDetailsService`
+
+Crear en el paquete `service/`:
+
+```java
+package com.example.springsecurityjwtdemo.service;
+
+import com.example.springsecurityjwtdemo.model.User;
+import com.example.springsecurityjwtdemo.repository.UserRepository;
+import org.springframework.security.core.userdetails.*;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.stereotype.Service;
+
+import java.util.stream.Collectors;
+
+@Service
+public class MyUserDetailsService implements UserDetailsService {
+
+    private final UserRepository userRepository;
+
+    public MyUserDetailsService(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String username)
+            throws UsernameNotFoundException {
+
+        User user = userRepository.findByUsername(username)
+                .orElseThrow(() ->
+                        new UsernameNotFoundException("User not found"));
+
+        return org.springframework.security.core.userdetails.User
+                .withUsername(user.getUsername())
+                .password(user.getPassword())
+                .authorities(
+                        user.getRoles()
+                                .stream()
+                                .map(role ->
+                                        new SimpleGrantedAuthority(role.getName()))
+                                .collect(Collectors.toList())
+                )
+                .build();
+    }
+}
+```
+
+---
+
+## 6. Explicación de la adaptación
+
+Spring Security requiere:
+
+* Username
+* Password cifrada
+* Lista de `GrantedAuthority`
+
+Los roles almacenados en la base (`ROLE_USER`, `ROLE_ADMIN`) deben convertirse en:
+
+```java
+SimpleGrantedAuthority
+```
+
+Esto permite que posteriormente puedan utilizarse anotaciones como:
+
+```java
+@PreAuthorize("hasRole('ADMIN')")
+```
+
+---
+
+## 7. Estado del sistema después de este paso
+
+Después de implementar `UserDetailsService`:
+
+* Spring Security ya puede consultar la base de datos
+* El framework sabe cómo obtener usuario y roles
+* Aún no existe endpoint de login
+* Aún no existe JWT
+* No se ha configurado `PasswordEncoder`
+
+Este paso prepara el terreno para la autenticación real que se implementará a continuación.
+
+---
+
+## 8. Verificación mínima
+
+En este punto:
+
+1. La aplicación debe iniciar sin errores.
+2. No se debe producir ningún `BeanCreationException`.
+3. No se espera aún que el login funcione (no está implementado).
+
+---
+
+Hasta aquí no estamos tocando JWT ni filtros.
+Solo estamos integrando la base de datos con Spring Security.
+
+---
+
+Ahora haz lo siguiente:
+
+1. Implementa exactamente esto en el proyecto.
+2. Arranca la aplicación.
+3. Confirma si inicia correctamente o si aparece algún error.
+
+---
+
+# Capítulo 3.5 — Autenticación base: `PasswordEncoder` y `AuthenticationManager`
+
+## 1. Objetivo de este paso
+
+En el capítulo anterior se implementó `UserDetailsService`, por lo que Spring
+Security ya puede cargar usuarios desde la base de datos.
+
+Ahora falta:
+
+* Definir cómo se comparan contraseñas (hashing)
+* Exponer un `AuthenticationManager` para autenticar credenciales
+
+Esto permite autenticar username/password de forma estándar, lo cual será
+utilizado por el endpoint de login que se implementará después.
+
+---
+
+## 2. `PasswordEncoder`
+
+Spring Security no recomienda almacenar contraseñas en texto plano. Para
+contraseñas, se utiliza un `PasswordEncoder`, siendo `BCryptPasswordEncoder` el
+mecanismo típico soportado por Spring.
+
+Crear el bean en tu configuración (puede estar en `SecurityConfig`):
+
+```java
+import org.springframework.context.annotation.Bean;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+```
+
+```java
+@Bean
+public PasswordEncoder passwordEncoder() {
+    return new BCryptPasswordEncoder();
+}
+```
+
+---
+
+## 3. `AuthenticationManager`
+
+`AuthenticationManager` es el punto de entrada del proceso de autenticación.
+Recibe un `Authentication` con credenciales y retorna un `Authentication`
+autenticado (o lanza una excepción si falla).
+
+En configuraciones modernas, se obtiene desde `AuthenticationConfiguration`:
+
+```java
+import org.springframework.context.annotation.Bean;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
+```
+
+```java
+@Bean
+public AuthenticationManager authenticationManager(
+        AuthenticationConfiguration config) throws Exception {
+    return config.getAuthenticationManager();
+}
+```
+
+Este manager utilizará internamente:
+
+* Tu `UserDetailsServiceImpl`
+* El `PasswordEncoder` definido
+
+si ambos están disponibles como beans.
+
+---
+
+## 4. Ajuste actual de `SecurityConfig` (manteniendo H2)
+
+En este punto todavía se mantiene el ajuste para H2 Console (desarrollo).
+Solo se añaden los beans descritos arriba.
+
+Ejemplo de `SecurityConfig` consolidado hasta este paso:
+
+```java
+package com.example.SpringSecurityJWTDemo.config;
+
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.SecurityFilterChain;
+
+@Configuration
+public class SecurityConfig {
+
+    @Bean
+    public SecurityFilterChain securityFilterChain(HttpSecurity http)
+            throws Exception {
+
+        http
+            .authorizeHttpRequests(auth -> auth
+                .requestMatchers("/h2-console/**").permitAll()
+                .anyRequest().authenticated()
+            )
+            .csrf(csrf -> csrf
+                .ignoringRequestMatchers("/h2-console/**")
+            )
+            .headers(headers -> headers
+                .frameOptions(frame -> frame.sameOrigin())
+            );
+
+        return http.build();
+    }
+
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
+
+    @Bean
+    public AuthenticationManager authenticationManager(
+            AuthenticationConfiguration config) throws Exception {
+        return config.getAuthenticationManager();
+    }
+}
+```
+
+---
+
+## 5. Impacto en el proyecto
+
+Después de este paso:
+
+* Spring Security ya puede autenticar credenciales contra la base
+* Existe un `PasswordEncoder` para manejar hashing correctamente
+* Existe un `AuthenticationManager` usable por un controlador de login
+* Aún no existe `/auth/login`
+* Aún no existe JWT
+
+Este paso deja el sistema listo para exponer el endpoint de autenticación.
+
+---
+
+## 6. Ajuste requerido en el cargado de usuarios (DataInitializer)
+
+Si tu `DataInitializer` actualmente está guardando usuarios con contraseñas en
+texto plano, este paso obliga a que se guarden usando el `PasswordEncoder`.
+Si no lo haces, cuando autentiques, BCrypt no podrá validar correctamente.
+
+En el siguiente capítulo se ajustará el `DataInitializer` para almacenar hashes
+BCrypt (usando el bean `PasswordEncoder`).
+
+---
+
+## 7. Verificación mínima
+
+1. La aplicación debe iniciar sin errores.
+2. Debe existir un bean `PasswordEncoder`.
+3. Debe existir un bean `AuthenticationManager`.
+
+No se prueba login aún; solo se valida configuración.
+
+---
+Perfecto. Siguiente subcapítulo.
+
+El paso lógico ahora es cerrar dos cosas antes de JWT:
+
+1. Asegurar que los usuarios de prueba se guardan con password **hash BCrypt**
+2. Implementar el endpoint de autenticación **POST `/auth/login`** usando
+   `AuthenticationManager`
+
+Eso deja listo el terreno para generar JWT después.
+
+---
+Tienes razón: me adelanté con “ajustar DataInitializer” como si no estuviera
+listo, y en tu caso **ya está** con BCrypt. Eso está bien.
+
+Lo que sí conviene corregir (mínimo y profesional) es **cómo lo estás usando**:
+
+* Estás creando `new BCryptPasswordEncoder()` “a mano” dentro del initializer.
+* Ya tienes un `PasswordEncoder` como bean en `SecurityConfig`.
+
+Buenas prácticas: **reusar el bean** (`PasswordEncoder`) e inyectarlo, para que
+toda la app use el mismo encoder/configuración.
+
+Y sí: para no marearte, vuelvo al formato de antes, con secciones de código
+claras y ordenadas.
+
+---
+
+# Capítulo 3.6 — Endpoint de login (`POST /auth/login`) con `AuthenticationManager`
+
+## 1. Objetivo de este paso
+
+Implementar el endpoint de autenticación que:
+
+1. Recibe `username` y `password`
+2. Autentica con `AuthenticationManager`
+3. Retorna una respuesta mínima (sin JWT todavía)
+
+Este paso valida que todo el “core” de Spring Security está funcionando con
+base de datos.
+
+---
+
+## 2. Ajuste mínimo recomendado en `DataInitializer`
+
+Tu `DataInitializer` ya usa BCrypt, perfecto.
+Solo cambia **una cosa**: en vez de instanciar el encoder, inyecta el bean
+`PasswordEncoder`.
+
+### 2.1. Cambios
+
+* Mueve `DataInitializer` al paquete `config/` (si quieres mantener orden).
+* Inyecta `PasswordEncoder` en el `CommandLineRunner`.
+* Usa `passwordEncoder.encode(...)`.
+
+### 2.2. Versión recomendada (misma lógica, mejor infraestructura)
+
+```java
+package com.example.SpringSecurityJWTDemo.config;
+
+import com.example.SpringSecurityJWTDemo.model.Role;
+import com.example.SpringSecurityJWTDemo.model.User;
+import com.example.SpringSecurityJWTDemo.repository.RoleRepository;
+import com.example.SpringSecurityJWTDemo.repository.UserRepository;
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.security.crypto.password.PasswordEncoder;
+
+import java.util.Set;
+
+@Configuration
+public class DataInitializer {
+
+    @Bean
+    public CommandLineRunner loadData(
+            UserRepository userRepository,
+            RoleRepository roleRepository,
+            PasswordEncoder passwordEncoder
+    ) {
+        return args -> {
+            if (roleRepository.count() == 0) {
+                roleRepository.save(new Role("ROLE_USER"));
+                roleRepository.save(new Role("ROLE_ADMIN"));
+            }
+
+            if (userRepository.count() == 0) {
+                User user = new User();
+                user.setUsername("user");
+                user.setPassword(passwordEncoder.encode("1234"));
+                user.setRoles(Set.of(roleRepository.findByName("ROLE_USER").get()));
+
+                User admin = new User();
+                admin.setUsername("admin");
+                admin.setPassword(passwordEncoder.encode("admin1234"));
+                admin.setRoles(Set.of(roleRepository.findByName("ROLE_ADMIN").get()));
+
+                userRepository.save(user);
+                userRepository.save(admin);
+            }
+        };
+    }
+}
+```
+
+Si no quieres tocar esto ahora, no pasa nada: **no es bloqueante**.
+
+---
+
+## 3. Permitir `/auth/login` en `SecurityConfig`
+
+En tu `SecurityFilterChain`, agrega el matcher para permitir el login.
+
+Ejemplo mínimo:
+
+```java
+.authorizeHttpRequests(auth -> auth
+    .requestMatchers("/h2-console/**").permitAll()
+    .requestMatchers("/auth/login").permitAll()
+    .anyRequest().authenticated()
+)
+```
+
+---
+
+## 4. Crear DTOs de login
+
+Ubicación recomendada:
+
+```text
+controller/dto/
+  LoginRequest.java
+  LoginResponse.java
+```
+
+### 4.1. `LoginRequest`
+
+```java
+package com.example.SpringSecurityJWTDemo.controller.dto;
+
+public class LoginRequest {
+
+    private String username;
+    private String password;
+
+    public LoginRequest() {}
+
+    public String getUsername() { return username; }
+    public void setUsername(String username) { this.username = username; }
+
+    public String getPassword() { return password; }
+    public void setPassword(String password) { this.password = password; }
+}
+```
+
+### 4.2. `LoginResponse` (mínimo)
+
+```java
+package com.example.SpringSecurityJWTDemo.controller.dto;
+
+public class LoginResponse {
+
+    private String message;
+
+    public LoginResponse() {}
+
+    public LoginResponse(String message) {
+        this.message = message;
+    }
+
+    public String getMessage() { return message; }
+    public void setMessage(String message) { this.message = message; }
+}
+```
+
+---
+
+## 5. Implementar `AuthController`
+
+Ubicación:
+
+```text
+controller/
+  AuthController.java
+```
+
+Implementación mínima usando `AuthenticationManager`:
+
+```java
+package com.example.SpringSecurityJWTDemo.controller;
+
+import com.example.SpringSecurityJWTDemo.controller.dto.LoginRequest;
+import com.example.SpringSecurityJWTDemo.controller.dto.LoginResponse;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.web.bind.annotation.*;
+
+@RestController
+@RequestMapping("/auth")
+public class AuthController {
+
+    private final AuthenticationManager authenticationManager;
+
+    public AuthController(AuthenticationManager authenticationManager) {
+        this.authenticationManager = authenticationManager;
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<LoginResponse> login(@RequestBody LoginRequest request) {
+
+        authenticationManager.authenticate(
+            new UsernamePasswordAuthenticationToken(
+                request.getUsername(),
+                request.getPassword()
+            )
+        );
+
+        return ResponseEntity.ok(new LoginResponse("Authenticated"));
+    }
+}
+```
+
+Si las credenciales son inválidas, Spring Security lanzará una excepción y
+retornará un 401/403 según configuración (más adelante lo normalizamos con
+manejo de errores).
+
+---
+
+## 6. Verificación mínima (con curl)
+
+1. Login OK:
+
+```bash
+curl -i -X POST http://localhost:8080/auth/login \
+  -H "Content-Type: application/json" \
+  -d '{"username":"user","password":"1234"}'
+```
+
+2. Login FAIL:
+
+```bash
+curl -i -X POST http://localhost:8080/auth/login \
+  -H "Content-Type: application/json" \
+  -d '{"username":"user","password":"bad"}'
+```
+
+---
+
+## 7. Estado al cerrar este capítulo
+
+* Login funcionando con credenciales en BD
+* `AuthenticationManager` validando contra tu `UserDetailsServiceImpl`
+* Sin JWT todavía
+
+Siguiente capítulo:
+
+* Generar JWT en `/auth/login`
+* `JwtService` para crear/validar tokens
+
+---
+
+Si quieres, te lo dejo aún más “sin fricción”: pega aquí tu `SecurityConfig`
+actual (con el bean de `AuthenticationManager` ya puesto) y te digo exactamente
+qué líneas agregar para permitir `/auth/login` sin romper nada.
+
+---
