@@ -1,4 +1,4 @@
-package com.example.SpringSecurityJWTDemo.service;
+package com.example.SpringSecurityJWTDemo.config;
 
 import com.example.SpringSecurityJWTDemo.repository.RoleRepository;
 import com.example.SpringSecurityJWTDemo.repository.UserRepository;
@@ -8,6 +8,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.Set;
 
@@ -17,28 +18,25 @@ public class DataInitializer {
     @Bean
     public CommandLineRunner loadData(
             UserRepository userRepository,
-            RoleRepository roleRepository
+            RoleRepository roleRepository,
+            PasswordEncoder passwordEncoder
     ) {
         return args -> {
             if (roleRepository.count() == 0) {
-                Role userRole = new Role("ROLE_USER");
-                Role adminRole = new Role("ROLE_ADMIN");
-                roleRepository.save(userRole);
-                roleRepository.save(adminRole);
+                roleRepository.save(new Role("ROLE_USER"));
+                roleRepository.save(new Role("ROLE_ADMIN"));
             }
 
             if (userRepository.count() == 0) {
-                BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-
                 User user = new User();
                 user.setUsername("user");
-                user.setPassword(encoder.encode("1234"));
+                user.setPassword(passwordEncoder.encode("1234"));
                 user.setRoles(Set.of(roleRepository.findByName("ROLE_USER")
                                                    .get()));
 
                 User admin = new User();
                 admin.setUsername("admin");
-                admin.setPassword(encoder.encode("admin1234"));
+                admin.setPassword(passwordEncoder.encode("admin1234"));
                 admin.setRoles(Set.of(roleRepository.findByName("ROLE_ADMIN")
                                                     .get()));
                 userRepository.save(user);
