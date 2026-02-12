@@ -2,20 +2,30 @@ package com.example.SpringSecurityJWTDemo.controller.dto;
 
 public class LoginResponse {
 
-    private String message;
+    private String token;
+    private String type;
 
     public LoginResponse() {
     }
 
-    public LoginResponse(String message) {
-        this.message = message;
+    public LoginResponse(String token, String type) {
+        this.token = token;
+        this.type = type;
     }
 
-    public String getMessage() {
-        return message;
+    public String getToken() {
+        return token;
     }
 
-    public void setMessage(String message) {
-        this.message = message;
+    public void setToken(String token) {
+        this.token = token;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 }
