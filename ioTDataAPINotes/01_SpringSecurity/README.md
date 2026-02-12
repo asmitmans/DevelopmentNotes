@@ -160,18 +160,18 @@ HMACSHA256(base64url(header) + "." + base64url(payload), clave_secreta)
 <dependency>
   <groupId>io.jsonwebtoken</groupId>
   <artifactId>jjwt-api</artifactId>
-  <version>0.11.5</version>
+  <version>0.13.0</version>
 </dependency>
 <dependency>
   <groupId>io.jsonwebtoken</groupId>
   <artifactId>jjwt-impl</artifactId>
-  <version>0.11.5</version>
+  <version>0.13.0</version>
   <scope>runtime</scope>
 </dependency>
 <dependency>
   <groupId>io.jsonwebtoken</groupId>
   <artifactId>jjwt-jackson</artifactId>
-  <version>0.11.5</version>
+  <version>0.13.0</version>
   <scope>runtime</scope>
 </dependency>
 ```
@@ -1180,15 +1180,34 @@ public class AuthController {
 }
 ```
 
-Si las credenciales son inválidas, Spring Security lanzará una excepción y
-retornará un 401/403 según configuración (más adelante lo normalizamos con
-manejo de errores).
+### `SecurityConfig`: permitir `/auth/login` y excluirlo de CSRF
 
----
+Spring Security habilita CSRF por defecto para proteger aplicaciones basadas
+en cookies y sesiones.
+En una API REST stateless que usa tokens, CSRF normalmente se deshabilita
+completamente o se ignora en endpoints públicos como `/auth/login`.
 
-## 6. Verificación mínima (con curl)
+* Permitir acceso público a `/auth/login`
+* Excluir `/auth/login` de CSRF (además de H2 console en desarrollo)
 
-1. Login OK:
+Ejemplo mínimo (manteniendo H2):
+
+```java
+http
+    .authorizeHttpRequests(auth -> auth
+        .requestMatchers("/h2-console/**").permitAll()
+        .requestMatchers("/auth/login").permitAll()
+        .anyRequest().authenticated()
+    )
+    .csrf(csrf -> csrf
+        .ignoringRequestMatchers("/h2-console/**", "/auth/login")
+    )
+    .headers(headers -> headers
+        .frameOptions(frame -> frame.sameOrigin())
+    );
+```
+
+### Verificación mínima (curl)
 
 ```bash
 curl -i -X POST http://localhost:8080/auth/login \
@@ -1196,31 +1215,741 @@ curl -i -X POST http://localhost:8080/auth/login \
   -d '{"username":"user","password":"1234"}'
 ```
 
-2. Login FAIL:
+Resultado esperado:
 
-```bash
-curl -i -X POST http://localhost:8080/auth/login \
-  -H "Content-Type: application/json" \
-  -d '{"username":"user","password":"bad"}'
+* `HTTP/1.1 200`
+* Body JSON con mensaje de autenticación
+
+---
+
+## Capítulo 3.7 — `JwtService` (Boot 4.0.2 + Security 7 + JJWT)
+
+La meta aquí es **tener un servicio JWT correcto y estable** antes de tocar
+cualquier filtro o modo stateless.
+
+---
+
+## 1) Dependencias JJWT (sin “legacy jar”)
+
+JJWT separa **API** (compile) de **impl/jackson** (runtime). Esa es la forma
+recomendada por el proyecto. ([GitHub][1])
+
+**Maven (`pom.xml`)**:
+
+```xml
+<properties>
+  <jjwt.version>0.13.0</jjwt.version>
+</properties>
+
+<dependencies>
+  <dependency>
+    <groupId>io.jsonwebtoken</groupId>
+    <artifactId>jjwt-api</artifactId>
+    <version>${jjwt.version}</version>
+  </dependency>
+
+  <dependency>
+    <groupId>io.jsonwebtoken</groupId>
+    <artifactId>jjwt-impl</artifactId>
+    <version>${jjwt.version}</version>
+    <scope>runtime</scope>
+  </dependency>
+
+  <dependency>
+    <groupId>io.jsonwebtoken</groupId>
+    <artifactId>jjwt-jackson</artifactId>
+    <version>${jjwt.version}</version>
+    <scope>runtime</scope>
+  </dependency>
+</dependencies>
 ```
 
 ---
 
-## 7. Estado al cerrar este capítulo
+## 2) Propiedades JWT (configurable y reproducible)
 
-* Login funcionando con credenciales en BD
-* `AuthenticationManager` validando contra tu `UserDetailsServiceImpl`
-* Sin JWT todavía
+Vamos a usar **HS256** (simétrico) por simplicidad del demo. El secreto debe
+ser **Base64** (no string “crudo”). JJWT lo recomienda explícitamente y además
+advierte que `secretString.getBytes(...)` suele ser incorrecto en criptografía.
+([GitHub][1])
 
-Siguiente capítulo:
+**`application.properties`**:
 
-* Generar JWT en `/auth/login`
-* `JwtService` para crear/validar tokens
+```properties
+security.jwt.secret-base64=CHANGE_ME
+security.jwt.ttl-seconds=3600
+security.jwt.issuer=SpringSecurityJWTDemo
+```
+
+### Cómo generar un secreto correcto (una vez)
+
+1. Ejecutar en un terminal
+```bash
+openssl rand -base64 32
+```
+
+2. Copiar el resultado en 
+```properties
+security.jwt.secret-base64=EL_RESULTADO
+security.jwt.ttl-seconds=3600
+security.jwt.issuer=SpringSecurityJWTDemo
+```
+
+## 3) Diseño del `JwtService` (contrato mínimo)
+
+**Responsabilidades del servicio**:
+
+1. Generar token firmado (con `sub`, `iat`, `exp`, opcional `iss`)
+2. Extraer claims (al menos `sub`, `exp`)
+3. Validar token (firma + expiración + subject)
+
+Para *no* meter lógica de Spring Security todavía, `JwtService` debería ser
+agnóstico del filtro: recibe strings y `UserDetails`.
 
 ---
 
-Si quieres, te lo dejo aún más “sin fricción”: pega aquí tu `SecurityConfig`
-actual (con el bean de `AuthenticationManager` ya puesto) y te digo exactamente
-qué líneas agregar para permitir `/auth/login` sin romper nada.
+## 4) Implementación usando APIs no deprecated (JJWT 0.12+ / 0.13)
+
+JJWT documenta el flujo correcto de parseo:
+
+* `Jwts.parser() -> verifyWith(key) -> build() -> parseSignedClaims(...)`
+  ([GitHub][1])
+
+Y también cómo construir el `SecretKey` desde Base64 con `Decoders.BASE64`.
+([GitHub][1])
+
+### 4.1 `JwtService` (interfaz)
+
+```java
+public interface JwtService {
+  String generateToken(org.springframework.security.core.userdetails.UserDetails user);
+
+  String extractUsername(String token);
+
+  <T> T extractClaim(String token, java.util.function.Function<io.jsonwebtoken.Claims, T> resolver);
+
+  boolean isTokenValid(String token, org.springframework.security.core.userdetails.UserDetails user);
+}
+```
+
+### 4.2 `JwtServiceImpl`
+
+```java
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.JwtException;
+import io.jsonwebtoken.io.Decoders;
+import io.jsonwebtoken.security.Keys;
+
+import javax.crypto.SecretKey;
+import java.time.Instant;
+import java.util.Date;
+import java.util.function.Function;
+
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.stereotype.Service;
+
+@Service
+public class JwtServiceImpl implements JwtService {
+
+  private final SecretKey signingKey;
+  private final long ttlSeconds;
+  private final String issuer;
+
+  public JwtServiceImpl(
+      @Value("${security.jwt.secret-base64}") String secretBase64,
+      @Value("${security.jwt.ttl-seconds}") long ttlSeconds,
+      @Value("${security.jwt.issuer}") String issuer
+  ) {
+    this.signingKey = Keys.hmacShaKeyFor(Decoders.BASE64.decode(secretBase64));
+    this.ttlSeconds = ttlSeconds;
+    this.issuer = issuer;
+  }
+
+  @Override
+  public String generateToken(UserDetails user) {
+    Instant now = Instant.now();
+    Instant exp = now.plusSeconds(ttlSeconds);
+
+    return Jwts.builder()
+        .subject(user.getUsername())
+        .issuer(issuer)
+        .issuedAt(Date.from(now))
+        .expiration(Date.from(exp))
+        .signWith(signingKey)
+        .compact();
+  }
+
+  @Override
+  public String extractUsername(String token) {
+    return extractClaim(token, Claims::getSubject);
+  }
+
+  @Override
+  public <T> T extractClaim(String token, Function<Claims, T> resolver) {
+    Claims claims = Jwts.parser()
+        .verifyWith(signingKey)
+        .build()
+        .parseSignedClaims(token)
+        .getPayload();
+
+    return resolver.apply(claims);
+  }
+
+  @Override
+  public boolean isTokenValid(String token, UserDetails user) {
+    try {
+      String username = extractUsername(token);
+      if (!user.getUsername().equals(username)) {
+        return false;
+      }
+
+      Date exp = extractClaim(token, Claims::getExpiration);
+      return exp != null && exp.after(new Date());
+
+    } catch (JwtException | IllegalArgumentException ex) {
+      return false;
+    }
+  }
+}
+```
+
+**Por qué así:**
+
+* `verifyWith(key)` + `parseSignedClaims(...)` es el flujo recomendado en JJWT
+  moderno. ([GitHub][1])
+* `Keys.hmacShaKeyFor(Decoders.BASE64.decode(...))` es el camino documentado
+  cuando el secreto está en Base64. ([GitHub][1])
 
 ---
+
+Gracias. Ya con tu README completo puedo revisar **3.7 como quedó en la práctica**
+y escribir **3.8** con cambios de código + pruebas, **explícito**.
+
+
+
+---
+
+# Revisión rápida de tu doc (ajustes necesarios antes de 3.8)
+
+## A) Hay una contradicción fuerte en JJWT
+
+En “Requisitos / Dependencias” estás poniendo **JJWT 0.11.5**, pero en 3.7 ya
+migraste a **0.13.0**. Debe quedar **una sola versión** (la nueva).
+Te recomiendo **reemplazar** la sección antigua por la de 3.7.
+
+* Mantén: `jjwt-api` (compile)
+* Mantén: `jjwt-impl` y `jjwt-jackson` (runtime)
+* Mantén: `<jjwt.version>0.13.0</jjwt.version>`
+
+
+
+## B) Estructura “mínima del proyecto” está adelantada
+
+Tu árbol lista `JwtFilter` y una configuración stateless, pero por tus reglas
+todavía **no toca** filtro ni stateless. Esa parte conviene moverla más adelante
+(o marcarla como “futuro”).
+
+
+
+## C) Detalle de código en 3.7 (pequeño pero limpio)
+
+En tu `JwtServiceImpl` importaste:
+
+```java
+import io.jsonwebtoken.io.Encoders;
+```
+
+pero **no se usa**. Bórralo para que quede prolijo.
+
+
+
+---
+
+# Capítulo 3.8 — Devolver JWT en `POST /auth/login` (sin filtro aún)
+
+## 1) Objetivo
+
+Cuando el login sea válido:
+
+1. autenticar con `AuthenticationManager` (ya lo tienes)
+2. cargar `UserDetails` con tu `UserDetailsService`
+3. generar token con `JwtService`
+4. responder JSON: `{ "token": "...", "type": "Bearer" }`
+
+> Importante: **sin filtro**, el token aún no “habilita” endpoints protegidos.
+> Solo lo emitimos.
+
+
+
+---
+
+## 2) DTOs nuevos
+
+Crea (o ajusta) estos DTOs.
+
+### 2.1 `LoginRequest`
+
+Ruta sugerida:
+`src/main/java/.../controller/dto/LoginRequest.java`
+
+```java
+package com.example.springsecurityjwtdemo.controller.dto;
+
+public class LoginRequest {
+
+    private String username;
+    private String password;
+
+    public LoginRequest() {}
+
+    public String getUsername() { return username; }
+    public void setUsername(String username) { this.username = username; }
+
+    public String getPassword() { return password; }
+    public void setPassword(String password) { this.password = password; }
+}
+```
+
+### 2.2 `LoginResponse`
+
+Ruta sugerida:
+`src/main/java/.../controller/dto/LoginResponse.java`
+
+```java
+package com.example.springsecurityjwtdemo.controller.dto;
+
+public class LoginResponse {
+
+    private String token;
+    private String type;
+
+    public LoginResponse() {}
+
+    public LoginResponse(String token, String type) {
+        this.token = token;
+        this.type = type;
+    }
+
+    public String getToken() { return token; }
+    public void setToken(String token) { this.token = token; }
+
+    public String getType() { return type; }
+    public void setType(String type) { this.type = type; }
+}
+```
+
+---
+
+## 3) Cambios en `AuthController`
+
+### 3.1 Inyectar dependencias
+
+Necesitas:
+
+* `AuthenticationManager`
+* `UserDetailsService` (tu `MyUserDetailsService` ya implementa la interfaz)
+* `JwtService`
+
+### 3.2 Implementación recomendada
+
+Archivo:
+`src/main/java/.../controller/AuthController.java`
+
+```java
+package com.example.springsecurityjwtdemo.controller;
+
+import com.example.springsecurityjwtdemo.controller.dto.LoginRequest;
+import com.example.springsecurityjwtdemo.controller.dto.LoginResponse;
+import com.example.springsecurityjwtdemo.security.JwtService;
+
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.web.bind.annotation.*;
+
+@RestController
+@RequestMapping("/auth")
+public class AuthController {
+
+    private final AuthenticationManager authenticationManager;
+    private final UserDetailsService userDetailsService;
+    private final JwtService jwtService;
+
+    public AuthController(
+            AuthenticationManager authenticationManager,
+            UserDetailsService userDetailsService,
+            JwtService jwtService
+    ) {
+        this.authenticationManager = authenticationManager;
+        this.userDetailsService = userDetailsService;
+        this.jwtService = jwtService;
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<LoginResponse> login(@RequestBody LoginRequest request) {
+
+        authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(
+                        request.getUsername(),
+                        request.getPassword()
+                )
+        );
+
+        UserDetails userDetails =
+                userDetailsService.loadUserByUsername(request.getUsername());
+
+        String token = jwtService.generateToken(userDetails);
+
+        return ResponseEntity.ok(new LoginResponse(token, "Bearer"));
+    }
+}
+```
+
+### Decisión técnica (por qué así)
+
+* El token se emite **solo después** de `authenticate(...)`.
+* Usamos `UserDetailsService` para generar token desde el usuario real
+  (en vez de confiar en lo que venga por request).
+
+---
+
+## 4) `SecurityConfig`: confirmar que `/auth/login` está permitido
+
+Tu doc ya lo tiene en 3.6:
+
+* `permitAll()` para `/auth/login`
+* CSRF ignored para `/auth/login` y `/h2-console/**`
+
+Asegúrate que está **exactamente** así (mínimo):
+
+```java
+.authorizeHttpRequests(auth -> auth
+    .requestMatchers("/h2-console/**").permitAll()
+    .requestMatchers("/auth/login").permitAll()
+    .anyRequest().authenticated()
+)
+.csrf(csrf -> csrf
+    .ignoringRequestMatchers("/h2-console/**", "/auth/login")
+)
+```
+
+---
+
+## 5) Pruebas (curl) — explícitas
+
+### 5.1 Login OK (devuelve token)
+
+```bash
+curl -i -X POST http://localhost:8080/auth/login \
+  -H "Content-Type: application/json" \
+  -d '{"username":"user","password":"1234"}'
+```
+
+**Esperado:**
+
+```json
+{"token":"<JWT>","type":"Bearer"}
+```
+
+### 5.2 Login FAIL (password mala)
+
+```bash
+curl -i -X POST http://localhost:8080/auth/login \
+  -H "Content-Type: application/json" \
+  -d '{"username":"user","password":"mala"}'
+```
+
+**Esperado:**
+
+* HTTP 401 (o 403 dependiendo de tu handler actual)
+* no debe devolver token
+
+> **Nota**
+> En este punto el backend **emite** JWT en el login, pero **aún no procesa**
+> tokens en requests entrantes (filtro viene después).”
+
+---
+
+## Capítulo 3.9 — Procesar JWT en requests (JwtFilter + stateless)
+
+En 3.8 ya **emitimos** JWT. Ahora toca que Spring Security **lo lea** desde
+`Authorization: Bearer ...`, lo valide y pueble el `SecurityContextHolder`.
+Spring Security usa el `SecurityContextHolder` como fuente de “quién está
+autenticado”. ([Home][1])
+
+---
+
+### 0) Estado objetivo (al terminar 3.9)
+
+* `/auth/login` → `permitAll` (emite token)
+* `/h2-console/**` → `permitAll` (solo dev)
+* Resto → requiere JWT válido
+* Session = **STATELESS**
+* `JwtAuthenticationFilter` en la cadena, antes del filtro de login clásico
+
+La idea de “Bearer token” viene del estándar de Authorization header (Spring
+Security Resource Server lo resuelve así por defecto). ([Home][2])
+
+---
+
+## 1) Crear `JwtAuthenticationFilter`
+
+Ruta sugerida:
+`src/main/java/.../security/JwtAuthenticationFilter.java`
+
+Características clave:
+
+* Extiende `OncePerRequestFilter`
+* Lee header `Authorization`
+* Si no hay `Bearer`, no hace nada y deja pasar
+* Si hay token:
+
+  * extrae `username` con `JwtService`
+  * carga `UserDetails`
+  * valida token
+  * crea `Authentication` y la pone en `SecurityContextHolder`
+
+> Spring Security no “impone” cómo poblar el `SecurityContextHolder`; si está
+> poblado, se usa como el usuario autenticado. ([Home][1])
+
+```java
+package com.example.springsecurityjwtdemo.security;
+
+import jakarta.servlet.FilterChain;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+
+import java.io.IOException;
+
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
+import org.springframework.web.filter.OncePerRequestFilter;
+
+public class JwtAuthenticationFilter extends OncePerRequestFilter {
+
+    private final JwtService jwtService;
+    private final UserDetailsService userDetailsService;
+
+    public JwtAuthenticationFilter(
+            JwtService jwtService,
+            UserDetailsService userDetailsService
+    ) {
+        this.jwtService = jwtService;
+        this.userDetailsService = userDetailsService;
+    }
+
+    @Override
+    protected void doFilterInternal(
+            HttpServletRequest request,
+            HttpServletResponse response,
+            FilterChain filterChain
+    ) throws ServletException, IOException {
+
+        String authHeader = request.getHeader("Authorization");
+        if (authHeader == null || !authHeader.startsWith("Bearer ")) {
+            filterChain.doFilter(request, response);
+            return;
+        }
+
+        String token = authHeader.substring("Bearer ".length());
+
+        if (SecurityContextHolder.getContext().getAuthentication() == null) {
+            String username = jwtService.extractUsername(token);
+            UserDetails userDetails =
+                    userDetailsService.loadUserByUsername(username);
+
+            if (jwtService.isTokenValid(token, userDetails)) {
+                UsernamePasswordAuthenticationToken authToken =
+                        new UsernamePasswordAuthenticationToken(
+                                userDetails,
+                                null,
+                                userDetails.getAuthorities()
+                        );
+
+                authToken.setDetails(
+                        new WebAuthenticationDetailsSource().buildDetails(request)
+                );
+
+                SecurityContextHolder.getContext().setAuthentication(authToken);
+            }
+        }
+
+        filterChain.doFilter(request, response);
+    }
+}
+```
+
+Notas:
+
+* Si el token es inválido, **no seteamos** autenticación y el request terminará
+  en 401 al intentar acceder a rutas protegidas.
+* No atrapamos excepciones aquí todavía; en 3.10/3.11 solemos mejorar el
+  manejo de errores con `AuthenticationEntryPoint`.
+
+---
+
+## 2) Registrar el filtro como bean (config)
+
+En `SecurityConfig`, crea el bean del filtro para poder inyectar deps.
+
+```java
+@Bean
+public JwtAuthenticationFilter jwtAuthenticationFilter(
+        JwtService jwtService,
+        UserDetailsService userDetailsService
+) {
+    return new JwtAuthenticationFilter(jwtService, userDetailsService);
+}
+```
+
+---
+
+## 3) Configurar `SecurityFilterChain` (stateless + filter order)
+
+### 3.1 Stateless
+
+En Spring Security, la parte de “session management” es donde forzamos
+`STATELESS` para API. ([Home][3])
+
+```java
+.sessionManagement(sm ->
+    sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+)
+```
+
+### 3.2 Insertar el filtro en la cadena
+
+Debes ponerlo **antes** de `UsernamePasswordAuthenticationFilter`:
+
+```java
+.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
+```
+
+### 3.3 H2 console (frames + CSRF)
+
+H2 usa frames y no implementa CSRF; Spring Boot documenta que para H2 en apps
+seguras debes deshabilitar CSRF en la consola y permitir frames (SAMEORIGIN).
+([Home][4])
+
+Ejemplo completo (ajusta paquetes/nombres a tu proyecto):
+
+```java
+@Bean
+public SecurityFilterChain securityFilterChain(
+        HttpSecurity http,
+        JwtAuthenticationFilter jwtAuthenticationFilter
+) throws Exception {
+
+    http
+        .authorizeHttpRequests(auth -> auth
+            .requestMatchers("/h2-console/**").permitAll()
+            .requestMatchers("/auth/login").permitAll()
+            .anyRequest().authenticated()
+        )
+        .sessionManagement(sm ->
+            sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+        )
+        .csrf(csrf -> csrf
+            .ignoringRequestMatchers("/h2-console/**", "/auth/login")
+        )
+        .headers(headers -> headers
+            .frameOptions(frame -> frame.sameOrigin())
+        )
+        .addFilterBefore(
+            jwtAuthenticationFilter,
+            UsernamePasswordAuthenticationFilter.class
+        );
+
+    return http.build();
+}
+```
+
+---
+
+## 4) Endpoint protegido de prueba (si no tienes uno)
+
+Crea algo mínimo para verificar 200 vs 401.
+
+Ruta sugerida:
+`src/main/java/.../controller/TestController.java`
+
+```java
+package com.example.springsecurityjwtdemo.controller;
+
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController
+public class TestController {
+
+    @GetMapping("/api/ping")
+    public String ping() {
+        return "pong";
+    }
+}
+```
+
+---
+
+## 5) Pruebas con curl (con HTTP codes)
+
+### 5.1 Login OK → obtienes token (200)
+
+```bash
+curl -i -X POST http://localhost:8080/auth/login \
+  -H "Content-Type: application/json" \
+  -d '{"username":"user","password":"1234"}'
+```
+
+Guarda el `<JWT>` del JSON.
+
+### 5.2 Endpoint protegido sin token → 401
+
+```bash
+curl -i http://localhost:8080/api/ping
+```
+
+Esperado (mínimo):
+
+```text
+HTTP/1.1 401
+```
+
+### 5.3 Endpoint protegido con token → 200
+
+```bash
+curl -i http://localhost:8080/api/ping \
+  -H "Authorization: Bearer <JWT>"
+```
+
+Esperado:
+
+* `HTTP/1.1 200`
+* body: `pong`
+
+---
+
+## 6) Qué NO hacemos todavía (para mantener el capítulo limpio)
+
+* No “formateamos” el error 401 en JSON (eso viene en un capítulo de error
+  handling / entry point).
+* No refresh token.
+* No revocación / blacklist.
+
+---
+
+Si me pegas tu `SecurityConfig` actual (el real, post-3.8), te lo devuelvo
+exactamente con el diff mínimo (sin introducir nada extra).
+
+[1]: https://docs.spring.io/spring-security/reference/servlet/authentication/architecture.html?utm_source=chatgpt.com "Servlet Authentication Architecture :: Spring Security"
+[2]: https://docs.spring.io/spring-security/reference/servlet/oauth2/resource-server/bearer-tokens.html?utm_source=chatgpt.com "OAuth 2.0 Bearer Tokens :: Spring Security"
+[3]: https://docs.spring.io/spring-security/reference/servlet/authentication/session-management.html?utm_source=chatgpt.com "Authentication Persistence and Session Management - Spring"
+[4]: https://docs.spring.io/spring-boot/docs/3.2.5/reference/htmlsingle/?utm_source=chatgpt.com "Spring Boot Reference Documentation"
