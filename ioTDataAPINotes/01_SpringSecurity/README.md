@@ -1717,21 +1717,21 @@ Características clave:
 > poblado, se usa como el usuario autenticado. ([Home][1])
 
 ```java
-package com.example.springsecurityjwtdemo.security;
+package com.example.SpringSecurityJWTDemo.security;
 
+import com.example.SpringSecurityJWTDemo.service.JwtService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-
-import java.io.IOException;
-
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.web.filter.OncePerRequestFilter;
+
+import java.io.IOException;
 
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
@@ -1754,7 +1754,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     ) throws ServletException, IOException {
 
         String authHeader = request.getHeader("Authorization");
-        if (authHeader == null || !authHeader.startsWith("Bearer ")) {
+        if (authHeader == null || !authHeader.startsWith("Bearer")) {
             filterChain.doFilter(request, response);
             return;
         }
@@ -1802,12 +1802,12 @@ En `SecurityConfig`, crea el bean del filtro para poder inyectar deps.
 
 ```java
 @Bean
-public JwtAuthenticationFilter jwtAuthenticationFilter(
-        JwtService jwtService,
-        UserDetailsService userDetailsService
-) {
-    return new JwtAuthenticationFilter(jwtService, userDetailsService);
-}
+    public JwtAuthenticationFilter jwtAuthenticationFilter(
+            JwtService jwtService,
+            UserDetailsService userDetailsService
+    ) {
+        return new JwtAuthenticationFilter(jwtService, userDetailsService);
+    }
 ```
 
 ---
@@ -1821,7 +1821,7 @@ En Spring Security, la parte de “session management” es donde forzamos
 
 ```java
 .sessionManagement(sm ->
-    sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+        sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
 )
 ```
 
@@ -1830,43 +1830,47 @@ En Spring Security, la parte de “session management” es donde forzamos
 Debes ponerlo **antes** de `UsernamePasswordAuthenticationFilter`:
 
 ```java
-.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
+.addFilterBefore(
+        jwtAuthenticationFilter,
+        UsernamePasswordAuthenticationFilter.class
+);
 ```
 
 ### 3.3 H2 console (frames + CSRF)
 
 H2 usa frames y no implementa CSRF; Spring Boot documenta que para H2 en apps
 seguras debes deshabilitar CSRF en la consola y permitir frames (SAMEORIGIN).
-([Home][4])
 
 Ejemplo completo (ajusta paquetes/nombres a tu proyecto):
 
 ```java
 @Bean
-public SecurityFilterChain securityFilterChain(
-        HttpSecurity http,
-        JwtAuthenticationFilter jwtAuthenticationFilter
-) throws Exception {
-
-    http
-        .authorizeHttpRequests(auth -> auth
-            .requestMatchers("/h2-console/**").permitAll()
-            .requestMatchers("/auth/login").permitAll()
-            .anyRequest().authenticated()
-        )
-        .sessionManagement(sm ->
-            sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-        )
-        .csrf(csrf -> csrf
-            .ignoringRequestMatchers("/h2-console/**", "/auth/login")
-        )
-        .headers(headers -> headers
-            .frameOptions(frame -> frame.sameOrigin())
-        )
-        .addFilterBefore(
-            jwtAuthenticationFilter,
-            UsernamePasswordAuthenticationFilter.class
-        );
+  public SecurityFilterChain securityFilterChain(
+          HttpSecurity http,
+          JwtAuthenticationFilter jwtAuthenticationFilter)
+          throws Exception {
+      
+      http
+              .authorizeHttpRequests(auth -> auth
+                      .requestMatchers("/h2-console/**").permitAll()
+                      .requestMatchers("/auth/login").permitAll()
+                      .anyRequest().authenticated()
+              )
+              .sessionManagement(sm ->
+                      sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+              )
+              .csrf(csrf -> csrf
+                    .ignoringRequestMatchers("/h2-console/**","/auth/login"))
+              .headers(headers -> headers
+                    .frameOptions(HeadersConfigurer.FrameOptionsConfig::sameOrigin)
+              )
+              .exceptionHandling(ex -> ex
+                        .authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED))
+              )
+              .addFilterBefore(
+                    jwtAuthenticationFilter,
+                    UsernamePasswordAuthenticationFilter.class
+              );
 
     return http.build();
 }
@@ -1882,7 +1886,7 @@ Ruta sugerida:
 `src/main/java/.../controller/TestController.java`
 
 ```java
-package com.example.springsecurityjwtdemo.controller;
+package com.example.SpringSecurityJWTDemo.controller;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -1904,9 +1908,7 @@ public class TestController {
 ### 5.1 Login OK → obtienes token (200)
 
 ```bash
-curl -i -X POST http://localhost:8080/auth/login \
-  -H "Content-Type: application/json" \
-  -d '{"username":"user","password":"1234"}'
+curl -i -X POST http://localhost:8080/auth/login   -H "Content-Type: application/json"   -d '{"username":"user","password":"1234"}'
 ```
 
 Guarda el `<JWT>` del JSON.
@@ -1926,8 +1928,7 @@ HTTP/1.1 401
 ### 5.3 Endpoint protegido con token → 200
 
 ```bash
-curl -i http://localhost:8080/api/ping \
-  -H "Authorization: Bearer <JWT>"
+curl -i http://localhost:8080/api/ping   -H "Authorization: Bearer <token>";echo
 ```
 
 Esperado:
@@ -1936,20 +1937,3 @@ Esperado:
 * body: `pong`
 
 ---
-
-## 6) Qué NO hacemos todavía (para mantener el capítulo limpio)
-
-* No “formateamos” el error 401 en JSON (eso viene en un capítulo de error
-  handling / entry point).
-* No refresh token.
-* No revocación / blacklist.
-
----
-
-Si me pegas tu `SecurityConfig` actual (el real, post-3.8), te lo devuelvo
-exactamente con el diff mínimo (sin introducir nada extra).
-
-[1]: https://docs.spring.io/spring-security/reference/servlet/authentication/architecture.html?utm_source=chatgpt.com "Servlet Authentication Architecture :: Spring Security"
-[2]: https://docs.spring.io/spring-security/reference/servlet/oauth2/resource-server/bearer-tokens.html?utm_source=chatgpt.com "OAuth 2.0 Bearer Tokens :: Spring Security"
-[3]: https://docs.spring.io/spring-security/reference/servlet/authentication/session-management.html?utm_source=chatgpt.com "Authentication Persistence and Session Management - Spring"
-[4]: https://docs.spring.io/spring-boot/docs/3.2.5/reference/htmlsingle/?utm_source=chatgpt.com "Spring Boot Reference Documentation"
